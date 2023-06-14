@@ -71,7 +71,7 @@ namespace MissionPlanner
             this.MenuFlightPlanner,
             this.MenuInitConfig,
             this.MenuConfigTune,
-            // this.MenuSimulation,
+            this.MenuSimulation,
             this.MenuHelp,
             this.MenuConnect,
             this.toolStripConnectionControl,
@@ -163,7 +163,7 @@ namespace MissionPlanner
             resources.ApplyResources(this.MenuSimulation, "MenuSimulation");
             this.MenuSimulation.Margin = new System.Windows.Forms.Padding(0);
             this.MenuSimulation.Name = "MenuSimulation";
-            // this.MenuSimulation.Click += new System.EventHandler(this.MenuSimulation_Click);
+            this.MenuSimulation.Click += new System.EventHandler(this.MenuSimulation_Click);
             // 
             // MenuHelp
             // 

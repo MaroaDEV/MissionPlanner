@@ -4846,6 +4846,9 @@
     <Content Include="aircraft.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="custom.config.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Drivers\CubeOrangePlus.inf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

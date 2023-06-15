@@ -3,7 +3,7 @@
   "displayHWIDs": false,
   "displayADSB": false,
   "displayName": 1,
-  "displaySimulation": true,
+  "displaySimulation": false,
   "displayTerminal": false,
   "displayDonate": false,
   "displayHelp": true,

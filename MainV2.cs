@@ -652,11 +652,11 @@ namespace MissionPlanner
 
                 if (DisplayConfiguration.displayScriptsTab && !t.TabPages.Contains(FlightData.tabScripts))
                 {
-                    //t.TabPages.Add(FlightData.tabScripts);
+                    t.TabPages.Add(FlightData.tabScripts);
                 }
                 else if (!DisplayConfiguration.displayScriptsTab && t.TabPages.Contains(FlightData.tabScripts))
                 {
-                    //t.TabPages.Remove(FlightData.tabScripts);
+                    t.TabPages.Remove(FlightData.tabScripts);
                 }
 
                 if (DisplayConfiguration.displayTelemetryTab && !t.TabPages.Contains(FlightData.tabTLogs))

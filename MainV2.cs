@@ -612,7 +612,7 @@ namespace MissionPlanner
                 {
                     t.TabPages.Remove(FlightData.tabActions);
                 }
-
+                DisplayConfiguration.displaySimpleActionsTab = false;
                 if (DisplayConfiguration.displaySimpleActionsTab && !t.TabPages.Contains(FlightData.tabActionsSimple))
                 {
                     t.TabPages.Add(FlightData.tabActionsSimple);

@@ -640,7 +640,7 @@ namespace MissionPlanner
                 {
                     t.TabPages.Remove(FlightData.tabStatus);
                 }
-
+                
                 if (DisplayConfiguration.displayServoTab && !t.TabPages.Contains(FlightData.tabServo))
                 {
                     t.TabPages.Add(FlightData.tabServo);
@@ -650,7 +650,7 @@ namespace MissionPlanner
                     t.TabPages.Remove(FlightData.tabServo);
                 }
 
-                if (DisplayConfiguration.displayScriptsTab && !t.TabPages.Contains(FlightData.tabScripts))
+                if (DisplayConfiguration.displayScriptsTab && !t.TabPages.Contains(FlightData.tabScripts) && false)
                 {
                     t.TabPages.Add(FlightData.tabScripts);
                 }

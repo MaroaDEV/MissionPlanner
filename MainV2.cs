@@ -923,7 +923,7 @@ namespace MissionPlanner
                 FlightData = new GCSViews.FlightData();
                 log.Info("Create FP");
                 FlightPlanner = new GCSViews.FlightPlanner();
-                Configuration = new GCSViews.ConfigurationView.Setup();
+                //Configuration = new GCSViews.ConfigurationView.Setup();
                 log.Info("Create SIM");
                 Simulation = new GCSViews.SITL();
                 //Firmware = new GCSViews.Firmware();

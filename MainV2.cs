@@ -564,6 +564,7 @@ namespace MissionPlanner
         {
             MenuSimulation.Visible = DisplayConfiguration.displaySimulation;
             MenuHelp.Visible = DisplayConfiguration.displayHelp;
+            MenuMessagesTab.Visible = DisplayConfiguration.displayMessagesTab;
             MissionPlanner.Controls.BackstageView.BackstageView.Advanced = DisplayConfiguration.isAdvancedMode;
 
             // force autohide on
@@ -676,14 +677,14 @@ namespace MissionPlanner
                     t.TabPages.Remove(FlightData.tablogbrowse);
                 }
 
-                if (DisplayConfiguration.displayMessagesTab && !t.TabPages.Contains(FlightData.tabPagemessages))
-                {
-                    t.TabPages.Add(FlightData.tabPagemessages);
-                }
-                else if (!DisplayConfiguration.displayMessagesTab && t.TabPages.Contains(FlightData.tabPagemessages))
-                {
-                    t.TabPages.Remove(FlightData.tabPagemessages);
-                }
+                //if (DisplayConfiguration.displayMessagesTab && !t.TabPages.Contains(FlightData.tabPagemessages))
+                //{
+                    //t.TabPages.Add(FlightData.tabPagemessages);
+                //}
+                //else if (!DisplayConfiguration.displayMessagesTab && t.TabPages.Contains(FlightData.tabPagemessages))
+                //{
+                    //t.TabPages.Remove(FlightData.tabPagemessages);
+                //}
 
                 t.SelectedIndex = 0;
 

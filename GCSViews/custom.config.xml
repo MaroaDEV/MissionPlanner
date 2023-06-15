@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Config>
+  <quickView3>battery_voltage</quickView3>
+  <quickView4>battery_remaining</quickView4>
+  <quickView5>current</quickView5>
+  <quickView6>DistToHome</quickView6>
+  <altunits>Meters</altunits>
+  <AACheck2>True</AACheck2>
+  <UserParams>SCR_USER1</UserParams>
+  <TXT_DefaultAlt>10</TXT_DefaultAlt>
+  <tabcontrolactions>tabPagePreFlight;tabQuick;tabPagemessages;tabGauges;tabStatus;tabTLogs;tablogbrowse;</tabcontrolactions>
+  <showairports>True</showairports>
+  <ShowNoFly>False</ShowNoFly>
+  <showtfr>False</showtfr>
+  <MainMaximised>Maximized</MainMaximised>
+  <CHK_GDIPlus>True</CHK_GDIPlus>
+</Config>

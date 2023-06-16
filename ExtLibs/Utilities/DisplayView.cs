@@ -257,23 +257,23 @@ namespace MissionPlanner.Utilities
             {
                 displayName = DisplayNames.Basic,
                 //MainV2 buttons
-                displaySimulation = true,
+                displaySimulation = false,
                 displayTerminal = false,
                 displayDonate = true,
-                displayHelp = true,
+                displayHelp = false,
 
                 //flight Data view
-                displayAnenometer = true,
-                displayQuickTab = true,
-                displayPreFlightTab = true,
+                displayAnenometer = false,
+                displayQuickTab = false,
+                displayPreFlightTab = false,
                 displayAdvActionsTab = false,
-                displaySimpleActionsTab = true,
+                displaySimpleActionsTab = false,
                 displayGaugesTab = true,
                 displayStatusTab = false,
                 displayServoTab = false,
                 displayScriptsTab = false,
-                displayTelemetryTab = true,
-                displayDataflashTab = true,
+                displayTelemetryTab = false,
+                displayDataflashTab = false,
                 displayMessagesTab = true,
 
                 //flight plan

@@ -260,7 +260,7 @@ namespace MissionPlanner.Utilities
                 displaySimulation = false,
                 displayTerminal = false,
                 displayDonate = true,
-                displayHelp = false,
+                displayHelp = true,
 
                 //flight Data view
                 displayAnenometer = false,

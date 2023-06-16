@@ -703,7 +703,7 @@ namespace MissionPlanner.GCSViews
             // quickView1
             // 
             this.quickView1.ContextMenuStrip = this.contextMenuStripQuickView;
-            this.quickView1.DataBindings.Add(new System.Windows.Forms.Binding("number", this.bindingSourceQuickTab, "Alexis_Lallement", true));
+            this.quickView1.DataBindings.Add(new System.Windows.Forms.Binding("number", this.bindingSourceQuickTab, "alt", true));
             this.quickView1.desc = "alt";
             resources.ApplyResources(this.quickView1, "quickView1");
             this.quickView1.Name = "quickView1";

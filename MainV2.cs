@@ -4393,7 +4393,7 @@ namespace MissionPlanner
                 MainMenu.MouseLeave += MainMenu_MouseLeave;
                 panel1.MouseLeave += MainMenu_MouseLeave;
                 toolStripConnectionControl.MouseLeave += MainMenu_MouseLeave;
-                menu.Visible = true;
+                menu.Visible = false;
                 menu.SendToBack();
                 this.ResumeLayout();
             }

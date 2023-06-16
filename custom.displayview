@@ -6,7 +6,7 @@
   "displaySimulation": false,
   "displayTerminal": false,
   "displayDonate": false,
-  "displayHelp": true,
+  "displayHelp": false,
   "displayAnenometer": true,
   "displayQuickTab": true,
   "displayPreFlightTab": true,

@@ -133,7 +133,7 @@ namespace MissionPlanner.Utilities
             displaySimulation = false;
             displayTerminal = false;
             displayDonate = false;
-            displayHelp = false;
+            displayHelp = true;
 
             //flight Data view
             displayAnenometer = false;
@@ -342,7 +342,7 @@ namespace MissionPlanner.Utilities
                 displaySimulation = false,
                 displayTerminal = false,
                 displayDonate = false,
-                displayHelp = false,
+                displayHelp = true,
 
                 //flight Data view
                 displayAnenometer = false,

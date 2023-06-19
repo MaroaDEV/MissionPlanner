@@ -339,10 +339,10 @@ namespace MissionPlanner.Utilities
             {
                 displayName = DisplayNames.Advanced,
                 //MainV2 buttons
-                displaySimulation = false,
-                displayTerminal = false,
-                displayDonate = false,
-                displayHelp = false,
+                displaySimulation = true,
+                displayTerminal = true,
+                displayDonate = true,
+                displayHelp = true,
 
                 //flight Data view
                 displayAnenometer = false,

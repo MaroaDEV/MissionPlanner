@@ -111,14 +111,14 @@ namespace MissionPlanner.Utilities
         public Boolean autoHideMenuForce { get; set; }
         public Boolean displayInitialParams { get; set; }
         public bool isAdvancedMode { get; set; }
-        public bool displayServoOutput { get; set; } = false;
-        public bool displayJoystick { get; set; } = false;
-        public bool displayOSD { get; set; } = false;
-        public bool displayUserParam { get; set; } = false;
-        public bool displayPlannerSettings { get; set; } = false;
-        public bool displayFFTSetup { get; set; } = false;
-        public bool displayPreFlightTabEdit { get; set; } = false;
-        public bool displayPlannerLayout { get; set; } = false;
+        public bool displayServoOutput { get; set; } = true;
+        public bool displayJoystick { get; set; } = true;
+        public bool displayOSD { get; set; } = true;
+        public bool displayUserParam { get; set; } = true;
+        public bool displayPlannerSettings { get; set; } = true;
+        public bool displayFFTSetup { get; set; } = true;
+        public bool displayPreFlightTabEdit { get; set; } = true;
+        public bool displayPlannerLayout { get; set; } = true;
 
         public bool lockQuickView { get; set; } = false;
 

@@ -37,6 +37,13 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
+
+            //add a new window
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.buttonOpen = new System.Windows.Forms.Button();
+            this.panel2.SuspendLayout();
+            this.SuspendLayout();
             // 
             // label1
             // 
@@ -105,6 +112,34 @@
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.buttonOpen);
+            this.panel2.Controls.Add(this.label3);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(4, 85);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(404, 50);
+            this.panel2.TabIndex = 4;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(10, 18);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(86, 13);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Nouvelle fenêtre";
+            // 
+            // buttonOpen
+            // 
+            this.buttonOpen.Location = new System.Drawing.Point(102, 13);
+            this.buttonOpen.Name = "buttonOpen";
+            this.buttonOpen.Size = new System.Drawing.Size(75, 23);
+            this.buttonOpen.TabIndex = 1;
+            this.buttonOpen.Text = "Ouvrir";
+            this.buttonOpen.UseVisualStyleBackColor = true;
+            // 
             // TilePrefetcher
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -114,6 +149,7 @@
             this.ControlBox = false;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panel2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.KeyPreview = true;
             this.MaximizeBox = false;
@@ -141,5 +177,8 @@
       private System.Windows.Forms.Label label2;
       private System.Windows.Forms.Panel panel1;
       private System.Windows.Forms.Button buttonCancel;
+      private System.Windows.Forms.Panel panel2;
+      private System.Windows.Forms.Label label3;
+      private System.Windows.Forms.Button buttonOpen;
    }
 }

@@ -131,7 +131,7 @@ namespace MissionPlanner.Utilities
             
 
             //MainV2 buttons
-            displaySimulation = true;
+            displaySimulation = false;
             displayTerminal = false;
             displayDonate = true;
             displayHelp = true;
@@ -258,9 +258,9 @@ namespace MissionPlanner.Utilities
             {
                 displayName = DisplayNames.Basic,
                 //MainV2 buttons
-                displaySimulation = true,
+                displaySimulation = false,
                 displayTerminal = false,
-                displayDonate = true,
+                displayDonate = false,
                 displayHelp = true,
 
                 //flight Data view

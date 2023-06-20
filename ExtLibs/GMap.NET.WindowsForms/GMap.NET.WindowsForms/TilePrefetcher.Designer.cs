@@ -129,7 +129,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(86, 13);
             this.label3.TabIndex = 0;
-            this.label3.Text = "Nouvelle fenêtre";
+            this.label3.Text = "Je suis un zombie";
             // 
             // buttonOpen
             // 

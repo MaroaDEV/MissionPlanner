@@ -282,6 +282,18 @@ namespace GStreamerHud
 
             this.Controls.Add(this.videoPanel);
 
+            // Création de la nouvelle fenêtre
+            var newForm = new Form();
+            newForm.Text = "Nouvelle fenêtre";
+            newForm.FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            newForm.Size = new Size(200, 100);
+            newForm.StartPosition = FormStartPosition.Manual;
+            newForm.Location = new Point(0, this.Height - newForm.Height);
+
+            // Ajout de la nouvelle fenêtre à l'interface principale
+            this.Controls.Add(newForm);
+
+
             this.Controls.Add(this.btnStop);
 
             this.Controls.Add(this.btnStart);

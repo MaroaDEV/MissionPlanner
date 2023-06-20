@@ -135,7 +135,7 @@ namespace MissionPlanner.Utilities
             displayTerminal = false;
             displayDonate = true;
             displayHelp = true;
-
+            
             //flight Data view
             displayAnenometer = false;
             displayQuickTab = true;
@@ -149,7 +149,7 @@ namespace MissionPlanner.Utilities
             displayTelemetryTab = false;
             displayDataflashTab = false;
             displayMessagesTab = true;
-
+            
             //flight plan
             displayRallyPointsMenu = true;
             displayGeoFenceMenu = true;

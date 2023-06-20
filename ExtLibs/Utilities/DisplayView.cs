@@ -260,21 +260,21 @@ namespace MissionPlanner.Utilities
                 //MainV2 buttons
                 displaySimulation = false,
                 displayTerminal = false,
-                displayDonate = false,
+                displayDonate = true,
                 displayHelp = true,
 
                 //flight Data view
-                displayAnenometer = true,
+                displayAnenometer = false,
                 displayQuickTab = true,
-                displayPreFlightTab = true,
+                displayPreFlightTab = false,
                 displayAdvActionsTab = false,
                 displaySimpleActionsTab = true,
-                displayGaugesTab = true,
+                displayGaugesTab = false,
                 displayStatusTab = false,
                 displayServoTab = false,
                 displayScriptsTab = false,
-                displayTelemetryTab = true,
-                displayDataflashTab = true,
+                displayTelemetryTab = false,
+                displayDataflashTab = false,
                 displayMessagesTab = true,
 
                 //flight plan

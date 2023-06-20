@@ -130,7 +130,7 @@ namespace MissionPlanner.Utilities
             
 
             //MainV2 buttons
-            displaySimulation = false;
+            displaySimulation = true;
             displayTerminal = false;
             displayDonate = true;
             displayHelp = true;
@@ -340,7 +340,7 @@ namespace MissionPlanner.Utilities
                 displayName = DisplayNames.Advanced,
                 //MainV2 buttons
                 displaySimulation = true,
-                displayTerminal = true,
+                displayTerminal = false,
                 displayDonate = true,
                 displayHelp = true,
 

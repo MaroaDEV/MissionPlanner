@@ -130,7 +130,7 @@ namespace MissionPlanner.Utilities
             
 
             //MainV2 buttons
-            displaySimulation = true;
+            displaySimulation = false;
             displayTerminal = false;
             displayDonate = true;
             displayHelp = true;

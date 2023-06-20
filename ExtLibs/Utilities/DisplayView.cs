@@ -343,7 +343,7 @@ namespace MissionPlanner.Utilities
                 displaySimulation = true,
                 displayTerminal = false,
                 displayDonate = true,
-                displayHelp = true,
+                displayHelp = false,
 
                 //flight Data view
                 displayAnenometer = true,

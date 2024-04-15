@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Newtonsoft.Json;
 
 namespace MissionPlanner.Utilities
@@ -21,36 +22,40 @@ namespace MissionPlanner.Utilities
         public DFLog dflog { get; }
 
         Stream basestream;
-        private int _count;
-        List<uint> linestartoffset = new List<uint>();
+        private long _count;
+        List<long> linestartoffset = new List<long>();
 
         /// <summary>
         /// Type and offsets
         /// </summary>
-        List<uint>[] messageindex = new List<uint>[256];
+        List<long>[] messageindex = new List<long>[256];
         /// <summary>
         /// Type and line numbers
         /// </summary>
-        List<uint>[] messageindexline = new List<uint>[256];
+        List<long>[] messageindexline = new List<long>[256];
 
         bool binary = false;
 
         object locker = new object();
 
-        int indexcachelineno = -1;
+        long indexcachelineno = -1;
         String currentindexcache = null;
 
         public DFLogBuffer(string filename) : this(File.Open(filename,FileMode.Open,FileAccess.Read,FileShare.Read))
         {
+            _filename = filename;
         }
 
         public DFLogBuffer(Stream instream)
         {
+            if (instream is FileStream)
+                _filename = ((FileStream)instream).Name;
+
             dflog = new DFLog(this);
             for (int a = 0; a < messageindex.Length; a++)
             {
-                messageindex[a] = new List<uint>();
-                messageindexline[a] = new List<uint>();
+                messageindex[a] = new List<long>();
+                messageindexline[a] = new List<long>();
             }
             
             if (instream.CanSeek)
@@ -90,7 +95,7 @@ namespace MissionPlanner.Utilities
 
             byte[] buffer = new byte[1024*1024];
 
-            var lineCount = 0;
+            var lineCount = 0l;
 
             if (binary)
             {
@@ -103,17 +108,32 @@ namespace MissionPlanner.Utilities
                         continue;
 
                     byte type = ans.Item1;
-                    messageindex[type].Add((uint)(ans.Item2));
-                    messageindexline[type].Add((uint) lineCount);
+                    messageindex[type].Add(ans.Item2);
+                    messageindexline[type].Add(lineCount);
 
-                    linestartoffset.Add((uint)(ans.Item2));
+                    linestartoffset.Add(ans.Item2);
                     lineCount++;
+
+                    if (lineCount % 1000000 == 0)
+                        Console.WriteLine("reading lines " + lineCount + " " + ((basestream.Position / (double)length) * 100.0));
                 }
                 
                 _count = lineCount;
 
                 // build fmt line database to pre seed the FMT message
-                messageindexline[128].ForEach(a => dflog.FMTLine(this[(int) a]));
+                messageindexline[128].ForEach(a => dflog.FMTLine(this[(int)a]));
+
+                try
+                {
+                    foreach (var item in dflog.logformat)
+                    {
+                        var id = item.Value.Id;
+                        var type = item.Value.Name;
+                        if(messageindex[id].Count != 0)
+                            Console.WriteLine("Seen " + type + " count " + messageindex[id].Count);
+                    }
+                }
+                catch { }
             }
             else
             {
@@ -250,6 +270,7 @@ namespace MissionPlanner.Utilities
 
             BuildUnitMultiList();
 
+            int limitcount = 0;
             // used to set the firmware type
             foreach (var item in GetEnumeratorType(new[]
             {
@@ -259,6 +280,9 @@ namespace MissionPlanner.Utilities
                 // must be the string version to do the firmware type detection - binarylog
                 var line = this[(int) item.lineno];
                 //Console.WriteLine();
+                limitcount++;
+                if (limitcount > 100000)
+                    break;
             }
 
             // try get gps time - when a dfitem is created and no valid gpstime has been establish the messages are parsed to get a valid gpstime
@@ -283,6 +307,89 @@ namespace MissionPlanner.Utilities
 
             indexcachelineno = -1;
         }
+        
+        public void SplitLog(int pieces = 0)
+        {
+            long length = basestream.Length;
+
+            if (pieces > 0)
+            { 
+                long sizeofpiece = length / pieces;
+
+                for(int i = 0; i < pieces; i++)
+                {
+                    long start = i * sizeofpiece;
+                    long end = start + sizeofpiece;
+
+                    using (var file = File.OpenWrite(_filename + "_split" + i + ".bin")) 
+                    {
+                        var type = dflog.logformat["FMT"];
+
+                        var buffer = new byte[1024*256];
+
+                        // fmt from entire file
+                        messageindex[type.Id].ForEach(a => {
+                            basestream.Seek(a, SeekOrigin.Begin);
+                            int read = basestream.Read(buffer, 0, type.Length);
+                            file.Write(buffer, 0, read);
+                        });
+
+                        type = dflog.logformat["FMTU"];
+
+                        messageindex[type.Id].ForEach(a => {
+                            basestream.Seek(a, SeekOrigin.Begin);
+                            int read = basestream.Read(buffer, 0, type.Length);
+                            file.Write(buffer, 0, read);
+                        });
+
+                        type = dflog.logformat["UNIT"];
+
+                        messageindex[type.Id].ForEach(a => {
+                            basestream.Seek(a, SeekOrigin.Begin);
+                            int read = basestream.Read(buffer, 0, type.Length);
+                            file.Write(buffer, 0, read);
+                        });
+
+                        type = dflog.logformat["MULT"];
+
+                        messageindex[type.Id].ForEach(a => {
+                            basestream.Seek(a, SeekOrigin.Begin);
+                            int read = basestream.Read(buffer, 0, type.Length);
+                            file.Write(buffer, 0, read);
+                        });
+
+
+
+                        var min = long.MaxValue;
+                        var max = long.MinValue;
+
+                        // got min and max valid
+                        linestartoffset.ForEach(a => 
+                        {
+                            if (a >= start && a < end)
+                            {
+                                min = Math.Min(min, a);
+                                max = Math.Max(max, a);
+                            }
+                        });
+
+                        basestream.Seek(min, SeekOrigin.Begin);
+
+                        while (basestream.Position < max)
+                        {
+                            int readsize = (int)Math.Min((end - basestream.Position), buffer.Length);
+                            int read = basestream.Read(buffer, 0, readsize);
+                            file.Write(buffer, 0, read);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                throw new Exception("Invalid pieces parameters");
+            }
+        }
+
         private void BuildUnitMultiList()
         {
             foreach (var msgtype in FMT)
@@ -328,6 +435,7 @@ namespace MissionPlanner.Utilities
 
         public List<Tuple<string,string,string,double>> UnitMultiList = new List<Tuple<string, string, string, double>>();
         public Dictionary<int, (int index, List<string> value)> InstanceType = new Dictionary<int, (int index, List<string> value)>();
+        private string _filename;
 
         public Dictionary<int, (int length, string name, string format, string columns)> FMT { get; set; } =
             new Dictionary<int, (int, string, string, string)>();
@@ -340,6 +448,9 @@ namespace MissionPlanner.Utilities
         {
             get
             {
+                if (indexin > int.MaxValue)
+                    throw new Exception("index too large");
+
                 var index = (int)indexin;
 
                 long startoffset = linestartoffset[index];
@@ -445,7 +556,7 @@ namespace MissionPlanner.Utilities
 
         public int Count
         {
-            get { return _count; }
+            get { if (_count > int.MaxValue) Console.WriteLine("log line count is too large");  return (int)_count; }
         }
 
         public bool IsReadOnly
@@ -530,6 +641,8 @@ namespace MissionPlanner.Utilities
                     progress = DateTime.Now.Second;
                 }
                 var ans = this[(long) l];
+                if (!instances.ContainsKey(ans.msgtype))
+                    continue;
                 var inst = instances[ans.msgtype];
                 // instance was requested, and its not a match
                 //if (inst != "" && ans.instance != inst)
@@ -585,11 +698,6 @@ namespace MissionPlanner.Utilities
 
                 return messagetypes;
             }
-        }
-
-        public String ReadLine()
-        {
-            return this[indexcachelineno+1];
         }
 
         public Tuple<string,double> GetUnit(string type, string header)

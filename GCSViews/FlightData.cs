@@ -156,6 +156,11 @@ namespace MissionPlanner.GCSViews
                 
         public readonly List<TabPage> TabListOriginal = new List<TabPage>();
 
+        //List for setting colors of quick tab numbers
+        List<Color> listQuickView = new List<Color>();
+        //works well for dark background
+        Color[] colorsForDefaultQuickView = new Color[] { Color.Blue, Color.Yellow, Color.Pink, Color.LimeGreen, Color.Orange, Color.Aqua, Color.LightCoral, Color.LightSteelBlue, Color.DarkKhaki, Color.LightYellow, Color.Violet, Color.YellowGreen, Color.OrangeRed, Color.Tomato, Color.Teal, Color.CornflowerBlue };
+
         Thread thisthread;
 
         int tickStart;
@@ -182,7 +187,8 @@ namespace MissionPlanner.GCSViews
             Scripting_cmd_stop_and_restart,
             Scripting_cmd_stop,
             HighLatency_Enable,
-            HighLatency_Disable
+            HighLatency_Disable,
+            Toggle_Safety_Switch,
         }
 
         private Dictionary<int, string> NIC_table = new Dictionary<int, string>()
@@ -700,35 +706,6 @@ namespace MissionPlanner.GCSViews
             }
 
             ThemeManager.ApplyThemeTo(tabControlactions);
-        }
-
-        //Updates the visibility of the payload control tab based on whether the payload target is available or not
-        public void updatePayloadTabVisible()
-        {
-            bool gimbalPresent = false;
-
-            //if the currently connected target is a flight controller check if there is an associated mavlink gimbal
-            if (MainV2.comPort.compidcurrent == 1)
-            {
-                foreach (var mav in MainV2.comPort.MAVlist)
-                {
-                    if (mav.sysid == MainV2.comPort.sysidcurrent &&
-                        mav.compid == (int) MAVLink.MAV_COMPONENT.MAV_COMP_ID_GIMBAL)
-                    {
-                        gimbalPresent = true;
-                        break;
-                    }
-                }
-            }
-
-            if (tabControlactions.TabPages.Contains(tabPayload) == true && gimbalPresent == false)
-            {
-                tabControlactions.TabPages.Remove(tabPayload);
-            }
-            else if (tabControlactions.TabPages.Contains(tabPayload) == false && gimbalPresent == true)
-            {
-                tabControlactions.TabPages.Add(tabPayload);
-            }
         }
 
         internal void BUT_run_script_Click(object sender, EventArgs e)
@@ -1710,6 +1687,19 @@ namespace MissionPlanner.GCSViews
                     if (CMB_action.Text == actions.HighLatency_Disable.ToString())
                     {
                         MainV2.comPort.doHighLatency(false);
+                        ((Control)sender).Enabled = true;
+                        return;
+                    }
+                    if (CMB_action.Text == actions.Toggle_Safety_Switch.ToString())
+                    {
+                        var target_system = (byte)MainV2.comPort.sysidcurrent;
+                        if (target_system == 0) {
+                            log.Info("Not toggling safety on sysid 0");
+                            return;
+                        }
+                        var custom_mode = (MainV2.comPort.MAV.cs.sensors_enabled.motor_control && MainV2.comPort.MAV.cs.sensors_enabled.seen) ? 1u : 0u;
+                        var mode = new MAVLink.mavlink_set_mode_t() { custom_mode = custom_mode, target_system = target_system };
+                        MainV2.comPort.setMode(mode, MAVLink.MAV_MODE_FLAG.SAFETY_ARMED);
                         ((Control)sender).Enabled = true;
                         return;
                     }
@@ -3603,8 +3593,16 @@ namespace MissionPlanner.GCSViews
 
                         if (Settings.Instance.GetBoolean("CHK_maprotation"))
                         {
-                            // dont holdinvalidation here
+                            ////Check if we have more than one vehicle connected and disable CHK_maprotation if so
+                            if (MainV2.comPort.MAVlist.Count > 1)
+                            {
+                                Settings.Instance["CHK_maprotation"] = "false";
+                                //And set maprotation to zero
+                                BeginInvoke((Action)delegate { gMapControl1.Bearing = 0; });
+                            }
+                            //gMapControl1.HoldInvalidation = true;
                             setMapBearing();
+
                         }
 
                         if (route == null)
@@ -3785,13 +3783,13 @@ namespace MissionPlanner.GCSViews
                         //updateClearRoutesMarkers();
 
                         // add this after the mav icons are drawn
-                        if (MainV2.comPort.MAV.cs.MovingBase != null &&
-                            MainV2.comPort.MAV.cs.MovingBase != PointLatLngAlt.Zero)
+                        if (MainV2.comPort.MAV.cs.Base != null &&
+                            MainV2.comPort.MAV.cs.Base != PointLatLngAlt.Zero)
                         {
                             addMissionRouteMarker(new GMarkerGoogle(currentloc, GMarkerGoogleType.blue_dot)
                             {
-                                Position = MainV2.comPort.MAV.cs.MovingBase,
-                                ToolTipText = "Moving Base",
+                                Position = MainV2.comPort.MAV.cs.Base,
+                                ToolTipText = "Base",
                                 ToolTipMode = MarkerTooltipMode.OnMouseOver
                             });
                         }
@@ -4129,7 +4127,7 @@ namespace MissionPlanner.GCSViews
                 || GetTagMarker == null || create == null || update == null)
                 return;
 
-            var markers = gMapOverlay.Markers.ToArray();
+            var markers = gMapOverlay.Markers.Where(a => a is TMarker).ToArray();
 
             foreach (var item in list)
             {
@@ -4355,14 +4353,15 @@ namespace MissionPlanner.GCSViews
             Form selectform = new Form
             {
                 Name = "select",
-                Width = 50,
-                Height = 50,
+                Width = MainV2.instance.Width - 100,
+                Height = MainV2.instance.Height - 100,
                 Text = "Display This",
-                AutoSize = true,
+                AutoSize = false,
                 StartPosition = FormStartPosition.CenterParent,
                 MaximizeBox = false,
                 MinimizeBox = false,
-                AutoScroll = true
+                AutoScroll = true,
+                FormBorderStyle = FormBorderStyle.FixedDialog
 
             };
             ThemeManager.ApplyThemeTo(selectform);
@@ -4655,7 +4654,7 @@ namespace MissionPlanner.GCSViews
                 {
                     var alt = srtm.getAltitude(MouseDownStart.Lat, MouseDownStart.Lng);
 
-                    if (alt.currenttype != srtm.tiletype.valid)
+                    if (alt.currenttype != srtm.tiletype.valid && alt.currenttype != srtm.tiletype.ocean)
                     {
                         CustomMessageBox.Show("No SRTM data for this area", Strings.ERROR);
                         return;
@@ -4748,26 +4747,94 @@ namespace MissionPlanner.GCSViews
                     return default(TableLayoutPanelCellPosition);
                 }
             }).ToList();
-
+            //randomiser for colors
+            Random random = new Random();
+            var controlCount = tableLayoutPanelQuick.Controls;
+            ////if the amount on the quickView Tab decreases, clear the colors List
+            if ((controlCount.Count <= total || controlCount.Count >= total) && listQuickView.Count() % 16 == 0)
+            {
+                listQuickView.Clear();
+            }
             // add extra
             while (total > tableLayoutPanelQuick.Controls.Count)
             {
+                //Variable to Set the name of the quickView Control/s
+                var NameQuickView = "quickView" +  (controlCount.Count + 1);
+
+                //if the 9 colors are equal in each list, then reset the colors in listQV
+                if ((listQuickView.ToList().OrderBy(x => Name) == colorsForDefaultQuickView.ToList().OrderBy(x => Name)) || (listQuickView.Count == colorsForDefaultQuickView.Length))
+                {
+                    listQuickView.Clear();
+                }
+
+                //Generate a random color
+                var randomColorQuickView = colorsForDefaultQuickView[random.Next(colorsForDefaultQuickView.Length)];
+
+                //If the list contains the random color and the listQV list contains more than one item, exclude the color from the next color to be chosen
+                if (listQuickView.Contains(randomColorQuickView) && listQuickView.ToList().Count() > 1)
+                {
+                    //Change random color to be the next available color
+                    var differentColorQuickView = colorsForDefaultQuickView[random.Next(colorsForDefaultQuickView.Length)];
+                    //Variable to find the items that are in colorsForDefault array, but are not in ListQV list                    
+                    var colorsRemaining = colorsForDefaultQuickView.Except(listQuickView);
+
+                    //if differentColor is the same as randomColor, then select the next item in the list of colors which are still available to be chosen from.
+                    if (randomColorQuickView == differentColorQuickView)
+                    {
+                        //make differentColor the next availaible color in the list of colors which are not yet in the listQV list
+                        differentColorQuickView = colorsRemaining.FirstOrDefault();
+                    }
+                    //if randomColor is not equal to differentColor, and check if either color is contained in the list of colors(listQV)
+                    if (randomColorQuickView != differentColorQuickView && (listQuickView.Contains(differentColorQuickView) || listQuickView.Contains(randomColorQuickView)))
+                    {
+                        //if differentColor and randomColor are both in the listQV list, then get the next color of remaining colors which have not yet been used
+                        if ((listQuickView.Contains(differentColorQuickView) && listQuickView.Contains(randomColorQuickView)))
+                        {
+                            //assign the next color available to the differentColorVariable
+                            differentColorQuickView = colorsRemaining.FirstOrDefault();
+                        }
+                        else
+                        {
+                            differentColorQuickView = colorsRemaining.FirstOrDefault();
+                        }
+                    }
+                    //assign the differentColor to randomColor
+                    randomColorQuickView = differentColorQuickView;
+                    //add the new randomColor into the list of colors(listQV)
+                    listQuickView.Add(randomColorQuickView);
+                    //if the list does not yet contain the randomColor, then add the random color into the list(listQV)
+                    if (!listQuickView.Contains(randomColorQuickView))
+                    {
+                        listQuickView.Add(randomColorQuickView);
+                    }
+                }
+                //if the random color is not in the list of Colors, then add it to the list
+                else if (!listQuickView.Contains(randomColorQuickView))
+                {
+                    //add the color to a list
+                    listQuickView.Add(randomColorQuickView);
+                }
+                //assigning the Name and NumberColor accordingly.
                 var QV = new QuickView()
                 {
-                    Name = "quickView" + (tableLayoutPanelQuick.Controls.Count + 1)
+                    Name = NameQuickView,
+                    numberColor = randomColorQuickView,
                 };
                 if (!MainV2.DisplayConfiguration.lockQuickView)
                     QV.DoubleClick += quickView_DoubleClick;
                 QV.ContextMenuStrip = contextMenuStripQuickView;
                 QV.Dock = DockStyle.Fill;
-                QV.numberColor = ThemeManager.getQvNumberColor();
                 QV.numberColorBackup = QV.numberColor;
                 QV.number = 0;
 
                 tableLayoutPanelQuick.Controls.Add(QV);
                 QV.Invalidate();
             }
-
+            //clear the listQV when the count of the list is divisible by 16
+            if (listQuickView.ToList().Count % 16 == 0)
+            {
+                listQuickView.Clear();
+            }
             for (int i = 0; i < tableLayoutPanelQuick.ColumnCount; i++)
             {
                 if (tableLayoutPanelQuick.ColumnStyles.Count <= i)
@@ -5187,7 +5254,7 @@ namespace MissionPlanner.GCSViews
         {
             try
             {
-                if (this.Visible)
+                if (this.Visible && !this.IsDisposed)
                 {
                     //Console.Write("bindingSource1 ");
                     MainV2.comPort.MAV.cs.UpdateCurrentSettings(bindingSource1.UpdateDataSource(MainV2.comPort.MAV.cs));
@@ -6127,7 +6194,14 @@ namespace MissionPlanner.GCSViews
                 if (!Squawk_nud.Focused)
                 {
                     Squawk_nud.ValueChanged -= new EventHandler(Squawk_nud_ValueChanged);
-                    Squawk_nud.Value = (decimal)MainV2.comPort.MAV.cs.xpdr_mode_A_squawk_code;
+                    try
+                    {
+                        Squawk_nud.Value = (decimal)MainV2.comPort.MAV.cs.xpdr_mode_A_squawk_code;
+                        // if the value is bad, we need to be able to reset it, so silent fail
+                    }
+                    catch
+                    {
+                    }
                     Squawk_nud.ValueChanged += new EventHandler(Squawk_nud_ValueChanged);
                 }
 

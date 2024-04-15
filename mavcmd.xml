@@ -111,6 +111,15 @@
       <Y>arg4</Y>
       <Z></Z>
     </SCRIPT_TIME>
+    <DO_SEND_SCRIPT_MESSAGE>
+      <P1>ID</P1>
+      <P2>P1</P2>
+      <P3>P2</P3>
+      <P4>P3</P4>
+      <X></X>
+      <Y></Y>
+      <Z></Z>
+    </DO_SEND_SCRIPT_MESSAGE>
     <SPLINE_WAYPOINT>
       <P1>Delay</P1>
       <P2></P2>
@@ -121,14 +130,23 @@
       <Z>Alt</Z>
     </SPLINE_WAYPOINT>
     <IMAGE_START_CAPTURE>
-      <P1></P1>
+      <P1>Id</P1>
+      <P2>Interval</P2>
+      <P3>Total Images</P3>
+      <P4></P4>
+      <X></X>
+      <Y></Y>
+      <Z></Z>
+    </IMAGE_START_CAPTURE>
+    <IMAGE_STOP_CAPTURE>
+      <P1>Id</P1>
       <P2></P2>
       <P3></P3>
       <P4></P4>
       <X></X>
       <Y></Y>
       <Z></Z>
-    </IMAGE_START_CAPTURE>
+    </IMAGE_STOP_CAPTURE>
     <SET_CAMERA_ZOOM>
       <P1>Type</P1>
       <P2>Value</P2>
@@ -147,6 +165,15 @@
       <Y></Y>
       <Z></Z>
     </SET_CAMERA_FOCUS>
+    <SET_CAMERA_SOURCE>
+      <P1>Id</P1>
+      <P2>Primary(1:RGB,2:IR,3:NDVI,4:Wide)</P2>
+      <P3>Secondary(1:RGB,2:IR,3:NDVI,4:Wide)</P3>
+      <P4></P4>
+      <X></X>
+      <Y></Y>
+      <Z></Z>
+    </SET_CAMERA_SOURCE>
     <VIDEO_START_CAPTURE>
       <P1>StreamId</P1>
       <P2></P2>
@@ -175,7 +202,7 @@
       <Z></Z>
     </DO_AUX_FUNCTION>
     <DO_CHANGE_SPEED>
-      <P1>Type</P1>
+      <P1>Type (0:horiz,2:up,3:down)</P1>
       <P2>Speed m/s</P2>
       <P3></P3>
       <P4></P4>
@@ -193,7 +220,7 @@
       <Z></Z>
     </DO_DIGICAM_CONFIGURE>
     <DO_DIGICAM_CONTROL>
-      <P1>On/Off</P1>
+      <P1>Session Control</P1>
       <P2>Zoom Position</P2>
       <P3>Zoom Step</P3>
       <P4>Focus Lock</P4>
@@ -474,6 +501,15 @@
       <Y></Y>
       <Z>Alt</Z>
     </TAKEOFF>
+    <DELAY>
+      <P1>Seconds (or -1)</P1>
+      <P2>Hour UTC (or -1)</P2>
+      <P3>Minute UTC (or -1)</P3>
+      <P4>Second UTC</P4>
+      <X></X>
+      <Y></Y>
+      <Z></Z>
+    </DELAY>
     <VTOL_TAKEOFF>
       <P1></P1>
       <P2></P2>
@@ -510,6 +546,15 @@
       <Y>arg4</Y>
       <Z></Z>
     </SCRIPT_TIME>
+    <DO_SEND_SCRIPT_MESSAGE>
+      <P1>ID</P1>
+      <P2>P1</P2>
+      <P3>P2</P3>
+      <P4>P3</P4>
+      <X></X>
+      <Y></Y>
+      <Z></Z>
+    </DO_SEND_SCRIPT_MESSAGE>
     <DO_VTOL_TRANSITION>
       <P1>mode (3=mc/4=plane)</P1>
       <P2></P2>
@@ -520,14 +565,23 @@
       <Z></Z>
     </DO_VTOL_TRANSITION>
     <IMAGE_START_CAPTURE>
-      <P1></P1>
+      <P1>Id</P1>
+      <P2>Interval</P2>
+      <P3>Total Images</P3>
+      <P4></P4>
+      <X></X>
+      <Y></Y>
+      <Z></Z>
+    </IMAGE_START_CAPTURE>
+    <IMAGE_STOP_CAPTURE>
+      <P1>Id</P1>
       <P2></P2>
       <P3></P3>
       <P4></P4>
       <X></X>
       <Y></Y>
       <Z></Z>
-    </IMAGE_START_CAPTURE>
+    </IMAGE_STOP_CAPTURE>
     <SET_CAMERA_ZOOM>
       <P1>Type</P1>
       <P2>Value</P2>
@@ -546,6 +600,15 @@
       <Y></Y>
       <Z></Z>
     </SET_CAMERA_FOCUS>
+    <SET_CAMERA_SOURCE>
+      <P1>Id</P1>
+      <P2>Primary(1:RGB,2:IR,3:NDVI,4:Wide)</P2>
+      <P3>Secondary(1:RGB,2:IR,3:NDVI,4:Wide)</P3>
+      <P4></P4>
+      <X></X>
+      <Y></Y>
+      <Z></Z>
+    </SET_CAMERA_SOURCE>
     <VIDEO_START_CAPTURE>
       <P1>StreamId</P1>
       <P2></P2>
@@ -754,7 +817,7 @@
       <Z></Z>
     </DO_DIGICAM_CONFIGURE>
     <DO_DIGICAM_CONTROL>
-      <P1>On/Off</P1>
+      <P1>Session Control</P1>
       <P2>Zoom Position</P2>
       <P3>Zoom Step</P3>
       <P4>Focus Lock</P4>
@@ -909,6 +972,15 @@
       <Y>arg4</Y>
       <Z></Z>
     </SCRIPT_TIME>
+    <DO_SEND_SCRIPT_MESSAGE>
+      <P1>ID</P1>
+      <P2>P1</P2>
+      <P3>P2</P3>
+      <P4>P3</P4>
+      <X></X>
+      <Y></Y>
+      <Z></Z>
+    </DO_SEND_SCRIPT_MESSAGE>
     <SET_YAW_SPEED>
       <P1>angle(CD)</P1>
       <P2>Speed(0..1)</P2>
@@ -919,14 +991,23 @@
       <Z></Z>
     </SET_YAW_SPEED>
     <IMAGE_START_CAPTURE>
-      <P1></P1>
+      <P1>Id</P1>
+      <P2>Interval</P2>
+      <P3>Total Images</P3>
+      <P4></P4>
+      <X></X>
+      <Y></Y>
+      <Z></Z>
+    </IMAGE_START_CAPTURE>
+    <IMAGE_STOP_CAPTURE>
+      <P1>Id</P1>
       <P2></P2>
       <P3></P3>
       <P4></P4>
       <X></X>
       <Y></Y>
       <Z></Z>
-    </IMAGE_START_CAPTURE>
+    </IMAGE_STOP_CAPTURE>
     <SET_CAMERA_ZOOM>
       <P1>Type</P1>
       <P2>Value</P2>
@@ -945,6 +1026,15 @@
       <Y></Y>
       <Z></Z>
     </SET_CAMERA_FOCUS>
+    <SET_CAMERA_SOURCE>
+      <P1>Id</P1>
+      <P2>Primary(1:RGB,2:IR,3:NDVI,4:Wide)</P2>
+      <P3>Secondary(1:RGB,2:IR,3:NDVI,4:Wide)</P3>
+      <P4></P4>
+      <X></X>
+      <Y></Y>
+      <Z></Z>
+    </SET_CAMERA_SOURCE>
     <VIDEO_START_CAPTURE>
       <P1>StreamId</P1>
       <P2></P2>
@@ -991,7 +1081,7 @@
       <Z></Z>
     </DO_DIGICAM_CONFIGURE>
     <DO_DIGICAM_CONTROL>
-      <P1>On/Off</P1>
+      <P1>Session Control</P1>
       <P2>Zoom Position</P2>
       <P3>Zoom Step</P3>
       <P4>Focus Lock</P4>

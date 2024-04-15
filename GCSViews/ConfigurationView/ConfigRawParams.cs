@@ -1,4 +1,4 @@
-﻿using log4net;
+using log4net;
 using MissionPlanner.Controls;
 using MissionPlanner.Utilities;
 using System;
@@ -66,9 +66,15 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
             foreach (DataGridViewColumn col in Params.Columns)
             {
-                if (!String.IsNullOrEmpty(Settings.Instance["rawparam_" + col.Name + "_widthpercent"]))
+                // Don't need to size a fill column
+                if (col.AutoSizeMode == DataGridViewAutoSizeColumnMode.Fill) continue;
+
+                // Don't need to size a column that can't be resized
+                if (col.Resizable == DataGridViewTriState.False) continue;
+
+                if (!String.IsNullOrEmpty(Settings.Instance["rawparam_" + col.Name + "_width"]))
                 {
-                    col.Width = (int)((Math.Max(5, Settings.Instance.GetInt32("rawparam_" + col.Name + "_widthpercent")) / 100.0) * Params.Width);
+                    col.Width = (int)Math.Max(5, Settings.Instance.GetInt32("rawparam_" + col.Name + "_width"));
                     log.InfoFormat("{0} to {1}", col.Name, col.Width);
                 }
             }
@@ -91,7 +97,13 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         {
             foreach (DataGridViewColumn col in Params.Columns)
             {
-                Settings.Instance["rawparam_" + col.Name + "_widthpercent"] = ((col.Width / (double)Params.Width) * 100.0).ToString("0", CultureInfo.InvariantCulture);
+                // Don't need to save the width of a fill column
+                if (col.AutoSizeMode == DataGridViewAutoSizeColumnMode.Fill) continue;
+
+                // Don't need to save the width of a column that can't be resized
+                if (col.Resizable == DataGridViewTriState.False) continue;
+
+                Settings.Instance["rawparam_" + col.Name + "_width"] = col.Width.ToString("0", CultureInfo.InvariantCulture);
             }
 
             Settings.Instance["rawparam_splitterdistance"] = splitContainer1.SplitterDistance.ToString();
@@ -251,14 +263,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
             bool enable = temp.Any(a => a.EndsWith("_ENABLE"));
 
-            if (enable)
-            {
-                CustomMessageBox.Show(
-                    "You have changed an Enable parameter. You may need to do a full param refresh to show all params",
-                    "Params");
-            }
-
             int error = 0;
+            bool reboot = false;
 
             foreach (string value in temp)
             {
@@ -271,7 +277,11 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                     }
 
                     MainV2.comPort.setParam(value, (double)_changes[value]);
-
+                    //check if reboot required
+                    if (ParameterMetaDataRepository.GetParameterRebootRequired(value, MainV2.comPort.MAV.cs.firmware.ToString()))
+                    {
+                        reboot = true;
+                    }
                     try
                     {
                         // set control as well
@@ -314,6 +324,27 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             else
                 CustomMessageBox.Show("Parameters successfully saved.", "Saved");
 
+            //Check if reboot is required
+            if (reboot)
+            {
+               CustomMessageBox.Show("Reboot is required for some parameters to take effect.", "Reboot Required");
+            }
+
+            if (MainV2.comPort.MAV.param.TotalReceived != MainV2.comPort.MAV.param.TotalReported )
+            {
+                if (MainV2.comPort.MAV.cs.armed)
+                {
+                    CustomMessageBox.Show("The number of available parameters changed, until full param refresh is done, some parameters will not be available.", "Params");
+                    //Hack the number of reported params to keep params list available
+                    MainV2.comPort.MAV.param.TotalReported = MainV2.comPort.MAV.param.TotalReceived;
+                }
+                else
+                {
+                    CustomMessageBox.Show("The number of available parameters changed. A full param refresh will be done to show all params.", "Params");
+                    //Click on refresh button
+                    BUT_rerequestparams_Click(BUT_rerequestparams, null);
+                }
+            }
         }
 
         private void BUT_compare_Click(object sender, EventArgs e)
@@ -588,9 +619,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
             log.Info("about to add all");
 
-            Params.SuspendLayout();
             Params.Visible = false;
-            Params.Enabled = false;
 
             Params.Rows.AddRange(rowlist.ToArray());
 
@@ -600,9 +629,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
             Params.Sort(Params.Columns[Command.Index], ListSortDirection.Ascending);
 
-            Params.Enabled = true;
             Params.Visible = true;
-            Params.ResumeLayout();
 
             if (splitContainer1.Panel1Collapsed == false)
             {
@@ -712,8 +739,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         void filterList(string searchfor)
         {
             DateTime start = DateTime.Now;
-            Params.SuspendLayout();
-            Params.Enabled = false;
+            Params.Visible = false;
             if (searchfor.Length >= 2 || searchfor.Length == 0)
             {
                 Regex filter = new Regex(searchfor.Replace("*", ".*").Replace("..*", ".*"), RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.Singleline);
@@ -762,8 +788,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                 }
             }
 
-            Params.Enabled = true;
-            Params.ResumeLayout();
+            Params.Visible = true;
 
             log.InfoFormat("Filter: {0}ms", (DateTime.Now - start).TotalMilliseconds);
         }
@@ -991,8 +1016,42 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             string vehicle = MainV2.comPort.MAV.cs.firmware.ToString();
             var options = ParameterMetaDataRepository.GetParameterOptionsInt(param_name, vehicle);
             var bitmask = ParameterMetaDataRepository.GetParameterBitMaskInt(param_name, vehicle);
+            // If this is a bitmask, create a button to open the bitmask editor
+            // (this is better than trying to cram the bitmask checkboxes into the small cell)
+            if (bitmask.Count > 0)
+            {
+                optionsControl = new MyButton() { Text = "Set Bitmask" };
+                optionsControl.Click += (s, a) =>
+                {
+                    var mcb = new MavlinkCheckBoxBitMask();
+                    var list = new MAVLink.MAVLinkParamList();
+
+                    // Try and get type so the correct bitmask to value convertion is done
+                    var type = MAVLink.MAV_PARAM_TYPE.INT32;
+                    if (MainV2.comPort.MAV.param.ContainsKey(param_name))
+                    {
+                        type = MainV2.comPort.MAV.param[param_name].TypeAP;
+                    }
+
+                    list.Add(new MAVLink.MAVLinkParam(param_name, double.Parse(Params[Value.Index, e.RowIndex].Value.ToString(), CultureInfo.InvariantCulture),
+                        type));
+                    mcb.setup(param_name, list);
+                    mcb.ValueChanged += (o, x, value) =>
+                    {
+                        Params.CurrentRow.Cells[Value.Index].Value = value;
+                        Params.Invalidate();
+                        mcb.Focus();
+                    };
+                    var frm = mcb.ShowUserControl();
+                    frm.TopMost = true;
+                };
+
+                ThemeManager.ApplyThemeTo(optionsControl);
+                optionsControl.Bounds = Params.GetCellDisplayRectangle(Options.Index, e.RowIndex, false);
+                Params.Controls.Add(optionsControl);
+            }
             // If there are options, create a combo box and populate it with the options
-            if (options.Count > 0)
+            else if (options.Count > 0)
             {
                 ComboBox cmb = new ComboBox() { Dock = DockStyle.Fill };
                 cmb.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -1053,32 +1112,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
                     Params.Invalidate();
                 };
             }
-            // If this is a bitmask, create a button to open the bitmask editor
-            // (this is better than trying to cram the bitmask checkboxes into the small cell)
-            else if (bitmask.Count > 0)
-            {
-                optionsControl = new MyButton() { Text = "Set Bitmask" };
-                optionsControl.Click += (s, a) =>
-                {
-                    var mcb = new MavlinkCheckBoxBitMask();
-                    var list = new MAVLink.MAVLinkParamList();
-                    list.Add(new MAVLink.MAVLinkParam(param_name, double.Parse(Params[Value.Index, e.RowIndex].Value.ToString(), CultureInfo.InvariantCulture),
-                        MAVLink.MAV_PARAM_TYPE.INT32));
-                    mcb.setup(param_name, list);
-                    mcb.ValueChanged += (o, x, value) =>
-                    {
-                        Params.CurrentRow.Cells[Value.Index].Value = value;
-                        Params.Invalidate();
-                        mcb.Focus();
-                    };
-                    var frm = mcb.ShowUserControl();
-                    frm.TopMost = true;
-                };
 
-                ThemeManager.ApplyThemeTo(optionsControl);
-                optionsControl.Bounds = Params.GetCellDisplayRectangle(Options.Index, e.RowIndex, false);
-                Params.Controls.Add(optionsControl);
-            }
             // Otherwise, this is a simple numeric parameter
             else
             {

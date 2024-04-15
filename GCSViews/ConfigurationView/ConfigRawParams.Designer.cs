@@ -1,4 +1,4 @@
-﻿using MissionPlanner.Controls;
+using MissionPlanner.Controls;
 
 namespace MissionPlanner.GCSViews.ConfigurationView
 {
@@ -303,9 +303,11 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             // 
             // Fav
             // 
+            this.Fav.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.Fav.FillWeight = 4F;
             resources.ApplyResources(this.Fav, "Fav");
             this.Fav.Name = "Fav";
+            this.Fav.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // but_collapse
             // 
@@ -370,6 +372,11 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         private MyButton BUT_commitToFlash;
         private System.Windows.Forms.CheckBox chk_modified;
         private MyButton BUT_refreshTable;
+        private System.Windows.Forms.CheckBox chk_none_default;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TreeView treeView1;
+        private MyButton but_collapse;
         private System.Windows.Forms.DataGridViewTextBoxColumn Command;
         private System.Windows.Forms.DataGridViewTextBoxColumn Value;
         private System.Windows.Forms.DataGridViewTextBoxColumn Default_value;
@@ -377,10 +384,5 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         private System.Windows.Forms.DataGridViewTextBoxColumn Options;
         private System.Windows.Forms.DataGridViewTextBoxColumn Desc;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Fav;
-        private System.Windows.Forms.CheckBox chk_none_default;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TreeView treeView1;
-        private MyButton but_collapse;
     }
 }

@@ -4469,18 +4469,15 @@ Mission Planner waits for 2 valid heartbeat packets before connecting");
         [Obsolete]
         public void setMountConfigure(MAV_MOUNT_MODE mountmode, bool stabroll, bool stabpitch, bool stabyaw)
         {
-            mavlink_mount_configure_t req = new mavlink_mount_configure_t();
+            byte stab_roll = (stabroll == true) ? (byte) 1 : (byte) 0;
+            byte stab_pitch = (stabpitch == true) ? (byte) 1 : (byte) 0;
+            byte stab_yaw = (stabyaw == true) ? (byte) 1 : (byte) 0;
 
-            req.target_system = MAV.sysid;
-            req.target_component = MAV.compid;
-            req.mount_mode = (byte) mountmode;
-            req.stab_pitch = (stabpitch == true) ? (byte) 1 : (byte) 0;
-            req.stab_roll = (stabroll == true) ? (byte) 1 : (byte) 0;
-            req.stab_yaw = (stabyaw == true) ? (byte) 1 : (byte) 0;
-
-            generatePacket((byte) MAVLINK_MSG_ID.MOUNT_CONFIGURE, req);
-            Thread.Sleep(20);
-            generatePacket((byte) MAVLINK_MSG_ID.MOUNT_CONFIGURE, req);
+            // p1 : mount mode
+            // p2, p3, p4 : stabilize roll, pitch, yaw
+            // p5, p6, p7 : empty
+            // no ack required
+            doCommand(MAV.sysid, MAV.compid, MAV_CMD.DO_MOUNT_CONFIGURE, (byte)mountmode, stab_roll, stab_pitch, stab_yaw, 0, 0, 0, false);
         }
 
         [Obsolete]
@@ -4491,28 +4488,18 @@ Mission Planner waits for 2 valid heartbeat packets before connecting");
 
         public void setMountControl(byte sysid, byte compid, double pa, double pb, double pc, bool islatlng)
         {
-            mavlink_mount_control_t req = new mavlink_mount_control_t
-            {
-                target_system = sysid,
-                target_component = compid
-            };
-
             if (!islatlng)
             {
-                req.input_a = (int) pa;
-                req.input_b = (int) pb;
-                req.input_c = (int) pc;
+                // pa is pitch, pb is roll, pc is yaw in centi-degrees.  convert to degrees
+                doCommand(sysid, compid, MAV_CMD.DO_MOUNT_CONTROL, (float)(pa * 0.01), (float)(pb * 0.01), (float)(pc * 0.01), 0, 0, 0, (float)MAV_MOUNT_MODE.MAVLINK_TARGETING, false);
             }
             else
             {
-                req.input_a = (int) (pa * 10000000.0);
-                req.input_b = (int) (pb * 10000000.0);
-                req.input_c = (int) (pc * 100.0);
+                // pa is lat in degrees, placed in param5 in deg * 10e7
+                // pb is lon in degrees, placed in param6 in deg * 10e7
+                // pc is alt in meters, placed in param5 in meters
+                doCommand(sysid, compid, MAV_CMD.DO_MOUNT_CONTROL, 0, 0, 0, (float)pc, (float)(pa * 10000000.0f), (float)(pb * 10000000.0f), (float)MAV_MOUNT_MODE.MAVLINK_TARGETING, false);
             }
-
-            generatePacket((byte) MAVLINK_MSG_ID.MOUNT_CONTROL, req);
-            Thread.Sleep(20);
-            generatePacket((byte) MAVLINK_MSG_ID.MOUNT_CONTROL, req);
         }
 
         [Obsolete]
@@ -5289,25 +5276,11 @@ Mission Planner waits for 2 valid heartbeat packets before connecting");
 
                         bool printit = false;
 
-                        // the change of severity and the autopilot version where introduced at the same time, so any version non 0 can be used
-                        // copter 3.4+
-                        // plane 3.4+
                         MAV_SEVERITY mavsev = MAV_SEVERITY.EMERGENCY;
-                        if (MAVlist[sysid, compidcurrent].cs.version.Major > 0 ||
-                            MAVlist[sysid, compidcurrent].cs.version.Minor >= 4)
+                        if (sev <= (byte)Settings.Instance.GetInt32("severity", 4))
                         {
-                            if (sev <= (byte)Settings.Instance.GetInt32("severity", 4))
-                            {
-                                printit = true;
-                                mavsev = (MAV_SEVERITY)sev;
-                            }
-                        }
-                        else
-                        {
-                            if (sev >= 3)
-                            {
-                                printit = true;
-                            }
+                            printit = true;
+                            mavsev = (MAV_SEVERITY)sev;
                         }
 
                         if (logdata.StartsWith("Tuning:") || logdata.StartsWith("PreArm:") ||

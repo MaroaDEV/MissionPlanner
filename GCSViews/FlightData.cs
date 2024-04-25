@@ -5376,11 +5376,12 @@ namespace MissionPlanner.GCSViews
                 if (quickView != null)
                 {
 
-                    quickView.BackColor = Color.Green;
+                    
 
                     if (quickView.Tag.ToString() == "airspeed")
                     {
                         float value;
+                        quickView.BackColor = Color.Green;
                         value = MainV2.comPort.MAV.cs.airspeed;
                         //if (value > MainV2.comPort.MAV.cs.targetairspeed + 3 || value < MainV2.comPort.MAV.cs.targetairspeed - 3)
                         //{
@@ -5404,6 +5405,7 @@ namespace MissionPlanner.GCSViews
                     if (quickView.Tag.ToString() == "vibez")
                     {
                         quickView.desc = "VibeSum";
+                        quickView.BackColor = Color.Green;
                         float value;
                         value = MainV2.comPort.MAV.cs.vibez + 3*MainV2.comPort.MAV.cs.vibex + 3*MainV2.comPort.MAV.cs.vibex;
                         if (value > 5)

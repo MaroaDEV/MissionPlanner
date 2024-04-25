@@ -72,7 +72,7 @@ namespace MissionPlanner
             this.MenuInitConfig,
             this.MenuConfigTune,
             this.MenuSimulation,
-            this.MenuHelp,
+            // this.MenuHelp,    Hide help for AM, simu will be remooved later
             this.MenuConnect,
             this.toolStripConnectionControl,
             this.MenuArduPilot});

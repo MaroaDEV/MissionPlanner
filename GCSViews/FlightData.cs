@@ -5108,6 +5108,12 @@ namespace MissionPlanner.GCSViews
             tableLayoutPanelQuick.AutoScroll = false;
         }
 
+        private void tableLayoutPanel1_Resize(object sender, EventArgs e)
+        {
+            tableLayoutPanel1.Width = tabQuick.Width;
+            tableLayoutPanel1.AutoScroll = false;
+        }
+
         void tabStatus_Resize(object sender, EventArgs e)
         {
         }

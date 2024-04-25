@@ -766,6 +766,7 @@ namespace MissionPlanner.GCSViews
             this.tableLayoutPanel1.SetColumnSpan(this.BUTrestartmission, 2);
             this.tableLayoutPanel1.SetRowSpan(this.modifyandSetSpeed, 3);
             this.tableLayoutPanel1.SetColumnSpan(this.modifyandSetSpeed, 3);
+            this.tableLayoutPanel1.Resize += new System.EventHandler(this.tableLayoutPanel1_Resize);
             // 
             // BUT_SendMSG
             // 

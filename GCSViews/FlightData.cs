@@ -6206,6 +6206,50 @@ namespace MissionPlanner.GCSViews
             ALT_btn.Font = new Font(ALT_btn.Font, FontStyle.Bold);
         }
 
+        private void tabControlactions_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            for (int i = 0; i < tabControlactions.TabPages.Count; i++)
+            {
+                if (tabControlactions.GetTabRect(i).Contains(e.Location))
+                {
+                    TabPage clickedTab = tabControlactions.TabPages[i];
+                    int originalIndex = tabControlactions.TabPages.IndexOf(clickedTab); // Store the original index
+                    tabControlactions.TabPages.Remove(clickedTab);
+
+                    TabControl detachedTabControl = new TabControl();
+                    TabPage detachedTabPage = new TabPage(clickedTab.Text);
+
+                    // Copy the controls from the original tab to the new tab
+                    foreach (Control control in clickedTab.Controls)
+                    {
+                        detachedTabPage.Controls.Add(control);
+                    }
+
+                    detachedTabControl.TabPages.Add(detachedTabPage);
+
+                    Form detachedTabForm = new Form();
+                    detachedTabForm.Text = clickedTab.Text;
+                    detachedTabForm.FormClosed += (formSender, formClosedEventArgs) =>
+                    {
+                        // Move the controls from detachedTabPage back to clickedTab
+                        clickedTab.Controls.Clear();
+                        foreach (Control control in detachedTabPage.Controls)
+                        {
+                            clickedTab.Controls.Add(control);
+                        }
+                        // Add clickedTab back at its original index
+                        tabControlactions.TabPages.Insert(originalIndex, clickedTab);
+                    };
+                    detachedTabPage.Dock = DockStyle.Fill;
+                    detachedTabControl.Dock = DockStyle.Fill;
+                    detachedTabForm.Controls.Add(detachedTabControl);
+
+                    detachedTabForm.Show();
+                    break;
+                }
+            }
+        }
+
 
         private void Squawk_nud_MouseWheel(object sender, MouseEventArgs e)
         {

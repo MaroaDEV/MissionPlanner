@@ -1742,21 +1742,34 @@ namespace MissionPlanner.GCSViews
 
         private void BUTrestartmission_Click(object sender, EventArgs e)
         {
-            try
-            {
-                ((Control) sender).Enabled = false;
 
-                MainV2.comPort.setWPCurrent(MainV2.comPort.MAV.sysid, MainV2.comPort.MAV.compid, 0); // set nav to
-            }
-            catch
-            {
-                CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
-            }
+            DialogResult result = MessageBox.Show("Voulez-vous vraiment déclencher le parachute ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            ((Control) sender).Enabled = true;
+
+            // Vérifier la réponse de l'utilisateur
+            if (result == DialogResult.Yes)
+            {
+                // ID du canal de servo pour le déclenchement du parachute (à remplacer par votre valeur)
+                int parachuteServoChannel = 13;
+
+                ((Control)sender).Enabled = true;
+                // Angle de déclenchement du servo (à remplacer par votre valeur)
+                int parachuteTriggerAngle = 180;
+
+                // Envoyer une commande MAVLink pour définir la position du servo
+                MainV2.comPort.doCommand(
+                    MAVLink.MAV_CMD.DO_SET_SERVO,
+                    parachuteServoChannel,   // Numéro de canal de servo
+                    parachuteTriggerAngle,   // Angle de déclenchement du servo
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0);                      // Non utilisé
+            }
         }
 
-        void cam_camimage(Image camimage)
+    void cam_camimage(Image camimage)
         {
             hud1.bgimage = camimage;
         }

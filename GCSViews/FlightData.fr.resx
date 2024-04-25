@@ -235,7 +235,7 @@
     <value>Effectuer</value>
   </data>
   <data name="BUTrestartmission.Text" xml:space="preserve">
-    <value>Repartir Plan</value>
+    <value>Parachute</value>
   </data>
   <data name="BUT_quickmanual.ToolTip" xml:space="preserve">
     <value>Changement du Mode à Manuel/Stabilisé</value>

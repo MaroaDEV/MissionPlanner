@@ -1108,7 +1108,7 @@
     <value>63</value>
   </data>
   <data name="BUTrestartmission.Text" xml:space="preserve">
-    <value>Restart Mission</value>
+    <value>Parachute</value>
   </data>
   <data name="BUTrestartmission.ToolTip" xml:space="preserve">
     <value>Restarts the mission from the beginning</value>
@@ -1348,10 +1348,10 @@
     <value>0, 0</value>
   </data>
   <data name="tableLayoutPanel1.RowCount" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>12</value>
   </data>
   <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>287, 181</value>
+    <value>287, 230</value>
   </data>
   <data name="tableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
     <value>78</value>

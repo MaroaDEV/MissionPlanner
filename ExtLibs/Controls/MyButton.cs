@@ -196,4 +196,18 @@ namespace MissionPlanner.Controls
             base.WndProc(ref m);
         }
     }
+    public class CustomButton : MissionPlanner.Controls.MyButton
+    {
+        public CustomButton()
+        {
+            // Modifiez les propriétés de style ici
+            this.BackColor = System.Drawing.Color.Red;
+            this.ColorMouseDown = System.Drawing.Color.Red;
+            this.ColorMouseOver = System.Drawing.Color.DarkRed;
+            this.ForeColor = System.Drawing.Color.Red;
+            this.BGGradTop = System.Drawing.Color.DarkRed;
+            this.BGGradBot = System.Drawing.Color.Red;
+            this.TextColor = System.Drawing.Color.White;
+        }
+    }
 }

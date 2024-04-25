@@ -32,6 +32,7 @@ using ZedGraph;
 using LogAnalyzer = MissionPlanner.Utilities.LogAnalyzer;
 using TableLayoutPanelCellPosition = System.Windows.Forms.TableLayoutPanelCellPosition;
 using UnauthorizedAccessException = System.UnauthorizedAccessException;
+using GMap.NET.MapProviders;
 
 // written by michael oborne
 
@@ -229,6 +230,27 @@ namespace MissionPlanner.GCSViews
             InitializeComponent();
 
             log.Info("Components Done");
+
+            var mapProviders = new List<GMapProvider>
+            {
+                GMapProviders.GoogleMap,
+                GMapProviders.GoogleTerrainMap,
+                GMapProviders.GoogleSatelliteMap,
+                GMapProviders.GoogleHybridMap
+            };
+
+            // Définissez la DataSource du comboBoxMapType en utilisant la liste spécifique de fournisseurs de carte
+            comboBoxMapType.ValueMember = "Name";
+            comboBoxMapType.DataSource = mapProviders;
+
+            // Sélectionnez le fournisseur de carte actuel
+            comboBoxMapType.SelectedItem = gMapControl1.MapProvider;
+
+            // Écoutez les changements de sélection dans le comboBoxMapType
+            comboBoxMapType.SelectedValueChanged += comboBoxMapType_SelectedValueChanged;
+
+            // Activez les itinéraires sur la carte
+            gMapControl1.RoutesEnabled = true;
 
             instance = this;
 
@@ -6361,6 +6383,42 @@ namespace MissionPlanner.GCSViews
                 Squawk_nud.Enabled = false;
 
                 XPDRConnect_btn.Text = "Connect to Transponder";
+            }
+        }
+        private void comboBoxMapType_SelectedValueChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                // check if we are setting the initial state
+                if (gMapControl1.MapProvider != GMapProviders.EmptyProvider &&
+                    (GMapProvider)comboBoxMapType.SelectedItem == MapboxUser.Instance)
+                {
+                    var url = Settings.Instance["MapBoxURL", ""];
+                    InputBox.Show("Enter MapBox Share URL", "Enter MapBox Share URL", ref url);
+                    var match = System.Text.RegularExpressions.Regex.Matches(url, @"\/styles\/[^\/]+\/([^\/]+)\/([^\/\.]+).*access_token=([^#&=]+)");
+                    if (match != null)
+                    {
+                        MapboxUser.Instance.UserName = match[0].Groups[1].Value;
+                        MapboxUser.Instance.StyleId = match[0].Groups[2].Value;
+                        MapboxUser.Instance.MapKey = match[0].Groups[3].Value;
+                        Settings.Instance["MapBoxURL"] = url;
+                    }
+                    else
+                    {
+                        CustomMessageBox.Show(Strings.InvalidField, Strings.ERROR);
+                        return;
+                    }
+                }
+
+                gMapControl1.MapProvider = (GMapProvider)comboBoxMapType.SelectedItem;
+                if (FlightData.mymap != null)
+                    FlightData.mymap.MapProvider = (GMapProvider)comboBoxMapType.SelectedItem;
+                Settings.Instance["MapType"] = comboBoxMapType.Text;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                CustomMessageBox.Show("Map change failed. try zooming out first.");
             }
         }
 

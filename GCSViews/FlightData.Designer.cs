@@ -228,6 +228,7 @@ namespace MissionPlanner.GCSViews
             this.jumpToTagToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.MainH)).BeginInit();
             this.MainH.Panel1.SuspendLayout();
+            this.comboBoxMapType = new System.Windows.Forms.ComboBox(); //Add combomap 
             this.MainH.Panel2.SuspendLayout();
             this.MainH.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SubMainLeft)).BeginInit();
@@ -2633,6 +2634,15 @@ namespace MissionPlanner.GCSViews
             this.gMapControl1.MouseLeave += new System.EventHandler(this.gMapControl1_MouseLeave);
             this.gMapControl1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.gMapControl1_MouseMove);
             this.gMapControl1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gMapControl1_MouseUp);
+            double tanaLatitude = -18.8792; // Latitude d'Antananarivo
+            double tanaLongitude = 47.5079; // Longitude d'Antananarivo
+            int initialZoom = 7; // Zoom initial de la carte
+
+            // Centrer la carte sur Antananarivo (Tana)
+            gMapControl1.Position = new GMap.NET.PointLatLng(tanaLatitude, tanaLongitude);
+
+            // Définir le niveau de zoom initial
+            gMapControl1.Zoom = initialZoom;
             // 
             // TRK_zoom
             // 
@@ -2647,6 +2657,14 @@ namespace MissionPlanner.GCSViews
             this.TRK_zoom.Value = 1F;
             this.TRK_zoom.Scroll += new System.EventHandler(this.TRK_zoom_Scroll);
             // 
+            // comboBoxMapType
+            // 
+            this.comboBoxMapType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxMapType.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBoxMapType, "comboBoxMapType");
+            this.comboBoxMapType.Name = "comboBoxMapType";
+            this.toolTip1.SetToolTip(this.comboBoxMapType, resources.GetString("comboBoxMapType.ToolTip"));
+            // 
             // panel1
             // 
             resources.ApplyResources(this.panel1, "panel1");
@@ -2655,7 +2673,22 @@ namespace MissionPlanner.GCSViews
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.CHK_autopan);
             this.panel1.Controls.Add(this.CB_tuning);
+            this.panel1.Controls.Add(this.comboBoxMapType);
             this.panel1.Name = "panel1";
+
+            // Créez un nouveau panneau pour contenir le comboBoxMapType
+            Panel panel2 = new Panel();
+            panel2.Dock = DockStyle.Right;
+            panel2.Width = 150; // Ajustez la largeur du panneau selon vos besoins
+
+            // Ajoutez le comboBoxMapType au nouveau panneau
+            panel2.Controls.Add(this.comboBoxMapType);
+
+            // Déplacez les autres contrôles dans le panel1 vers la gauche
+            this.panel1.Controls.Remove(this.comboBoxMapType);
+
+            // Ajoutez le nouveau panneau à droite du panel1
+            this.panel1.Controls.Add(panel2);
             // 
             // coords1
             // 
@@ -2960,6 +2993,7 @@ namespace MissionPlanner.GCSViews
         private Controls.MyButton but_dflogtokml;
         private Controls.MyButton BUT_DFMavlink;
         public System.Windows.Forms.TabPage tabPagemessages;
+        public ComboBox comboBoxMapType;
         private System.Windows.Forms.TextBox txt_messagebox;
         private System.Windows.Forms.Timer Messagetabtimer;
         public System.Windows.Forms.TabPage tabActionsSimple;

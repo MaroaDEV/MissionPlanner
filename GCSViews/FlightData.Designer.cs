@@ -2401,14 +2401,15 @@ namespace MissionPlanner.GCSViews
             this.flyToHereAltToolStripMenuItem,
             this.flyToCoordsToolStripMenuItem,
             this.addPoiToolStripMenuItem,
-            this.pointCameraHereToolStripMenuItem,
-            this.PointCameraCoordsToolStripMenuItem1,
-            this.triggerCameraToolStripMenuItem,
-            this.flightPlannerToolStripMenuItem,
-            this.setHomeHereToolStripMenuItem,
-            this.takeOffToolStripMenuItem,
-            this.onOffCameraOverlapToolStripMenuItem,
-            this.jumpToTagToolStripMenuItem});
+            //this.pointCameraHereToolStripMenuItem,
+            //this.PointCameraCoordsToolStripMenuItem1,
+            //this.triggerCameraToolStripMenuItem,
+            //this.flightPlannerToolStripMenuItem,
+            //this.setHomeHereToolStripMenuItem,
+            //this.takeOffToolStripMenuItem,
+            //this.onOffCameraOverlapToolStripMenuItem,
+            //this.jumpToTagToolStripMenuItem
+            });
             this.contextMenuStripMap.Name = "contextMenuStrip1";
             resources.ApplyResources(this.contextMenuStripMap, "contextMenuStripMap");
             // 

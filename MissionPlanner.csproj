@@ -61,6 +61,9 @@
   <PropertyGroup>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyName>GCAM</AssemblyName>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Remove="APMPlannerXplanes\**" />
     <Compile Remove="plugins\**" />

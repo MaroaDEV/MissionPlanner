@@ -153,22 +153,24 @@
             this.pictureBoxRover.Image = global::MissionPlanner.Properties.Resources.rover_11;
             this.pictureBoxRover.Location = new System.Drawing.Point(3, 3);
             this.pictureBoxRover.Name = "pictureBoxRover";
-            this.pictureBoxRover.Size = new System.Drawing.Size(150, 150);
+            this.pictureBoxRover.Size = new System.Drawing.Size(300,300);
             this.pictureBoxRover.TabIndex = 38;
             this.pictureBoxRover.TabStop = false;
             this.pictureBoxRover.Tag = "";
-            this.pictureBoxRover.Click += new System.EventHandler(this.PictureBox_Click);
+            this.pictureBoxRover.Text = "Load AerialMetric Firmware";
+            this.pictureBoxRover.Click += new System.EventHandler(this.Lbl_Custom_firmware_label_Click);
             // 
             // pictureBoxOctaQuad
             // 
-            this.pictureBoxOctaQuad.Image = global::MissionPlanner.Properties.Resources.x8;
+            this.pictureBoxOctaQuad.Image = global::MissionPlanner.Properties.Resources.FW_icons_2013_logos_12;
             this.pictureBoxOctaQuad.Location = new System.Drawing.Point(627, 3);
             this.pictureBoxOctaQuad.Name = "pictureBoxOctaQuad";
-            this.pictureBoxOctaQuad.Size = new System.Drawing.Size(150, 150);
+            this.pictureBoxOctaQuad.Size = new System.Drawing.Size(300, 300);
             this.pictureBoxOctaQuad.TabIndex = 46;
             this.pictureBoxOctaQuad.TabStop = false;
             this.pictureBoxOctaQuad.Tag = "";
-            this.pictureBoxOctaQuad.Click += new System.EventHandler(this.PictureBox_Click);
+            this.pictureBoxOctaQuad.Text = "Load Ardupilot Firmware";
+            this.pictureBoxOctaQuad.Click += new System.EventHandler(this.lbl_alloptions_Click);
             // 
             // pictureBoxOcta
             // 
@@ -275,23 +277,23 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.lbl_alloptions);
             this.Controls.Add(this.lbl_bootloaderupdate);
-            this.Controls.Add(this.lbl_px4bl);
-            this.Controls.Add(this.lbl_Custom_firmware_label);
+            //this.Controls.Add(this.lbl_px4bl);
+            //this.Controls.Add(this.lbl_Custom_firmware_label);
             this.Controls.Add(this.lbl_devfw);
             this.Controls.Add(this.lbl_status);
             this.Controls.Add(this.progress);
-            this.Controls.Add(this.imageLabel1);
-            this.Controls.Add(this.pictureBoxSub);
-            this.Controls.Add(this.pictureAntennaTracker);
+            //this.Controls.Add(this.imageLabel1);
+            //this.Controls.Add(this.pictureBoxSub);
+            //this.Controls.Add(this.pictureAntennaTracker);
             this.Controls.Add(this.pictureBoxRover);
             this.Controls.Add(this.pictureBoxOctaQuad);
-            this.Controls.Add(this.pictureBoxOcta);
-            this.Controls.Add(this.pictureBoxHeli);
-            this.Controls.Add(this.pictureBoxY6);
-            this.Controls.Add(this.pictureBoxTri);
-            this.Controls.Add(this.pictureBoxHexa);
-            this.Controls.Add(this.pictureBoxQuad);
-            this.Controls.Add(this.pictureBoxPlane);
+            //this.Controls.Add(this.pictureBoxOcta);
+            //this.Controls.Add(this.pictureBoxHeli);
+            //this.Controls.Add(this.pictureBoxY6);
+            //this.Controls.Add(this.pictureBoxTri);
+            //this.Controls.Add(this.pictureBoxHexa);
+            //this.Controls.Add(this.pictureBoxQuad);
+            //this.Controls.Add(this.pictureBoxPlane);
             this.Name = "ConfigFirmwareManifest";
             this.Size = new System.Drawing.Size(946, 375);
             this.ResumeLayout(false);

@@ -556,16 +556,16 @@ namespace MissionPlanner.GCSViews
             this.tabControlactions.Controls.Add(this.tabQuick);
             this.tabControlactions.Controls.Add(this.tabActions);
             this.tabControlactions.Controls.Add(this.tabPagemessages);
-            this.tabControlactions.Controls.Add(this.tabActionsSimple);
-            this.tabControlactions.Controls.Add(this.tabPagePreFlight);
-            this.tabControlactions.Controls.Add(this.tabGauges);
-            this.tabControlactions.Controls.Add(this.tabTransponder);
-            this.tabControlactions.Controls.Add(this.tabStatus);
-            this.tabControlactions.Controls.Add(this.tabServo);
-            this.tabControlactions.Controls.Add(this.tabAuxFunction);
-            this.tabControlactions.Controls.Add(this.tabScripts);
-            this.tabControlactions.Controls.Add(this.tabPayload);
-            this.tabControlactions.Controls.Add(this.tabTLogs);
+            //this.tabControlactions.Controls.Add(this.tabActionsSimple);    LIMITED EDITION FOR AerialMetric
+            //this.tabControlactions.Controls.Add(this.tabPagePreFlight);
+            //this.tabControlactions.Controls.Add(this.tabGauges);
+            //this.tabControlactions.Controls.Add(this.tabTransponder);
+            //this.tabControlactions.Controls.Add(this.tabStatus);
+            //this.tabControlactions.Controls.Add(this.tabServo);
+            //this.tabControlactions.Controls.Add(this.tabAuxFunction);
+            //this.tabControlactions.Controls.Add(this.tabScripts);
+            //this.tabControlactions.Controls.Add(this.tabPayload);
+            //this.tabControlactions.Controls.Add(this.tabTLogs);
             this.tabControlactions.Controls.Add(this.tablogbrowse);
             resources.ApplyResources(this.tabControlactions, "tabControlactions");
             this.tabControlactions.Name = "tabControlactions";

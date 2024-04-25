@@ -5306,6 +5306,67 @@ namespace MissionPlanner.GCSViews
                 log.Error(ex);
                 Tracking.AddException(ex);
             }
+
+            // THE FOLLOWING PART IS EDITED BY DEVS TO ADD THE CUSTOM MONITORING FOR AERIALMETRIC
+            foreach (Control control in tableLayoutPanelQuick.Controls)
+            {
+
+                QuickView quickView = control as QuickView;
+                quickView.ForeColor = Color.White;
+                quickView.numberColor = Color.White;
+                quickView.numberColorBackup = Color.White;
+
+
+                if (quickView != null)
+                {
+
+                    quickView.BackColor = Color.Green;
+
+                    if (quickView.Tag.ToString() == "airspeed")
+                    {
+                        float value;
+                        value = MainV2.comPort.MAV.cs.airspeed;
+                        //if (value > MainV2.comPort.MAV.cs.targetairspeed + 3 || value < MainV2.comPort.MAV.cs.targetairspeed - 3)
+                        //{
+                        //    quickView.BackColor = Color.OrangeRed;
+                        //}
+                        //if (value > MainV2.comPort.MAV.cs.targetairspeed + 5 || value < MainV2.comPort.MAV.cs.targetairspeed - 5)
+                        //{
+                        //    quickView.BackColor = Color.Red;
+                        //}
+                        // LOOP FOR GROUND TEST ONLY
+                        if (value > 5)
+                        {
+                            quickView.BackColor = Color.OrangeRed;
+                        }
+                        if (value > 10)
+                        {
+                            quickView.BackColor = Color.Red;
+                        }
+
+                    }
+                    if (quickView.Tag.ToString() == "vibez")
+                    {
+                        quickView.desc = "VibeSum";
+                        float value;
+                        value = MainV2.comPort.MAV.cs.vibez + 3*MainV2.comPort.MAV.cs.vibex + 3*MainV2.comPort.MAV.cs.vibex;
+                        if (value > 5)
+                        {
+                            quickView.BackColor = Color.OrangeRed;
+                        }
+                        if (value > 10)
+                        {
+                            quickView.BackColor = Color.Red;
+                        }
+                    }
+
+
+                }
+
+
+                /// END OF EDITED PART
+
+            }
         }
 
         // to prevent cross thread calls while in a draw and exception

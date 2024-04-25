@@ -564,7 +564,7 @@
     <value>51, 47</value>
   </data>
   <data name="MenuConfigTune.Text" xml:space="preserve">
-    <value>CONFIG</value>
+    <value>PARAMS</value>
   </data>
   <data name="MenuConfigTune.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>BottomCenter</value>

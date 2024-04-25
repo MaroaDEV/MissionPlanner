@@ -1395,6 +1395,30 @@
   <data name="&gt;&gt;tabActions.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+	<data name="tabGroundActions.Location" type="System.Drawing.Point, System.Drawing">
+		<value>4, 44</value>
+	</data>
+	<data name="tabGroundActions.Size" type="System.Drawing.Size, System.Drawing">
+		<value>290, 175</value>
+	</data>
+	<data name="tabGroundActions.TabIndex" type="System.Int32, mscorlib">
+		<value>2</value>
+	</data>
+	<data name="tabGroundActions.Text" xml:space="preserve">
+    <value>Ground Actions</value>
+  </data>
+	<data name="&gt;&gt;tabGroundActions.Name" xml:space="preserve">
+    <value>tabGroundActions</value>
+  </data>
+	<data name="&gt;&gt;tabGroundActions.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+	<data name="&gt;&gt;tabGroundActions.Parent" xml:space="preserve">
+    <value>tabControlactions</value>
+  </data>
+	<data name="&gt;&gt;tabGroundActions.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="txt_messagebox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>

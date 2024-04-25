@@ -5135,7 +5135,11 @@ namespace MissionPlanner.GCSViews
             tableLayoutPanel1.Width = tabQuick.Width;
             tableLayoutPanel1.AutoScroll = false;
         }
-
+        private void tableLayoutPanel3_Resize(object sender, EventArgs e)
+        {
+            tableLayoutPanel3.Width = tabQuick.Width;
+            tableLayoutPanel3.AutoScroll = false;
+        }
         void tabStatus_Resize(object sender, EventArgs e)
         {
         }
@@ -5376,48 +5380,53 @@ namespace MissionPlanner.GCSViews
                 if (quickView != null)
                 {
 
-                    
 
-                    if (quickView.Tag.ToString() == "airspeed")
+                    if (quickView.Tag != null)
                     {
-                        float value;
-                        quickView.BackColor = Color.Green;
-                        value = MainV2.comPort.MAV.cs.airspeed;
-                        //if (value > MainV2.comPort.MAV.cs.targetairspeed + 3 || value < MainV2.comPort.MAV.cs.targetairspeed - 3)
-                        //{
-                        //    quickView.BackColor = Color.OrangeRed;
-                        //}
-                        //if (value > MainV2.comPort.MAV.cs.targetairspeed + 5 || value < MainV2.comPort.MAV.cs.targetairspeed - 5)
-                        //{
-                        //    quickView.BackColor = Color.Red;
-                        //}
-                        // LOOP FOR GROUND TEST ONLY
-                        if (value > 5)
+                        if (quickView.Tag.ToString() == "airspeed")
                         {
-                            quickView.BackColor = Color.OrangeRed;
-                        }
-                        if (value > 10)
-                        {
-                            quickView.BackColor = Color.Red;
-                        }
+                            float value;
+                            quickView.BackColor = Color.Green;
+                            value = MainV2.comPort.MAV.cs.airspeed;
+                            //if (value > MainV2.comPort.MAV.cs.targetairspeed + 3 || value < MainV2.comPort.MAV.cs.targetairspeed - 3)
+                            //{
+                            //    quickView.BackColor = Color.OrangeRed;
+                            //}
+                            //if (value > MainV2.comPort.MAV.cs.targetairspeed + 5 || value < MainV2.comPort.MAV.cs.targetairspeed - 5)
+                            //{
+                            //    quickView.BackColor = Color.Red;
+                            //}
+                            // LOOP FOR GROUND TEST ONLY
+                            if (value > 5)
+                            {
+                                quickView.BackColor = Color.OrangeRed;
+                            }
+                            if (value > 10)
+                            {
+                                quickView.BackColor = Color.Red;
+                            }
 
-                    }
-                    if (quickView.Tag.ToString() == "vibez")
-                    {
-                        quickView.desc = "VibeSum";
-                        quickView.BackColor = Color.Green;
-                        float value;
-                        value = MainV2.comPort.MAV.cs.vibez + 3*MainV2.comPort.MAV.cs.vibex + 3*MainV2.comPort.MAV.cs.vibex;
-                        if (value > 5)
-                        {
-                            quickView.BackColor = Color.OrangeRed;
                         }
-                        if (value > 10)
+                        else if (quickView.Tag.ToString() == "vibez")
                         {
-                            quickView.BackColor = Color.Red;
+                            quickView.desc = "VibeSum";
+                            quickView.BackColor = Color.Green;
+                            float value;
+                            value = MainV2.comPort.MAV.cs.vibez + 3 * MainV2.comPort.MAV.cs.vibex + 3 * MainV2.comPort.MAV.cs.vibex;
+                            if (value > 5)
+                            {
+                                quickView.BackColor = Color.OrangeRed;
+                            }
+                            if (value > 10)
+                            {
+                                quickView.BackColor = Color.Red;
+                            }
+                        }
+                        else
+                        {
+                            quickView.BackColor = Color.FromArgb(20, 20, 20);
                         }
                     }
-
 
                 }
 

@@ -4736,7 +4736,7 @@
     <value>3, 3</value>
   </data>
   <data name="BUT_DFMavlink.Size" type="System.Drawing.Size, System.Drawing">
-    <value>110, 38</value>
+    <value>220, 38</value>
   </data>
   <data name="BUT_DFMavlink.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -4790,7 +4790,7 @@
     <value>119, 3</value>
   </data>
   <data name="BUT_logbrowse.Size" type="System.Drawing.Size, System.Drawing">
-    <value>87, 38</value>
+    <value>220, 38</value>
   </data>
   <data name="BUT_logbrowse.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -4844,7 +4844,7 @@
     <value>119, 47</value>
   </data>
   <data name="but_bintolog.Size" type="System.Drawing.Size, System.Drawing">
-    <value>87, 38</value>
+    <value>220, 38</value>
   </data>
   <data name="but_bintolog.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>

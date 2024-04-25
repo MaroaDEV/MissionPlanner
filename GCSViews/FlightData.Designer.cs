@@ -2255,13 +2255,16 @@ namespace MissionPlanner.GCSViews
             // 
             resources.ApplyResources(this.tableLayoutPanel2, "tableLayoutPanel2");
             this.tableLayoutPanel2.Controls.Add(this.BUT_DFMavlink, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.BUT_georefimage, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.BUT_logbrowse, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.BUT_matlab, 2, 1);
-            this.tableLayoutPanel2.Controls.Add(this.but_bintolog, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.but_dflogtokml, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.BUT_loganalysis, 2, 0);
+            // this.tableLayoutPanel2.Controls.Add(this.BUT_georefimage, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.BUT_logbrowse, 0, 1);
+            // this.tableLayoutPanel2.Controls.Add(this.BUT_matlab, 2, 1);
+            this.tableLayoutPanel2.Controls.Add(this.but_bintolog, 0, 2);
+            // this.tableLayoutPanel2.Controls.Add(this.but_dflogtokml, 0, 1);
+            // this.tableLayoutPanel2.Controls.Add(this.BUT_loganalysis, 2, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.SetColumnSpan(this.BUT_DFMavlink, 2);
+            this.tableLayoutPanel2.SetColumnSpan(this.BUT_logbrowse, 2);
+            this.tableLayoutPanel2.SetColumnSpan(this.but_bintolog, 2);
             // 
             // BUT_DFMavlink
             // 

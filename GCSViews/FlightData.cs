@@ -335,9 +335,24 @@ namespace MissionPlanner.GCSViews
 
             CMB_action.DataSource = Enum.GetNames(typeof(actions));
 
-            CMB_modes.DataSource = ArduPilot.Common.getModesList(MainV2.comPort.MAV.cs.firmware);
+            // Sauvegarder la valeur actuelle sélectionnée
+            string current_value = CMB_modes.Text;
+
+            // Récupérer la liste complète des modes de vol
+            List<KeyValuePair<int, string>> allModes = ArduPilot.Common.getModesList(MainV2.comPort.MAV.cs.firmware);
+
+            List<KeyValuePair<int, string>> filteredModes = allModes
+                .Where(mode => mode.Key == 10 || mode.Key == 21 || mode.Key == 0 || mode.Key == 7 || mode.Key == 11 || mode.Key == 17 || mode.Key == 19 || mode.Key == 20 || mode.Key == 21 || mode.Key == 12)
+                .ToList();
+
+            // Définir la source de données pour CMB_modes sur la liste filtrée
+            CMB_modes.DataSource = filteredModes;
             CMB_modes.ValueMember = "Key";
             CMB_modes.DisplayMember = "Value";
+
+            // Restaurer la valeur précédemment sélectionnée
+            CMB_modes.Text = current_value;
+            //CMB_modes.DataSource = ArduPilot.Common.getModesList(MainV2.comPort.MAV.cs.firmware);
 
             //default to auto
             CMB_modes.Text = "Auto";

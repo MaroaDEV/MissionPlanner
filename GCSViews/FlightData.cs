@@ -1395,6 +1395,58 @@ namespace MissionPlanner.GCSViews
             ((Control) sender).Enabled = true;
         }
 
+        private void BUT_PreFlightCal_Click(object sender, EventArgs e)
+        {
+            if (
+                CustomMessageBox.Show("Are you sure you want to do " + actions.Preflight_Calibration.ToString() + " ?", "Action",
+                MessageBoxButtons.YesNo) == (int)DialogResult.Yes)
+            {
+                try
+                {
+                    ((Control)sender).Enabled = false;
+
+                    int param1 = 0;
+                    int param2 = 0;
+                    int param3 = 1;
+
+                    // request gyro
+
+                    if (MainV2.comPort.MAV.cs.firmware == Firmwares.ArduCopter2)
+                        param1 = 1; // gyro
+                    param3 = 1; // baro / airspeed
+
+                    MAVLink.MAV_CMD cmd;
+                    try
+                    {
+                        cmd = (MAVLink.MAV_CMD)Enum.Parse(typeof(MAVLink.MAV_CMD), actions.Preflight_Calibration.ToString().ToUpper());
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        cmd = (MAVLink.MAV_CMD)Enum.Parse(typeof(MAVLink.MAV_CMD),
+                            "DO_START_" + actions.Preflight_Calibration.ToString().ToUpper());
+                    }
+
+                    if (MainV2.comPort.doCommand(cmd, param1, param2, param3, 0, 0, 0, 0))
+                    {
+
+                    }
+                    else
+                    {
+                        CustomMessageBox.Show(Strings.CommandFailed + " " + cmd, Strings.ERROR);
+                    }
+                }
+                catch
+                {
+                    CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+                }
+
+                ((Control)sender).Enabled = true;
+            }
+        }
+
+
+        
+
         private void BUT_quickrtl_Click(object sender, EventArgs e)
         {
             try

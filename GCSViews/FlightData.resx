@@ -1213,11 +1213,44 @@
     <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;BUT_quickmanual.Parent" xml:space="preserve">
-    <value>tableLayoutPanel1</value>
+    <value>tableLayoutPanel3</value>
   </data>
   <data name="&gt;&gt;BUT_quickmanual.ZOrder" xml:space="preserve">
     <value>18</value>
   </data>
+<data name="BUT_PreFlightCal.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+	<value>Fill</value>
+</data>
+<data name="BUT_PreFlightCal.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+	<value>NoControl</value>
+</data>
+<data name="BUT_PreFlightCal.Location" type="System.Drawing.Point, System.Drawing">
+	<value>174, 39</value>
+</data>
+<data name="BUT_PreFlightCal.Size" type="System.Drawing.Size, System.Drawing">
+	<value>51, 30</value>
+</data>
+<data name="BUT_PreFlightCal.TabIndex" type="System.Int32, mscorlib">
+	<value>77</value>
+</data>
+<data name="BUT_PreFlightCal.Text" xml:space="preserve">
+<value>Pre Flight Cal</value>
+</data>
+<data name="BUT_PreFlightCal.ToolTip" xml:space="preserve">
+<value>Do Pre Fligh Calibrations</value>
+</data>
+<data name="&gt;&gt;BUT_PreFlightCall.Name" xml:space="preserve">
+<value>BUT_PreFlightCal</value>
+</data>
+<data name="&gt;&gt;BUT_PreFlightCal.Type" xml:space="preserve">
+<value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+</data>
+<data name="&gt;&gt;BUT_PreFlightCal.Parent" xml:space="preserve">
+<value>tableLayoutPanel3</value>
+</data>
+<data name="&gt;&gt;BUT_PreFlightCal.ZOrder" xml:space="preserve">
+<value>18</value>
+</data>
   <data name="BUT_setwp.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -1371,6 +1404,33 @@
   <data name="tableLayoutPanel1.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="BUT_SendMSG" Row="4" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="BUT_abortland" Row="4" RowSpan="1" Column="4" ColumnSpan="1" /&gt;&lt;Control Name="modifyandSetLoiterRad" Row="2" RowSpan="1" Column="4" ColumnSpan="1" /&gt;&lt;Control Name="BUT_clear_track" Row="3" RowSpan="1" Column="4" ColumnSpan="1" /&gt;&lt;Control Name="CMB_action" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="BUTactiondo" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="BUT_resumemis" Row="4" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="modifyandSetAlt" Row="1" RowSpan="1" Column="4" ColumnSpan="1" /&gt;&lt;Control Name="modifyandSetSpeed" Row="0" RowSpan="1" Column="4" ColumnSpan="1" /&gt;&lt;Control Name="CMB_setwp" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="BUT_ARM" Row="3" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="BUT_mountmode" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="BUT_joystick" Row="3" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="BUT_RAWSensor" Row="2" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="BUT_Homealt" Row="0" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="BUTrestartmission" Row="1" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="CMB_mountmode" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="BUT_quickrtl" Row="2" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="BUT_quickmanual" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="BUT_setwp" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="CMB_modes" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="BUT_quickauto" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="BUT_setmode" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,20,Percent,20,Percent,20,Percent,20,Percent,20" /&gt;&lt;Rows Styles="Percent,20,Percent,20,Percent,20,Percent,20,Percent,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
+	<data name="tableLayoutPanel3.Location" type="System.Drawing.Point, System.Drawing">
+		<value>0, 0</value>
+	</data>
+	<data name="tableLayoutPanel3.RowCount" type="System.Int32, mscorlib">
+		<value>4</value>
+	</data>
+	<data name="tableLayoutPanel3.Size" type="System.Drawing.Size, System.Drawing">
+		<value>287, 230</value>
+	</data>
+	<data name="tableLayoutPanel3.TabIndex" type="System.Int32, mscorlib">
+		<value>78</value>
+	</data>
+	<data name="&gt;&gt;tableLayoutPanel3.Name" xml:space="preserve">
+    <value>tableLayoutPanel3</value>
+  </data>
+	<data name="&gt;&gt;tableLayoutPanel3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+	<data name="&gt;&gt;tableLayoutPanel3.Parent" xml:space="preserve">
+    <value>tabActions</value>
+  </data>
+	<data name="&gt;&gt;tableLayoutPanel3.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+	<data name="tableLayoutPanel3.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+		<value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="BUT_SendMSG" Row="4" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="BUT_abortland" Row="4" RowSpan="1" Column="4" ColumnSpan="1" /&gt;&lt;Control Name="modifyandSetLoiterRad" Row="2" RowSpan="1" Column="4" ColumnSpan="1" /&gt;&lt;Control Name="BUT_clear_track" Row="3" RowSpan="1" Column="4" ColumnSpan="1" /&gt;&lt;Control Name="CMB_action" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="BUTactiondo" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="BUT_resumemis" Row="4" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="modifyandSetAlt" Row="1" RowSpan="1" Column="4" ColumnSpan="1" /&gt;&lt;Control Name="modifyandSetSpeed" Row="0" RowSpan="1" Column="4" ColumnSpan="1" /&gt;&lt;Control Name="CMB_setwp" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="BUT_ARM" Row="3" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="BUT_mountmode" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="BUT_joystick" Row="3" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="BUT_RAWSensor" Row="2" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="BUT_Homealt" Row="0" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="BUTrestartmission" Row="1" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="CMB_mountmode" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="BUT_quickrtl" Row="2" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="BUT_quickmanual" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="BUT_setwp" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="CMB_modes" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="BUT_quickauto" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="BUT_setmode" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,20,Percent,20,Percent,20,Percent,20,Percent,20" /&gt;&lt;Rows Styles="Percent,20,Percent,20,Percent,20,Percent,20,Percent,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
+	</data>
   <data name="tabActions.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 44</value>
   </data>

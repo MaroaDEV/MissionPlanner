@@ -69,6 +69,7 @@ namespace MissionPlanner.GCSViews
             this.CMB_mountmode = new System.Windows.Forms.ComboBox();
             this.BUT_quickrtl = new MissionPlanner.Controls.MyButton();
             this.BUT_quickmanual = new MissionPlanner.Controls.MyButton();
+            this.BUT_PreFlightCal = new MissionPlanner.Controls.MyButton();
             this.BUT_setwp = new MissionPlanner.Controls.MyButton();
             this.CMB_modes = new System.Windows.Forms.ComboBox();
             this.BUT_quickauto = new MissionPlanner.Controls.MyButton();
@@ -746,9 +747,9 @@ namespace MissionPlanner.GCSViews
             this.tableLayoutPanel1.Controls.Add(this.BUTactiondo, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.BUT_resumemis, 1, 3);
             //this.tableLayoutPanel1.Controls.Add(this.modifyandSetAlt, 4, 1);
-            this.tableLayoutPanel1.Controls.Add(this.modifyandSetSpeed, 1, 8);
+            this.tableLayoutPanel1.Controls.Add(this.modifyandSetSpeed, 1, 4);
             this.tableLayoutPanel1.Controls.Add(this.CMB_setwp, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.BUT_ARM, 0, 4);
+            //this.tableLayoutPanel1.Controls.Add(this.BUT_ARM, 0, 4);
             //this.tableLayoutPanel1.Controls.Add(this.BUT_mountmode, 1, 3);
             //this.tableLayoutPanel1.Controls.Add(this.BUT_joystick, 2, 3);
             //this.tableLayoutPanel1.Controls.Add(this.BUT_RAWSensor, 3, 2);
@@ -759,15 +760,14 @@ namespace MissionPlanner.GCSViews
             //this.tableLayoutPanel1.Controls.Add(this.BUT_quickmanual, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.BUT_setwp, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.CMB_modes, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.BUT_quickauto, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.BUT_quickauto, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.BUT_setmode, 1, 2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.SetColumnSpan(this.CMB_action, 2);
             this.tableLayoutPanel1.SetColumnSpan(this.BUTactiondo, 2);
             this.tableLayoutPanel1.SetColumnSpan(this.BUT_resumemis, 2);
             this.tableLayoutPanel1.SetColumnSpan(this.CMB_setwp, 2);
-            this.tableLayoutPanel1.SetColumnSpan(this.BUT_ARM, 2);
-            this.tableLayoutPanel1.SetRowSpan(this.BUT_ARM, 2);
+
             this.tableLayoutPanel1.SetColumnSpan(this.BUT_quickauto, 2);
             this.tableLayoutPanel1.SetRowSpan(this.BUT_quickauto, 2);
             this.tableLayoutPanel1.SetColumnSpan(this.BUT_setmode, 2);
@@ -783,7 +783,10 @@ namespace MissionPlanner.GCSViews
             // tableLayoutPanel3
             // 
             resources.ApplyResources(this.tableLayoutPanel3, "tableLayoutPanel3");
-            this.tableLayoutPanel3.Controls.Add(this.BUT_quickmanual, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.BUT_quickmanual, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.BUT_PreFlightCal, 1, 1);
+            this.tableLayoutPanel3.Controls.Add(this.BUT_ARM, 0, 0);
+            this.tableLayoutPanel1.SetColumnSpan(this.BUT_ARM, 2);
             this.tableLayoutPanel3.Resize += new System.EventHandler(this.tableLayoutPanel3_Resize);
             // 
             // BUT_SendMSG
@@ -1036,6 +1039,17 @@ namespace MissionPlanner.GCSViews
             this.toolTip1.SetToolTip(this.BUT_quickmanual, resources.GetString("BUT_quickmanual.ToolTip"));
             this.BUT_quickmanual.UseVisualStyleBackColor = true;
             this.BUT_quickmanual.Click += new System.EventHandler(this.BUT_quickmanual_Click);
+            // 
+            // BUT_PreFlightCal
+            // 
+            this.BUT_PreFlightCal.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BUT_PreFlightCal.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BUT_PreFlightCal.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BUT_PreFlightCal, "BUT_PreFlightCal");
+            this.BUT_PreFlightCal.Name = "BUT_PreFlightCal";
+            this.toolTip1.SetToolTip(this.BUT_PreFlightCal, resources.GetString("BUT_PreFlightCal.ToolTip"));
+            this.BUT_PreFlightCal.UseVisualStyleBackColor = true;
+            this.BUT_PreFlightCal.Click += new System.EventHandler(this.BUT_PreFlightCal_Click);
             // 
             // BUT_setwp
             // 
@@ -2928,6 +2942,7 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.ComboBox CMB_setwp;
         private Controls.MyButton BUT_setwp;
         private Controls.MyButton BUT_quickmanual;
+        private Controls.MyButton BUT_PreFlightCal;
         private Controls.MyButton BUT_quickrtl;
         private Controls.MyButton BUT_quickauto;
         private Controls.MyButton BUT_log2kml;

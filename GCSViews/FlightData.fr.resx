@@ -126,6 +126,9 @@
   <data name="BUT_quickmanual.Text" xml:space="preserve">
     <value>&amp;Manuel</value>
   </data>
+  <data name="BUT_PreFlightCal.Text" xml:space="preserve">
+    <value>&amp;Pre Fligh Cal</value>
+  </data>
   <data name="BUT_playlog.Text" xml:space="preserve">
     <value>Lecture/Pause</value>
   </data>

@@ -784,7 +784,7 @@ namespace MissionPlanner.GCSViews
             // 
             resources.ApplyResources(this.tableLayoutPanel3, "tableLayoutPanel3");
             this.tableLayoutPanel3.Controls.Add(this.BUT_quickmanual, 0, 0);
-            this.tableLayoutPanel1.Resize += new System.EventHandler(this.tableLayoutPanel3_Resize);
+            this.tableLayoutPanel3.Resize += new System.EventHandler(this.tableLayoutPanel3_Resize);
             // 
             // BUT_SendMSG
             // 

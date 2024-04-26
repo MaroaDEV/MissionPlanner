@@ -610,6 +610,121 @@ namespace MissionPlanner.GCSViews
             }
         }
 
+        public void BUT_Reboot_Click(object sender, EventArgs e)
+        {
+
+            if (
+                CustomMessageBox.Show("Are you sure you want to do " + actions.Preflight_Reboot_Shutdown.ToString() + " ?", "Action",
+                MessageBoxButtons.YesNo) == (int)DialogResult.Yes)
+            {
+                try
+                {
+                    ((Control)sender).Enabled = false;
+
+                    int param1 = 0;
+                    int param2 = 0;
+                    int param3 = 1;
+
+
+                    MAVLink.MAV_CMD cmd;
+                    try
+                    {
+                        cmd = (MAVLink.MAV_CMD)Enum.Parse(typeof(MAVLink.MAV_CMD), actions.Preflight_Reboot_Shutdown.ToString().ToUpper());
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        cmd = (MAVLink.MAV_CMD)Enum.Parse(typeof(MAVLink.MAV_CMD),
+                            "DO_START_" + actions.Preflight_Reboot_Shutdown.ToString().ToUpper());
+                    }
+
+                    if (MainV2.comPort.doCommand(cmd, param1, param2, param3, 0, 0, 0, 0))
+                    {
+
+                    }
+                    else
+                    {
+                        CustomMessageBox.Show(Strings.CommandFailed + " " + cmd, Strings.ERROR);
+                    }
+                }
+                catch
+                {
+                    CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+                }
+
+                ((Control)sender).Enabled = true;
+            }
+
+        }
+
+        public void qlandClickBox_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Voulez-vous vraiment opérer un QLAND ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+
+            // Vérifier la réponse de l'utilisateur
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    ((Control)sender).Enabled = false;
+                    MainV2.comPort.setMode("QLAND");
+                }
+                catch
+                {
+                    CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+                }
+
+                ((Control)sender).Enabled = true;
+            }
+        }
+
+        public void rtlClickBox_Click(object sender, EventArgs e)
+        {
+
+            DialogResult result = MessageBox.Show("Voulez-vous vraiment commencer un RTL ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+
+            // Vérifier la réponse de l'utilisateur
+            if (result == DialogResult.Yes)
+            {
+
+                try
+                {
+                    ((Control)sender).Enabled = false;
+                    MainV2.comPort.setMode("RTL");
+                }
+                catch
+                {
+                    CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+                }
+
+                ((Control)sender).Enabled = true;
+            }
+        }
+
+        private void SetSp30ClickBox_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Voulez-vous vraiment régler la consigne de vitesse à 30 m/s ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+
+            // Vérifier la réponse de l'utilisateur
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    MainV2.comPort.doCommandAsync(MainV2.comPort.MAV.sysid, MainV2.comPort.MAV.compid,
+                            MAVLink.MAV_CMD.DO_CHANGE_SPEED, 0, 30.0f, 0, 0, 0, 0, 0)
+                        .ConfigureAwait(true);
+                }
+                catch
+                {
+                    CustomMessageBox.Show(Strings.ErrorCommunicating, Strings.ERROR);
+                }
+            }
+
+        }
+
+
         public void CheckBatteryShow()
         {
             //Check if we want to display calculated battery cell voltage
@@ -1380,19 +1495,15 @@ namespace MissionPlanner.GCSViews
         {
             try
             {
-                ((Control) sender).Enabled = false;
-                if (MainV2.comPort.MAV.cs.firmware == Firmwares.ArduPlane ||
-                    MainV2.comPort.MAV.cs.firmware == Firmwares.Ateryx ||
-                    MainV2.comPort.MAV.cs.firmware == Firmwares.ArduRover ||
-                    MainV2.comPort.MAV.cs.firmware == Firmwares.ArduCopter2)
-                    MainV2.comPort.setMode("Manual");
+                ((Control)sender).Enabled = false;
+                MainV2.comPort.setMode("Manual");
             }
             catch
             {
                 CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
             }
 
-            ((Control) sender).Enabled = true;
+            ((Control)sender).Enabled = true;
         }
 
         private void BUT_PreFlightCal_Click(object sender, EventArgs e)

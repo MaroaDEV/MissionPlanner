@@ -1218,6 +1218,39 @@
   <data name="&gt;&gt;BUT_quickmanual.ZOrder" xml:space="preserve">
     <value>18</value>
   </data>
+	<data name="BUT_Reboot.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+		<value>Fill</value>
+	</data>
+	<data name="BUT_Reboot.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+		<value>NoControl</value>
+	</data>
+	<data name="BUT_Reboot.Location" type="System.Drawing.Point, System.Drawing">
+		<value>117, 39</value>
+	</data>
+	<data name="BUT_Reboot.Size" type="System.Drawing.Size, System.Drawing">
+		<value>51, 30</value>
+	</data>
+	<data name="BUT_Reboot.TabIndex" type="System.Int32, mscorlib">
+		<value>76</value>
+	</data>
+	<data name="BUT_Reboot.Text" xml:space="preserve">
+    <value>Reboot autopilot</value>
+  </data>
+	<data name="BUT_Reboot.ToolTip" xml:space="preserve">
+    <value>Reboot Cube</value>
+  </data>
+	<data name="&gt;&gt;BUT_Reboot.Name" xml:space="preserve">
+    <value>BUT_Reboot</value>
+  </data>
+	<data name="&gt;&gt;BUT_Reboot.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+	<data name="&gt;&gt;BUT_Reboot.Parent" xml:space="preserve">
+    <value>tableLayoutPanel3</value>
+  </data>
+	<data name="&gt;&gt;BUT_Reboot.ZOrder" xml:space="preserve">
+    <value>18</value>
+  </data>
 <data name="BUT_PreFlightCal.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
 	<value>Fill</value>
 </data>

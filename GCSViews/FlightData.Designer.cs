@@ -69,6 +69,7 @@ namespace MissionPlanner.GCSViews
             this.BUTrestartmission = new MissionPlanner.Controls.CustomButton();
             this.CMB_mountmode = new System.Windows.Forms.ComboBox();
             this.BUT_quickrtl = new MissionPlanner.Controls.MyButton();
+            this.BUT_Reboot = new MissionPlanner.Controls.MyButton();
             this.BUT_quickmanual = new MissionPlanner.Controls.MyButton();
             this.BUT_PreFlightCal = new MissionPlanner.Controls.MyButton();
             this.BUT_setwp = new MissionPlanner.Controls.MyButton();
@@ -455,18 +456,13 @@ namespace MissionPlanner.GCSViews
             this.parachuteClickBox.Text = "Parachute";
             this.parachuteClickBox.Click += BUTrestartmission_Click;
             this.qlandClickBox.Text = "QLAND";
+            this.qlandClickBox.Click += qlandClickBox_Click;
             this.rtlClickBox.Text = "RTL";
+            this.rtlClickBox.Click += rtlClickBox_Click;
             this.setSp30ClickBox.Text = "SetSp30";
+            this.setSp30ClickBox.Click += SetSp30ClickBox_Click;
             this.setWPClickBox.Text = "SetWP";
 
-
-
-            // Add checkboxes to the form
-            this.Controls.Add(this.parachuteClickBox);
-            this.Controls.Add(this.qlandClickBox);
-            this.Controls.Add(this.rtlClickBox);
-            this.Controls.Add(this.setSp30ClickBox);
-            this.Controls.Add(this.setWPClickBox);
 
             // Set form properties
             this.ClientSize = new System.Drawing.Size(200, 150);
@@ -821,7 +817,8 @@ namespace MissionPlanner.GCSViews
             this.tableLayoutPanel3.Controls.Add(this.BUT_quickmanual, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.BUT_PreFlightCal, 1, 1);
             this.tableLayoutPanel3.Controls.Add(this.BUT_ARM, 0, 0);
-            this.tableLayoutPanel3.SetColumnSpan(this.BUT_ARM, 2);
+            this.tableLayoutPanel3.Controls.Add(this.BUT_Reboot, 1, 0);
+            this.tableLayoutPanel3.SetColumnSpan(this.BUT_ARM, 1);
             this.tableLayoutPanel3.Resize += new System.EventHandler(this.tableLayoutPanel3_Resize);
             // 
             // tableLayoutPanel4
@@ -831,7 +828,7 @@ namespace MissionPlanner.GCSViews
             this.tableLayoutPanel4.Controls.Add(this.qlandClickBox, 1, 0);
             this.tableLayoutPanel4.Controls.Add(this.rtlClickBox, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.setSp30ClickBox, 1, 1);
-            this.tableLayoutPanel4.Controls.Add(this.setWPClickBox, 0, 2);
+            //this.tableLayoutPanel4.Controls.Add(this.setWPClickBox, 0, 2);
             this.tableLayoutPanel4.Resize += new System.EventHandler(this.tableLayoutPanel4_Resize);
             // 
             // BUT_SendMSG
@@ -1073,6 +1070,17 @@ namespace MissionPlanner.GCSViews
             this.toolTip1.SetToolTip(this.BUT_quickrtl, resources.GetString("BUT_quickrtl.ToolTip"));
             this.BUT_quickrtl.UseVisualStyleBackColor = true;
             this.BUT_quickrtl.Click += new System.EventHandler(this.BUT_quickrtl_Click);
+            // 
+            // BUT_Reboot
+            // 
+            this.BUT_Reboot.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BUT_Reboot.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BUT_Reboot.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BUT_Reboot, "BUT_Reboot");
+            this.BUT_Reboot.Name = "BUT_Reboot";
+            this.toolTip1.SetToolTip(this.BUT_Reboot, resources.GetString("BUT_Reboot.ToolTip"));
+            this.BUT_Reboot.UseVisualStyleBackColor = true;
+            this.BUT_Reboot.Click += new System.EventHandler(this.BUT_Reboot_Click);
             // 
             // BUT_quickmanual
             // 
@@ -2991,6 +2999,7 @@ namespace MissionPlanner.GCSViews
         private Controls.MyButton BUT_quickmanual;
         private Controls.MyButton BUT_PreFlightCal;
         private Controls.MyButton BUT_quickrtl;
+        private Controls.MyButton BUT_Reboot;
         private Controls.MyButton BUT_quickauto;
         private Controls.MyButton BUT_log2kml;
         private Controls.MyButton BUT_joystick;

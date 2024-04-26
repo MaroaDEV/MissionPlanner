@@ -50,6 +50,7 @@ namespace MissionPlanner.GCSViews
             this.tabGroundActions = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.BUT_SendMSG = new MissionPlanner.Controls.MyButton();
             this.BUT_abortland = new MissionPlanner.Controls.MyButton();
             this.modifyandSetLoiterRad = new MissionPlanner.Controls.ModifyandSet();
@@ -249,6 +250,7 @@ namespace MissionPlanner.GCSViews
             this.tabActions.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
             this.tabPagemessages.SuspendLayout();
             this.tabActionsSimple.SuspendLayout();
             this.tabPagePreFlight.SuspendLayout();
@@ -438,6 +440,39 @@ namespace MissionPlanner.GCSViews
             this.hud1.Load += new System.EventHandler(this.hud1_Load);
             this.hud1.DoubleClick += new System.EventHandler(this.hud1_DoubleClick);
             this.hud1.Resize += new System.EventHandler(this.hud1_Resize);
+            ///
+            /// ShowActionsBox
+            ///
+            this.parachuteClickBox = new Controls.MyButton();
+            this.qlandClickBox = new Controls.MyButton();
+            this.rtlClickBox = new Controls.MyButton();
+            this.setSp30ClickBox = new Controls.MyButton();
+            this.setWPClickBox = new Controls.MyButton();
+
+            this.SuspendLayout();
+
+            // Set properties for each checkbox
+            this.parachuteClickBox.Text = "Parachute";
+            this.parachuteClickBox.Click += BUTrestartmission_Click;
+            this.qlandClickBox.Text = "QLAND";
+            this.rtlClickBox.Text = "RTL";
+            this.setSp30ClickBox.Text = "SetSp30";
+            this.setWPClickBox.Text = "SetWP";
+
+
+
+            // Add checkboxes to the form
+            this.Controls.Add(this.parachuteClickBox);
+            this.Controls.Add(this.qlandClickBox);
+            this.Controls.Add(this.rtlClickBox);
+            this.Controls.Add(this.setSp30ClickBox);
+            this.Controls.Add(this.setWPClickBox);
+
+            // Set form properties
+            this.ClientSize = new System.Drawing.Size(200, 150);
+            this.Text = "Actions";
+
+            this.ResumeLayout(false);
             // 
             // contextMenuStripHud
             // 
@@ -786,8 +821,18 @@ namespace MissionPlanner.GCSViews
             this.tableLayoutPanel3.Controls.Add(this.BUT_quickmanual, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.BUT_PreFlightCal, 1, 1);
             this.tableLayoutPanel3.Controls.Add(this.BUT_ARM, 0, 0);
-            this.tableLayoutPanel1.SetColumnSpan(this.BUT_ARM, 2);
+            this.tableLayoutPanel3.SetColumnSpan(this.BUT_ARM, 2);
             this.tableLayoutPanel3.Resize += new System.EventHandler(this.tableLayoutPanel3_Resize);
+            // 
+            // tableLayoutPanel4
+            // 
+            resources.ApplyResources(this.tableLayoutPanel4, "tableLayoutPanel4");
+            this.tableLayoutPanel4.Controls.Add(this.parachuteClickBox, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.qlandClickBox, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.rtlClickBox, 0, 1);
+            this.tableLayoutPanel4.Controls.Add(this.setSp30ClickBox, 1, 1);
+            this.tableLayoutPanel4.Controls.Add(this.setWPClickBox, 0, 2);
+            this.tableLayoutPanel4.Resize += new System.EventHandler(this.tableLayoutPanel4_Resize);
             // 
             // BUT_SendMSG
             // 
@@ -2851,6 +2896,8 @@ namespace MissionPlanner.GCSViews
             this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.tableLayoutPanel4.PerformLayout();
             this.tabPagemessages.ResumeLayout(false);
             this.tabPagemessages.PerformLayout();
             this.tabActionsSimple.ResumeLayout(false);
@@ -2971,6 +3018,11 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.ToolStripMenuItem triggerCameraToolStripMenuItem;
         private Controls.MyTrackBar TRK_zoom;
         private Label LBL_logfn;
+        private Controls.MyButton parachuteClickBox;
+        private Controls.MyButton qlandClickBox;
+        private Controls.MyButton rtlClickBox;
+        private Controls.MyButton setSp30ClickBox;
+        private Controls.MyButton setWPClickBox;
         public System.Windows.Forms.TabPage tabServo;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelServos;
         private Controls.ServoOptions servoOptions1;
@@ -3094,6 +3146,8 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private Form actionForm;
         private System.Windows.Forms.ToolStripMenuItem setBatteryCellCountToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem undockToolStripMenuItem;
         private System.Windows.Forms.Button ALT_btn;

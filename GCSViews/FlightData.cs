@@ -5192,6 +5192,12 @@ namespace MissionPlanner.GCSViews
             tableLayoutPanel3.Width = tabQuick.Width;
             tableLayoutPanel3.AutoScroll = false;
         }
+
+        private void tableLayoutPanel4_Resize(object sender, EventArgs e)
+        {
+            tableLayoutPanel4.Width = tabQuick.Width;
+            tableLayoutPanel4.AutoScroll = false;
+        }
         void tabStatus_Resize(object sender, EventArgs e)
         {
         }
@@ -5428,6 +5434,8 @@ namespace MissionPlanner.GCSViews
                 quickView.numberColor = Color.White;
                 quickView.numberColorBackup = Color.White;
 
+                // Bitmask: 0 Para, 1 RTL, 2 Qland, 3 SetSp30, 4 SetWP
+
 
                 if (quickView != null)
                 {
@@ -5438,25 +5446,21 @@ namespace MissionPlanner.GCSViews
                         if (quickView.Tag.ToString() == "airspeed")
                         {
                             float value;
-                            quickView.BackColor = Color.Green;
                             value = MainV2.comPort.MAV.cs.airspeed;
-                            //if (value > MainV2.comPort.MAV.cs.targetairspeed + 3 || value < MainV2.comPort.MAV.cs.targetairspeed - 3)
-                            //{
-                            //    quickView.BackColor = Color.OrangeRed;
-                            //}
-                            //if (value > MainV2.comPort.MAV.cs.targetairspeed + 5 || value < MainV2.comPort.MAV.cs.targetairspeed - 5)
-                            //{
-                            //    quickView.BackColor = Color.Red;
-                            //}
-                            // LOOP FOR GROUND TEST ONLY
-                            if (value > 5)
+                            if (value < 5)
+                            {
+                                quickView.BackColor = Color.Red;
+                                quickView.MouseClick += (sender, e) =>
+                                {
+                                    ShowActions(0);
+                                };
+                            }
+                            else if (value < 10)
                             {
                                 quickView.BackColor = Color.OrangeRed;
                             }
-                            if (value > 10)
-                            {
-                                quickView.BackColor = Color.Red;
-                            }
+                            else
+                                quickView.BackColor = Color.Green;
 
                         }
                         else if (quickView.Tag.ToString() == "vibez")
@@ -5499,7 +5503,35 @@ namespace MissionPlanner.GCSViews
                 routes.Markers.Clear();
             });
         }
+        public void ShowActions(int bitmask)
+        {
+            // Vérifiez si la fenêtre existe déjà
+            if (actionForm == null || actionForm.IsDisposed)
+            {
+                // Si la fenêtre n'existe pas ou a été fermée, créez une nouvelle instance de Form
+                actionForm = new Form();
 
+                // Ajoutez votre TableLayoutPanel à la fenêtre
+                actionForm.Controls.Add(tableLayoutPanel4);
+
+                // Attacher une fonction lambda à l'événement FormClosing pour empêcher la fermeture de la fenêtre de supprimer ses contrôles
+                actionForm.FormClosing += (sender, e) =>
+                {
+                    e.Cancel = true; // Annuler la fermeture de la fenêtre
+                    actionForm.Hide(); // Masquer la fenêtre au lieu de la fermer
+                };
+            }
+
+            // Affichez ou activez la fenêtre
+            if (actionForm.Visible)
+            {
+                actionForm.Activate(); // Si la fenêtre est déjà visible, assurez-vous qu'elle est activée
+            }
+            else
+            {
+                actionForm.Show(); // Si la fenêtre n'est pas visible, affichez-la
+            }
+        }
         // to prevent cross thread calls while in a draw and exception
         private void updateClearRoutes()
         {

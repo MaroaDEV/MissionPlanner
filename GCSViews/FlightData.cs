@@ -1385,7 +1385,7 @@ namespace MissionPlanner.GCSViews
                     MainV2.comPort.MAV.cs.firmware == Firmwares.Ateryx ||
                     MainV2.comPort.MAV.cs.firmware == Firmwares.ArduRover ||
                     MainV2.comPort.MAV.cs.firmware == Firmwares.ArduCopter2)
-                    MainV2.comPort.setMode("Loiter");
+                    MainV2.comPort.setMode("Manual");
             }
             catch
             {
@@ -2493,10 +2493,23 @@ namespace MissionPlanner.GCSViews
 
         private void CMB_modes_Click(object sender, EventArgs e)
         {
+            // Sauvegarder la valeur actuelle sélectionnée
             string current_value = CMB_modes.Text;
-            CMB_modes.DataSource = ArduPilot.Common.getModesList(MainV2.comPort.MAV.cs.firmware);
+            // CMB_modes.DataSource = ArduPilot.Common.getModesList(MainV2.comPort.MAV.cs.firmware);
+
+            // Récupérer la liste complète des modes de vol
+            List<KeyValuePair<int, string>> allModes = ArduPilot.Common.getModesList(MainV2.comPort.MAV.cs.firmware);
+
+            List<KeyValuePair<int, string>> filteredModes = allModes
+                .Where(mode => mode.Key == 10 || mode.Key == 21  || mode.Key == 7 || mode.Key == 11 || mode.Key == 17 || mode.Key == 19 || mode.Key == 20 || mode.Key == 21)
+                .ToList();
+
+            // Définir la source de données pour CMB_modes sur la liste filtrée
+            CMB_modes.DataSource = filteredModes;
             CMB_modes.ValueMember = "Key";
             CMB_modes.DisplayMember = "Value";
+
+            // Restaurer la valeur précédemment sélectionnée
             CMB_modes.Text = current_value;
         }
 

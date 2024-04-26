@@ -6350,9 +6350,13 @@ namespace MissionPlanner.GCSViews
 
                     detachedTabControl.TabPages.Add(detachedTabPage);
 
-                    Form detachedTabForm = new Form();
-                    detachedTabForm.Text = clickedTab.Text;
-                    detachedTabForm.FormClosed += (formSender, formClosedEventArgs) =>
+                    Form detachedForm = new Form();
+                    detachedForm.Text = clickedTab.Text;
+
+                    // Set the TopMost property of the detached form to true
+                    detachedForm.TopMost = true;
+
+                    detachedForm.FormClosed += (formSender, formClosedEventArgs) =>
                     {
                         // Move the controls from detachedTabPage back to clickedTab
                         clickedTab.Controls.Clear();
@@ -6365,9 +6369,9 @@ namespace MissionPlanner.GCSViews
                     };
                     detachedTabPage.Dock = DockStyle.Fill;
                     detachedTabControl.Dock = DockStyle.Fill;
-                    detachedTabForm.Controls.Add(detachedTabControl);
+                    detachedForm.Controls.Add(detachedTabControl);
 
-                    detachedTabForm.Show();
+                    detachedForm.Show();
                     break;
                 }
             }

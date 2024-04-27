@@ -5558,7 +5558,7 @@ namespace MissionPlanner.GCSViews
                 quickView.numberColor = Color.White;
                 quickView.numberColorBackup = Color.White;
 
-                // Bitmask: 0 Para, 1 RTL, 2 Qland, 3 SetSp30, 4 SetWP
+                // Bitmask: 0 Para, 1 QLAND, 2 RTL, 3 SetSp30, 4 SetWP
 
 
                 if (quickView != null)
@@ -5567,45 +5567,71 @@ namespace MissionPlanner.GCSViews
 
                     if (quickView.Tag != null)
                     {
-                        if (quickView.Tag.ToString() == "airspeed")
-                        {
-                            float value;
-                            value = MainV2.comPort.MAV.cs.airspeed;
-                            if (value < 5)
-                            {
-                                quickView.BackColor = Color.Red;
-                                quickView.MouseClick += (sender, e) =>
-                                {
-                                    ShowActions(0);
-                                };
-                            }
-                            else if (value < 10)
-                            {
-                                quickView.BackColor = Color.OrangeRed;
-                            }
-                            else
-                                quickView.BackColor = Color.Green;
+                        int bitmask = 0;
 
-                        }
-                        else if (quickView.Tag.ToString() == "vibez")
+                        switch (quickView.Tag.ToString())
                         {
-                            quickView.desc = "VibeSum";
-                            quickView.BackColor = Color.Green;
-                            float value;
-                            value = MainV2.comPort.MAV.cs.vibez + 3 * MainV2.comPort.MAV.cs.vibex + 3 * MainV2.comPort.MAV.cs.vibex;
-                            if (value > 5)
-                            {
-                                quickView.BackColor = Color.OrangeRed;
-                            }
-                            if (value > 10)
-                            {
-                                quickView.BackColor = Color.Red;
-                            }
+                            case "airspeed":
+                                float value;
+                                value = MainV2.comPort.MAV.cs.airspeed;
+                                switch (value)
+                                {
+                                    case float v when v < 5:
+                                        quickView.BackColor = Color.Red;
+                                        bitmask = 15;
+                                        break;
+                                    case float v when v < 10:
+                                        quickView.BackColor = Color.OrangeRed;
+                                        bitmask = 0;
+                                        break;
+                                    default:
+                                        quickView.BackColor = Color.Green;
+                                        bitmask = 0;
+                                        break;
+                                }
+                                break;
+                            case "vibez":
+                                quickView.desc = "VibeSum";
+                                quickView.BackColor = Color.Green;
+                                float valueVibez;
+                                valueVibez = MainV2.comPort.MAV.cs.vibez + 3 * MainV2.comPort.MAV.cs.vibex + 3 * MainV2.comPort.MAV.cs.vibex;
+                                switch (valueVibez)
+                                {
+                                    case float v when v > 10:
+                                        quickView.BackColor = Color.Red;
+                                        bitmask = 2;
+                                        break;
+                                    case float v when v > 5:
+                                        quickView.BackColor = Color.OrangeRed;
+                                        bitmask = 0;
+                                        break;
+                                    default:
+                                        bitmask = 0;
+                                        break;
+                                }
+                                break;
+                            default:
+                                quickView.BackColor = Color.FromArgb(20, 20, 20);
+                                bitmask = 0;
+                                break;
+                        }
+                        // Vérifie si quickView.Tag.ToString() existe déjà dans la liste
+                        var existingTuple = listOfTuples.FirstOrDefault(t => t.Item1 == quickView.Tag.ToString());
+
+                        if (existingTuple != null)
+                        {
+                            // Si l'élément existe déjà, mettez à jour son entier avec la valeur de bitmask
+                            int index = listOfTuples.IndexOf(existingTuple);
+                            listOfTuples[index] = new Tuple<string, int>(existingTuple.Item1, bitmask);
                         }
                         else
                         {
-                            quickView.BackColor = Color.FromArgb(20, 20, 20);
+                            // Sinon, ajoutez un nouveau tuple à la liste
+                            listOfTuples.Add(new Tuple<string, int>(quickView.Tag.ToString(), bitmask));
                         }
+
+                        // Liaison de l'événement Click avec ShowActions
+                        quickView.Click += (sender, e) => ShowActions(quickView.Tag.ToString());
                     }
 
                 }
@@ -5627,33 +5653,42 @@ namespace MissionPlanner.GCSViews
                 routes.Markers.Clear();
             });
         }
-        public void ShowActions(int bitmask)
+        private void ShowActions(string item)
         {
-            // Vérifiez si la fenêtre existe déjà
-            if (actionForm == null || actionForm.IsDisposed)
+            if (listOfTuples.Any(t => t.Item1 == item && t.Item2 != 0))
             {
-                // Si la fenêtre n'existe pas ou a été fermée, créez une nouvelle instance de Form
-                actionForm = new Form();
-
-                // Ajoutez votre TableLayoutPanel à la fenêtre
-                actionForm.Controls.Add(tableLayoutPanel4);
-
-                // Attacher une fonction lambda à l'événement FormClosing pour empêcher la fermeture de la fenêtre de supprimer ses contrôles
-                actionForm.FormClosing += (sender, e) =>
+                // Vérifiez si la fenêtre existe déjà
+                if (actionForm == null || actionForm.IsDisposed)
                 {
-                    e.Cancel = true; // Annuler la fermeture de la fenêtre
-                    actionForm.Hide(); // Masquer la fenêtre au lieu de la fermer
-                };
-            }
+                    // Si la fenêtre n'existe pas ou a été fermée, créez une nouvelle instance de Form
+                    actionForm = new Form();
 
-            // Affichez ou activez la fenêtre
-            if (actionForm.Visible)
-            {
-                actionForm.Activate(); // Si la fenêtre est déjà visible, assurez-vous qu'elle est activée
-            }
-            else
-            {
-                actionForm.Show(); // Si la fenêtre n'est pas visible, affichez-la
+                    // Ajoutez votre TableLayoutPanel à la fenêtre
+                    actionForm.Controls.Add(tableLayoutPanel4);
+
+                    // Attacher une fonction lambda à l'événement FormClosing pour empêcher la fermeture de la fenêtre de supprimer ses contrôles
+                    actionForm.FormClosing += (sender, e) =>
+                    {
+                        e.Cancel = true; // Annuler la fermeture de la fenêtre
+                        actionForm.Hide(); // Masquer la fenêtre au lieu de la fermer
+                    };
+                }
+                int bitmask = listOfTuples.FirstOrDefault(t => t.Item1 == item)?.Item2 ?? 0;
+                // Modifier la visibilité des boutons en fonction du bitmask
+                parachuteClickBox.Visible = (bitmask & 1) != 0; // Vérifie si le premier bit est défini
+                qlandClickBox.Visible = (bitmask & 2) != 0; // Vérifie si le deuxième bit est défini
+                rtlClickBox.Visible = (bitmask & 4) != 0; // Vérifie si le troisième bit est défini
+                setSp30ClickBox.Visible = (bitmask & 8) != 0; // Vérifie si le quatrième bit est défini
+
+                // Affichez ou activez la fenêtre
+                if (actionForm.Visible)
+                {
+                    actionForm.Activate(); // Si la fenêtre est déjà visible, assurez-vous qu'elle est activée
+                }
+                else
+                {
+                    actionForm.Show(); // Si la fenêtre n'est pas visible, affichez-la
+                }
             }
         }
         // to prevent cross thread calls while in a draw and exception

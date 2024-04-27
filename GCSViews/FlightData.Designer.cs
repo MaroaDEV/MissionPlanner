@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System.Collections.Generic;
+using System;
+using System.Windows.Forms;
 
 namespace MissionPlanner.GCSViews
 {
@@ -3024,6 +3026,7 @@ namespace MissionPlanner.GCSViews
         private Controls.MyButton BUT_ARM;
         private Controls.ModifyandSet modifyandSetAlt;
         private Controls.ModifyandSet modifyandSetSpeed;
+        private List<Tuple<string, int>> listOfTuples = new List<Tuple<string, int>>();
         private System.Windows.Forms.ToolStripMenuItem triggerCameraToolStripMenuItem;
         private Controls.MyTrackBar TRK_zoom;
         private Label LBL_logfn;

@@ -612,6 +612,18 @@ namespace MissionPlanner.GCSViews
 
         public void BUT_Reboot_Click(object sender, EventArgs e)
         {
+            // Vérifier la condition si value > 20
+            if (MainV2.comPort.MAV.cs.ter_curalt > 20)
+            {
+                // Afficher une fenêtre de confirmation
+                DialogResult result = MessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                // Si l'utilisateur choisit "Non", annuler l'action
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+            }
 
             if (
                 CustomMessageBox.Show("Are you sure you want to do " + actions.Preflight_Reboot_Shutdown.ToString() + " ?", "Action",
@@ -1097,8 +1109,22 @@ namespace MissionPlanner.GCSViews
 
         private void BUT_ARM_Click(object sender, EventArgs e)
         {
+
             if (!MainV2.comPort.BaseStream.IsOpen)
                 return;
+
+            // Vérifier la condition si value > 20
+            if (MainV2.comPort.MAV.cs.ter_curalt > 20)
+            {
+                // Afficher une fenêtre de confirmation
+                DialogResult result = MessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                // Si l'utilisateur choisit "Non", annuler l'action
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+            }
 
             // arm the MAV
             try
@@ -1493,6 +1519,18 @@ namespace MissionPlanner.GCSViews
 
         private void BUT_quickmanual_Click(object sender, EventArgs e)
         {
+            // Vérifier la condition si value > 20
+            if (MainV2.comPort.MAV.cs.ter_curalt > 20)
+            {
+                // Afficher une fenêtre de confirmation
+                DialogResult result = MessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                // Si l'utilisateur choisit "Non", annuler l'action
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+            }
             try
             {
                 ((Control)sender).Enabled = false;
@@ -1508,6 +1546,18 @@ namespace MissionPlanner.GCSViews
 
         private void BUT_PreFlightCal_Click(object sender, EventArgs e)
         {
+            // Vérifier la condition si value > 20
+            if (MainV2.comPort.MAV.cs.ter_curalt > 20)
+            {
+                // Afficher une fenêtre de confirmation
+                DialogResult result = MessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                // Si l'utilisateur choisit "Non", annuler l'action
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+            }
             if (
                 CustomMessageBox.Show("Are you sure you want to do " + actions.Preflight_Calibration.ToString() + " ?", "Action",
                 MessageBoxButtons.YesNo) == (int)DialogResult.Yes)
@@ -5550,6 +5600,27 @@ namespace MissionPlanner.GCSViews
                 Tracking.AddException(ex);
             }
 
+            // Vérifier si tableLayoutPanel3 est un conteneur valide
+            if (tableLayoutPanel3 != null)
+            {
+                // Parcourir tous les contrôles dans tableLayoutPanel3
+                foreach (Control control in tableLayoutPanel3.Controls)
+                {
+                    // Vérifier si le contrôle est un bouton
+                    if (control is Button button)
+                    {
+                        // Gérer l'événement Click du bouton
+                        button.Click += (sender, e) =>
+                        {
+
+
+                            // Exécuter l'action normale du bouton si la condition n'est pas remplie ou si l'utilisateur confirme
+                            // Placez ici le code à exécuter lorsque le bouton est cliqué
+                        };
+                    }
+                }
+            }
+
             // THE FOLLOWING PART IS EDITED BY DEVS TO ADD THE CUSTOM MONITORING FOR AERIALMETRIC
             foreach (Control control in tableLayoutPanelQuick.Controls)
             {
@@ -5559,7 +5630,7 @@ namespace MissionPlanner.GCSViews
                 quickView.numberColor = Color.White;
                 quickView.numberColorBackup = Color.White;
 
-                // Bitmask: 0 Para, 1 QLAND, 2 RTL, 3 SetSp30, 4 SetWP
+                // Bitmask: 1 Para, 2 QLAND, 4 RTL, 8 SetSp30, 16 SetWP
 
 
                 if (quickView != null)
@@ -5569,19 +5640,55 @@ namespace MissionPlanner.GCSViews
                     if (quickView.Tag != null)
                     {
                         int bitmask = 0;
+                        float value;
 
                         switch (quickView.Tag.ToString())
                         {
-                            case "airspeed":
-                                float value;
+                            case "airspeed":                                
                                 value = MainV2.comPort.MAV.cs.airspeed;
                                 switch (value)
                                 {
-                                    case float v when v < 5:
+                                    case float v when v < 18:
                                         quickView.BackColor = Color.Red;
                                         bitmask = 15;
                                         break;
-                                    case float v when v < 10:
+                                    case float v when v < 21:
+                                        quickView.BackColor = Color.OrangeRed;
+                                        bitmask = 0;
+                                        break;
+                                    default:
+                                        quickView.BackColor = Color.Green;
+                                        bitmask = 0;
+                                        break;
+                                }
+                                break;
+                            case "ter_curalt":
+                                value = MainV2.comPort.MAV.cs.ter_curalt;
+                                switch (value)
+                                {
+                                    case float v when v < 80:
+                                        quickView.BackColor = Color.Red;
+                                        bitmask = 15;
+                                        break;
+                                    case float v when v < 120:
+                                        quickView.BackColor = Color.OrangeRed;
+                                        bitmask = 0;
+                                        break;
+                                    default:
+                                        quickView.BackColor = Color.Green;
+                                        bitmask = 0;
+                                        break;
+                                }
+                                break;
+                            case "boardvoltage":
+                                value = MainV2.comPort.MAV.cs.boardvoltage;
+                                switch (value)
+                                {
+                                    case float v when v < 4:
+                                        quickView.BackColor = Color.Red;
+                                        bitmask = 15;
+                                        break;
+                                    case float v when v < 4.5:
                                         quickView.BackColor = Color.OrangeRed;
                                         bitmask = 0;
                                         break;

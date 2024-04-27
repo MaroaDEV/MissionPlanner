@@ -5657,11 +5657,11 @@ namespace MissionPlanner.GCSViews
                                 switch (value)
                                 {
                                     case float v when v < 18:
-                                        quickView.BackColor = Color.Red;
+                                        quickView.BackColor = Color.DarkRed;
                                         bitmask = 15;
                                         break;
                                     case float v when v < 21:
-                                        quickView.BackColor = Color.OrangeRed;
+                                        quickView.BackColor = Color.DarkOrange;
                                         bitmask = 0;
                                         break;
                                     default:
@@ -5675,11 +5675,11 @@ namespace MissionPlanner.GCSViews
                                 switch (value)
                                 {
                                     case float v when v < 80:
-                                        quickView.BackColor = Color.Red;
+                                        quickView.BackColor = Color.DarkRed;
                                         bitmask = 15;
                                         break;
                                     case float v when v < 120:
-                                        quickView.BackColor = Color.OrangeRed;
+                                        quickView.BackColor = Color.DarkOrange;
                                         bitmask = 0;
                                         break;
                                     default:
@@ -5693,11 +5693,11 @@ namespace MissionPlanner.GCSViews
                                 switch (value)
                                 {
                                     case float v when v < 4:
-                                        quickView.BackColor = Color.Red;
+                                        quickView.BackColor = Color.DarkRed;
                                         bitmask = 15;
                                         break;
                                     case float v when v < 4.5:
-                                        quickView.BackColor = Color.OrangeRed;
+                                        quickView.BackColor = Color.DarkOrange;
                                         bitmask = 0;
                                         break;
                                     default:
@@ -5706,23 +5706,96 @@ namespace MissionPlanner.GCSViews
                                         break;
                                 }
                                 break;
-                            case "vibez":
-                                quickView.desc = "VibeSum";
-                                quickView.BackColor = Color.Green;
-                                float valueVibez;
-                                valueVibez = MainV2.comPort.MAV.cs.vibez + 3 * MainV2.comPort.MAV.cs.vibex + 3 * MainV2.comPort.MAV.cs.vibex;
-                                switch (valueVibez)
+                            case "xtrack_error":
+                                quickView.desc = "Ecart (m)";
+                                value = MainV2.comPort.MAV.cs.xtrack_error;
+                                switch (value)
                                 {
-                                    case float v when v > 10:
-                                        quickView.BackColor = Color.Red;
+                                    case float v when v > 400:
+                                        quickView.BackColor = Color.DarkRed;
                                         bitmask = 2;
                                         break;
-                                    case float v when v > 5:
-                                        quickView.BackColor = Color.OrangeRed;
+                                    case float v when v > 200:
+                                        quickView.BackColor = Color.DarkOrange;
                                         bitmask = 0;
                                         break;
                                     default:
                                         bitmask = 0;
+                                        quickView.BackColor = Color.Green;
+                                        break;
+                                }
+                                break;
+                            case "roll":
+                                value = MainV2.comPort.MAV.cs.roll;
+                                switch (Math.Abs(value))
+                                {
+                                    case float v when v > 35:
+                                        quickView.BackColor = Color.DarkRed;
+                                        bitmask = 3;
+                                        break;
+                                    case float v when v > 25:
+                                        quickView.BackColor = Color.DarkOrange;
+                                        bitmask = 0;
+                                        break;
+                                    default:
+                                        bitmask = 0;
+                                        quickView.BackColor = Color.Green;
+                                        break;
+                                }
+                                break;
+                            case "pitch":
+                                value = MainV2.comPort.MAV.cs.pitch;
+                                switch (Math.Abs(value))
+                                {
+                                    case float v when v > 15:
+                                        quickView.BackColor = Color.DarkRed;
+                                        bitmask = 3;
+                                        break;
+                                    case float v when v > 7:
+                                        quickView.BackColor = Color.DarkOrange;
+                                        bitmask = 0;
+                                        break;
+                                    default:
+                                        bitmask = 0;
+                                        quickView.BackColor = Color.Green;
+                                        break;
+                                }
+                                break;
+                            case "ch3percent":
+                                value = MainV2.comPort.MAV.cs.ch3percent;
+                                quickView.desc = "Throttle (%)";
+                                switch (value)
+                                {
+                                    case float v when (v > 90 || v < 10):
+                                        quickView.BackColor = Color.DarkRed;
+                                        bitmask = 3;
+                                        break;
+                                    case float v when (v > 80 || v < 60):
+                                        quickView.BackColor = Color.DarkOrange;
+                                        bitmask = 0;
+                                        break;
+                                    default:
+                                        bitmask = 0;
+                                        quickView.BackColor = Color.Green;
+                                        break;
+                                }
+                                break;
+                            case "vibez":
+                                quickView.desc = "VibeSum";                               
+                                value = MainV2.comPort.MAV.cs.vibez + 3 * MainV2.comPort.MAV.cs.vibex + 3 * MainV2.comPort.MAV.cs.vibex;
+                                switch (value)
+                                {
+                                    case float v when v > 10:
+                                        quickView.BackColor = Color.DarkRed;
+                                        bitmask = 2;
+                                        break;
+                                    case float v when v > 5:
+                                        quickView.BackColor = Color.DarkOrange;
+                                        bitmask = 0;
+                                        break;
+                                    default:
+                                        bitmask = 0;
+                                        quickView.BackColor = Color.Green;
                                         break;
                                 }
                                 break;

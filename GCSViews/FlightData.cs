@@ -5799,6 +5799,42 @@ namespace MissionPlanner.GCSViews
                                         break;
                                 }
                                 break;
+                            case "climbrate":
+                                value = MainV2.comPort.MAV.cs.climbrate;
+                                switch (Math.Abs(value))
+                                {
+                                    case float v when v > 10:
+                                        quickView.BackColor = Color.DarkRed;
+                                        bitmask = 3;
+                                        break;
+                                    case float v when v > 5:
+                                        quickView.BackColor = Color.DarkOrange;
+                                        bitmask = 0;
+                                        break;
+                                    default:
+                                        bitmask = 0;
+                                        quickView.BackColor = Color.Green;
+                                        break;
+                                }
+                                break;
+                            case "groundspeed":
+                                value = MainV2.comPort.MAV.cs.groundspeed;
+                                switch (value)
+                                {
+                                    case float v when (v < 18 || v>35):
+                                        quickView.BackColor = Color.DarkRed;
+                                        bitmask = 15;
+                                        break;
+                                    case float v when (v < 21 || v > 28):
+                                        quickView.BackColor = Color.DarkOrange;
+                                        bitmask = 0;
+                                        break;
+                                    default:
+                                        quickView.BackColor = Color.Green;
+                                        bitmask = 0;
+                                        break;
+                                }
+                                break;
                             default:
                                 quickView.BackColor = Color.FromArgb(20, 20, 20);
                                 bitmask = 0;

@@ -1993,7 +1993,7 @@ namespace MissionPlanner.GCSViews
         private void BUTrestartmission_Click(object sender, EventArgs e)
         {
 
-            DialogResult result = MessageBox.Show("Voulez-vous vraiment déclencher le parachute ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("Voulez-vous vraiment déclencher le parachute ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
 
             // Vérifier la réponse de l'utilisateur

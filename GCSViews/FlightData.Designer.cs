@@ -776,25 +776,25 @@ namespace MissionPlanner.GCSViews
             //this.tableLayoutPanel1.Controls.Add(this.BUT_abortland, 4, 4);
             //this.tableLayoutPanel1.Controls.Add(this.modifyandSetLoiterRad, 4, 2);
             //this.tableLayoutPanel1.Controls.Add(this.BUT_clear_track, 4, 3);
-            this.tableLayoutPanel1.Controls.Add(this.CMB_action, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.BUTactiondo, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.BUT_resumemis, 1, 3);
+            //this.tableLayoutPanel1.Controls.Add(this.CMB_action, 0, 0);
+            //this.tableLayoutPanel1.Controls.Add(this.BUTactiondo, 1, 0);
+            //this.tableLayoutPanel1.Controls.Add(this.BUT_resumemis, 1, 2);
             //this.tableLayoutPanel1.Controls.Add(this.modifyandSetAlt, 4, 1);
-            this.tableLayoutPanel1.Controls.Add(this.modifyandSetSpeed, 1, 4);
-            this.tableLayoutPanel1.Controls.Add(this.CMB_setwp, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.modifyandSetSpeed, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.CMB_setwp, 0, 0);
             //this.tableLayoutPanel1.Controls.Add(this.BUT_ARM, 0, 4);
             //this.tableLayoutPanel1.Controls.Add(this.BUT_mountmode, 1, 3);
             //this.tableLayoutPanel1.Controls.Add(this.BUT_joystick, 2, 3);
             //this.tableLayoutPanel1.Controls.Add(this.BUT_RAWSensor, 3, 2);
-            this.tableLayoutPanel1.Controls.Add(this.BUT_Homealt, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.BUTrestartmission, 0, 8);
+            //this.tableLayoutPanel1.Controls.Add(this.BUT_Homealt, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.BUTrestartmission, 0, 7);
             //this.tableLayoutPanel1.Controls.Add(this.CMB_mountmode, 0, 3);
             //this.tableLayoutPanel1.Controls.Add(this.BUT_quickrtl, 2, 2);
             //this.tableLayoutPanel1.Controls.Add(this.BUT_quickmanual, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.BUT_setwp, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.CMB_modes, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.BUT_quickauto, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.BUT_setmode, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.BUT_setwp, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.CMB_modes, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.BUT_quickauto, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.BUT_setmode, 1, 1);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.SetColumnSpan(this.CMB_action, 2);
             this.tableLayoutPanel1.SetColumnSpan(this.BUTactiondo, 2);
@@ -802,7 +802,7 @@ namespace MissionPlanner.GCSViews
             this.tableLayoutPanel1.SetColumnSpan(this.CMB_setwp, 2);
 
             this.tableLayoutPanel1.SetColumnSpan(this.BUT_quickauto, 2);
-            this.tableLayoutPanel1.SetRowSpan(this.BUT_quickauto, 2);
+            this.tableLayoutPanel1.SetRowSpan(this.BUT_quickauto, 1);
             this.tableLayoutPanel1.SetColumnSpan(this.BUT_setmode, 2);
             this.tableLayoutPanel1.SetColumnSpan(this.BUT_Homealt, 2);
             this.tableLayoutPanel1.SetColumnSpan(this.BUT_setwp, 2);
@@ -955,14 +955,14 @@ namespace MissionPlanner.GCSViews
             // 
             resources.ApplyResources(this.modifyandSetSpeed, "modifyandSetSpeed");
             this.modifyandSetSpeed.ButtonText = "Change Speed";
-            this.modifyandSetSpeed.DecimalPlaces = 1;
+            this.modifyandSetSpeed.DecimalPlaces = 0;
             this.modifyandSetSpeed.Increment = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.modifyandSetSpeed.Maximum = new decimal(new int[] {
-            1000,
+            40,
             0,
             0,
             0});
@@ -973,7 +973,7 @@ namespace MissionPlanner.GCSViews
             0});
             this.modifyandSetSpeed.Name = "modifyandSetSpeed";
             this.modifyandSetSpeed.Value = new decimal(new int[] {
-            100,
+            25,
             0,
             0,
             0});

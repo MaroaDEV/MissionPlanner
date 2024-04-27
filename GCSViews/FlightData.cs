@@ -4498,6 +4498,14 @@ namespace MissionPlanner.GCSViews
 
         private async void modifyandSetSpeed_Click(object sender, EventArgs e)
         {
+            // Afficher une fenêtre de confirmation
+            DialogResult result = MessageBox.Show("Attention: set speed est une action dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            // Si l'utilisateur choisit "Non", annuler l'action
+            if (result == DialogResult.No)
+            {
+                return;
+            }
             try
             {
                 await MainV2.comPort.doCommandAsync(MainV2.comPort.MAV.sysid, MainV2.comPort.MAV.compid,

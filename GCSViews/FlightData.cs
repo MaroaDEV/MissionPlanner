@@ -364,7 +364,7 @@ namespace MissionPlanner.GCSViews
             List<KeyValuePair<int, string>> allModes = ArduPilot.Common.getModesList(MainV2.comPort.MAV.cs.firmware);
 
             List<KeyValuePair<int, string>> filteredModes = allModes
-                .Where(mode => mode.Key == 10 || mode.Key == 21   || mode.Key == 11 || mode.Key == 20 || mode.Key == 21 || mode.Key == 12)
+                .Where(mode => mode.Key == 10 || mode.Key == 21   || mode.Key == 11 || mode.Key == 20 || mode.Key == 21 || mode.Key == 19)
                 .ToList();
 
             // Définir la source de données pour CMB_modes sur la liste filtrée
@@ -2662,7 +2662,7 @@ namespace MissionPlanner.GCSViews
             List<KeyValuePair<int, string>> allModes = ArduPilot.Common.getModesList(MainV2.comPort.MAV.cs.firmware);
 
             List<KeyValuePair<int, string>> filteredModes = allModes
-                .Where(mode => mode.Key == 10 || mode.Key == 21 || mode.Key == 11 || mode.Key == 20 || mode.Key == 21 || mode.Key == 12)
+                .Where(mode => mode.Key == 10 || mode.Key == 21 || mode.Key == 11 || mode.Key == 20 || mode.Key == 21 || mode.Key == 19)
                 .ToList();
 
             // Définir la source de données pour CMB_modes sur la liste filtrée
@@ -5657,11 +5657,11 @@ namespace MissionPlanner.GCSViews
                                 switch (value)
                                 {
                                     case float v when v < 18:
-                                        quickView.BackColor = Color.DarkRed;
+                                        quickView.BackColor = Color.Red;
                                         bitmask = 15;
                                         break;
                                     case float v when v < 21:
-                                        quickView.BackColor = Color.DarkOrange;
+                                        quickView.BackColor = Color.Orange;
                                         bitmask = 0;
                                         break;
                                     default:
@@ -5675,11 +5675,11 @@ namespace MissionPlanner.GCSViews
                                 switch (value)
                                 {
                                     case float v when v < 80:
-                                        quickView.BackColor = Color.DarkRed;
+                                        quickView.BackColor = Color.Red;
                                         bitmask = 15;
                                         break;
                                     case float v when v < 120:
-                                        quickView.BackColor = Color.DarkOrange;
+                                        quickView.BackColor = Color.Orange;
                                         bitmask = 0;
                                         break;
                                     default:
@@ -5693,11 +5693,11 @@ namespace MissionPlanner.GCSViews
                                 switch (value)
                                 {
                                     case float v when v < 4:
-                                        quickView.BackColor = Color.DarkRed;
+                                        quickView.BackColor = Color.Red;
                                         bitmask = 15;
                                         break;
                                     case float v when v < 4.5:
-                                        quickView.BackColor = Color.DarkOrange;
+                                        quickView.BackColor = Color.Orange;
                                         bitmask = 0;
                                         break;
                                     default:
@@ -5712,11 +5712,11 @@ namespace MissionPlanner.GCSViews
                                 switch (value)
                                 {
                                     case float v when v > 400:
-                                        quickView.BackColor = Color.DarkRed;
+                                        quickView.BackColor = Color.Red;
                                         bitmask = 2;
                                         break;
                                     case float v when v > 200:
-                                        quickView.BackColor = Color.DarkOrange;
+                                        quickView.BackColor = Color.Orange;
                                         bitmask = 0;
                                         break;
                                     default:
@@ -5730,11 +5730,11 @@ namespace MissionPlanner.GCSViews
                                 switch (Math.Abs(value))
                                 {
                                     case float v when v > 35:
-                                        quickView.BackColor = Color.DarkRed;
+                                        quickView.BackColor = Color.Red;
                                         bitmask = 3;
                                         break;
                                     case float v when v > 25:
-                                        quickView.BackColor = Color.DarkOrange;
+                                        quickView.BackColor = Color.Orange;
                                         bitmask = 0;
                                         break;
                                     default:
@@ -5748,11 +5748,11 @@ namespace MissionPlanner.GCSViews
                                 switch (Math.Abs(value))
                                 {
                                     case float v when v > 15:
-                                        quickView.BackColor = Color.DarkRed;
+                                        quickView.BackColor = Color.Red;
                                         bitmask = 3;
                                         break;
                                     case float v when v > 7:
-                                        quickView.BackColor = Color.DarkOrange;
+                                        quickView.BackColor = Color.Orange;
                                         bitmask = 0;
                                         break;
                                     default:
@@ -5767,11 +5767,11 @@ namespace MissionPlanner.GCSViews
                                 switch (value)
                                 {
                                     case float v when (v > 90 || v < 10):
-                                        quickView.BackColor = Color.DarkRed;
+                                        quickView.BackColor = Color.Red;
                                         bitmask = 3;
                                         break;
                                     case float v when (v > 80 || v < 60):
-                                        quickView.BackColor = Color.DarkOrange;
+                                        quickView.BackColor = Color.Orange;
                                         bitmask = 0;
                                         break;
                                     default:
@@ -5786,11 +5786,11 @@ namespace MissionPlanner.GCSViews
                                 switch (value)
                                 {
                                     case float v when v > 10:
-                                        quickView.BackColor = Color.DarkRed;
+                                        quickView.BackColor = Color.Red;
                                         bitmask = 2;
                                         break;
                                     case float v when v > 5:
-                                        quickView.BackColor = Color.DarkOrange;
+                                        quickView.BackColor = Color.Orange;
                                         bitmask = 0;
                                         break;
                                     default:
@@ -5804,11 +5804,11 @@ namespace MissionPlanner.GCSViews
                                 switch (Math.Abs(value))
                                 {
                                     case float v when v > 10:
-                                        quickView.BackColor = Color.DarkRed;
+                                        quickView.BackColor = Color.Red;
                                         bitmask = 3;
                                         break;
                                     case float v when v > 5:
-                                        quickView.BackColor = Color.DarkOrange;
+                                        quickView.BackColor = Color.Orange;
                                         bitmask = 0;
                                         break;
                                     default:
@@ -5822,11 +5822,11 @@ namespace MissionPlanner.GCSViews
                                 switch (value)
                                 {
                                     case float v when (v < 18 || v>35):
-                                        quickView.BackColor = Color.DarkRed;
+                                        quickView.BackColor = Color.Red;
                                         bitmask = 15;
                                         break;
                                     case float v when (v < 21 || v > 28):
-                                        quickView.BackColor = Color.DarkOrange;
+                                        quickView.BackColor = Color.Orange;
                                         bitmask = 0;
                                         break;
                                     default:

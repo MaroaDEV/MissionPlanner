@@ -5657,7 +5657,7 @@ namespace MissionPlanner.GCSViews
                                 switch (value)
                                 {
                                     case float v when v < 18:
-                                        quickView.BackColor = Color.Red;
+                                        quickView.BackColor = Color.DarkRed;
                                         bitmask = 15;
                                         break;
                                     case float v when v < 21:
@@ -5675,7 +5675,7 @@ namespace MissionPlanner.GCSViews
                                 switch (value)
                                 {
                                     case float v when v < 80:
-                                        quickView.BackColor = Color.Red;
+                                        quickView.BackColor = Color.DarkRed;
                                         bitmask = 15;
                                         break;
                                     case float v when v < 120:
@@ -5693,7 +5693,7 @@ namespace MissionPlanner.GCSViews
                                 switch (value)
                                 {
                                     case float v when v < 4:
-                                        quickView.BackColor = Color.Red;
+                                        quickView.BackColor = Color.DarkRed;
                                         bitmask = 15;
                                         break;
                                     case float v when v < 4.5:
@@ -5712,7 +5712,7 @@ namespace MissionPlanner.GCSViews
                                 switch (value)
                                 {
                                     case float v when v > 400:
-                                        quickView.BackColor = Color.Red;
+                                        quickView.BackColor = Color.DarkRed;
                                         bitmask = 2;
                                         break;
                                     case float v when v > 200:
@@ -5730,7 +5730,7 @@ namespace MissionPlanner.GCSViews
                                 switch (Math.Abs(value))
                                 {
                                     case float v when v > 35:
-                                        quickView.BackColor = Color.Red;
+                                        quickView.BackColor = Color.DarkRed;
                                         bitmask = 3;
                                         break;
                                     case float v when v > 25:
@@ -5748,7 +5748,7 @@ namespace MissionPlanner.GCSViews
                                 switch (Math.Abs(value))
                                 {
                                     case float v when v > 15:
-                                        quickView.BackColor = Color.Red;
+                                        quickView.BackColor = Color.DarkRed;
                                         bitmask = 3;
                                         break;
                                     case float v when v > 7:
@@ -5767,7 +5767,7 @@ namespace MissionPlanner.GCSViews
                                 switch (value)
                                 {
                                     case float v when (v > 90 || v < 10):
-                                        quickView.BackColor = Color.Red;
+                                        quickView.BackColor = Color.DarkRed;
                                         bitmask = 3;
                                         break;
                                     case float v when (v > 80 || v < 60):
@@ -5786,7 +5786,7 @@ namespace MissionPlanner.GCSViews
                                 switch (value)
                                 {
                                     case float v when v > 10:
-                                        quickView.BackColor = Color.Red;
+                                        quickView.BackColor = Color.DarkRed;
                                         bitmask = 2;
                                         break;
                                     case float v when v > 5:
@@ -5804,7 +5804,7 @@ namespace MissionPlanner.GCSViews
                                 switch (Math.Abs(value))
                                 {
                                     case float v when v > 10:
-                                        quickView.BackColor = Color.Red;
+                                        quickView.BackColor = Color.Crimson;
                                         bitmask = 3;
                                         break;
                                     case float v when v > 5:
@@ -5822,7 +5822,7 @@ namespace MissionPlanner.GCSViews
                                 switch (value)
                                 {
                                     case float v when (v < 18 || v>35):
-                                        quickView.BackColor = Color.Red;
+                                        quickView.BackColor = Color.DarkRed;
                                         bitmask = 15;
                                         break;
                                     case float v when (v < 21 || v > 28):

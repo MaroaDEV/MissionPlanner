@@ -3067,6 +3067,7 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private int loopCounter;
         public System.Windows.Forms.TabPage tabScripts;
         private Controls.MyButton BUT_edit_selected;
         private System.Windows.Forms.Label labelSelectedScript;

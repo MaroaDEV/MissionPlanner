@@ -5597,7 +5597,14 @@ namespace MissionPlanner.GCSViews
                         bindingSourceHud.UpdateDataSource(MainV2.comPort.MAV.cs));
                 }
                 //if the tab detached wi have to update it 
-                if (1 == 1) MainV2.comPort.MAV.cs.UpdateCurrentSettings(bindingSourceQuickTab.UpdateDataSource(MainV2.comPort.MAV.cs));
+                loopCounter++;
+
+                if (loopCounter > 5)
+                {
+                    // Exécuter votre action une fois sur 5
+                    MainV2.comPort.MAV.cs.UpdateCurrentSettings(bindingSourceQuickTab.UpdateDataSource(MainV2.comPort.MAV.cs));
+                    loopCounter = 0;
+                }
                 if (1 == 1) Messagetabtimer.Start();
 
                 lastscreenupdate = DateTime.Now;

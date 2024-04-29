@@ -897,9 +897,9 @@ mc:Ignorable=""d""
                     zg1.GraphPane.Y2Axis.MajorTic.Color = TextColor;
                     zg1.GraphPane.Y2Axis.MinorTic.Color = TextColor;
 
-                    zg1.GraphPane.XAxis.MajorGrid.Color = TextColor;
-                    zg1.GraphPane.YAxis.MajorGrid.Color = TextColor;
-                    zg1.GraphPane.Y2Axis.MajorGrid.Color = TextColor;
+                    zg1.GraphPane.XAxis.MajorGrid.Color = Color.Black;
+                    zg1.GraphPane.YAxis.MajorGrid.Color = Color.Black;
+                    zg1.GraphPane.Y2Axis.MajorGrid.Color = Color.Black;
 
                     zg1.GraphPane.YAxis.Scale.FontSpec.FontColor = TextColor;
                     zg1.GraphPane.YAxis.Title.FontSpec.FontColor = TextColor;
@@ -1201,9 +1201,9 @@ mc:Ignorable=""d""
                         GraphPane.Y2Axis.MajorTic.Color = TextColor;
                         GraphPane.Y2Axis.MinorTic.Color = TextColor;
 
-                        GraphPane.XAxis.MajorGrid.Color = TextColor;
-                        GraphPane.YAxis.MajorGrid.Color = TextColor;
-                        GraphPane.Y2Axis.MajorGrid.Color = TextColor;
+                        GraphPane.XAxis.MajorGrid.Color = Color.Black;
+                        GraphPane.YAxis.MajorGrid.Color = Color.Black;
+                        GraphPane.Y2Axis.MajorGrid.Color = Color.Black;
 
                         GraphPane.YAxis.Scale.FontSpec.FontColor = TextColor;
                         GraphPane.YAxis.Title.FontSpec.FontColor = TextColor;

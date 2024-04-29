@@ -4457,15 +4457,19 @@ namespace MissionPlanner.GCSViews
                         message.Insert(0, x.Item1 + " : " + x.Item2 + "\r\n");
                     });
                     txt_messagebox.Text = message.ToString();
-
+                    if (txt_messagebox.Text.Contains("Dual sensors alert"))
+                    {
+                        dual_airspeed_counter = 30;
+                    }
                     messagecount = messagetime.toUnixTime();
                 }
                 catch (Exception ex)
                 {
                     log.Error(ex);
                 }
+                
             }
-
+            dual_airspeed_counter = Math.Max(dual_airspeed_counter - 1, 5);
             coords1.AltUnit = CurrentState.AltUnit;
         }
 
@@ -5663,7 +5667,7 @@ namespace MissionPlanner.GCSViews
                                 value = MainV2.comPort.MAV.cs.airspeed;
                                 switch (value)
                                 {
-                                    case float v when v < 18:
+                                    case float v when (v < 18 || dual_airspeed_counter > 10):
                                         quickView.BackColor = Color.DarkRed;
                                         bitmask = 15;
                                         break;

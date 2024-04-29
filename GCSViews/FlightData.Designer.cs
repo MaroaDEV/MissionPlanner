@@ -3094,6 +3094,8 @@ namespace MissionPlanner.GCSViews
         private Controls.MyButton but_dflogtokml;
         private Controls.MyButton BUT_DFMavlink;
         public System.Windows.Forms.TabPage tabPagemessages;
+        private int dual_airspeed_counter = 5; // Compteur pour suivre le nombre d'occurrences de "Dual Airspeed"
+        private bool has_dual_alert = false;
         public ComboBox comboBoxMapType;
         private System.Windows.Forms.TextBox txt_messagebox;
         private System.Windows.Forms.Timer Messagetabtimer;

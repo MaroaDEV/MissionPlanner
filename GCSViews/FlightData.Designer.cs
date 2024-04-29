@@ -2494,7 +2494,7 @@ namespace MissionPlanner.GCSViews
             //this.PointCameraCoordsToolStripMenuItem1,
             //this.triggerCameraToolStripMenuItem,
             //this.flightPlannerToolStripMenuItem,
-            //this.setHomeHereToolStripMenuItem,
+            this.setHomeHereToolStripMenuItem,
             //this.takeOffToolStripMenuItem,
             //this.onOffCameraOverlapToolStripMenuItem,
             //this.jumpToTagToolStripMenuItem

@@ -74,6 +74,26 @@ namespace MissionPlanner.Maps
 
         public override void OnRender(IGraphics g)
         {
+
+            int sysid = which + 1;
+            string sysidText = "";
+            try
+            {
+                sysidText = "SN " + sysid.ToString("D3");
+            }
+            catch
+            {
+            }
+            base.OnRender(g);
+
+            // Dessiner le texte "hey" à côté du marqueur en blanc, en gras et plus grand
+            using (Font font = new Font("Arial", 12, FontStyle.Bold))
+            using (Brush brush = new SolidBrush(Color.Yellow))
+            {
+                Point textLocation = new Point(LocalPosition.X + Size.Width + 5, LocalPosition.Y);
+                g.DrawString(sysidText, font, brush, textLocation);
+            }
+
             var temp = g.Transform;
             g.TranslateTransform(LocalPosition.X, LocalPosition.Y);
 

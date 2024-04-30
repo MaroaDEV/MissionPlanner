@@ -1999,23 +1999,18 @@ namespace MissionPlanner.GCSViews
             // Vérifier la réponse de l'utilisateur
             if (result == (int)DialogResult.Yes)
             {
-                // ID du canal de servo pour le déclenchement du parachute (à remplacer par votre valeur)
-                int parachuteServoChannel = 13;
-
-                ((Control)sender).Enabled = true;
-                // Angle de déclenchement du servo (à remplacer par votre valeur)
-                int parachuteTriggerAngle = 180;
 
                 // Envoyer une commande MAVLink pour définir la position du servo
                 MainV2.comPort.doCommand(
-                    MAVLink.MAV_CMD.DO_SET_SERVO,
-                    parachuteServoChannel,   // Numéro de canal de servo
-                    parachuteTriggerAngle,   // Angle de déclenchement du servo
+                    MAVLink.MAV_CMD.DO_PARACHUTE,
+                    2,   // 0 = Disable, 1 = Enable, 2 = Release 
+                    0,   // Angle de déclenchement du servo
                     0,                       // Non utilisé
                     0,                       // Non utilisé
                     0,                       // Non utilisé
                     0,                       // Non utilisé
                     0);                      // Non utilisé
+
             }
         }
 

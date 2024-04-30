@@ -5663,7 +5663,7 @@ namespace MissionPlanner.GCSViews
                                 quickView.desc = "airspeed (m/s)";
                                 switch (value)
                                 {
-                                    case float v when (v < 18 || dual_airspeed_counter > 10):
+                                    case float v when (v < 21 || dual_airspeed_counter > 10):
                                         quickView.BackColor = Color.DarkRed;
                                         if (dual_airspeed_counter > 10)
                                         {
@@ -5671,7 +5671,7 @@ namespace MissionPlanner.GCSViews
                                         }
                                         bitmask = 15;
                                         break;
-                                    case float v when v < 21:
+                                    case float v when v < 21.7:
                                         quickView.BackColor = Color.Orange;
                                         bitmask = 0;
                                         break;
@@ -5687,9 +5687,9 @@ namespace MissionPlanner.GCSViews
                                 {
                                     case float v when v < 80:
                                         quickView.BackColor = Color.DarkRed;
-                                        bitmask = 15;
+                                        bitmask = 7;
                                         break;
-                                    case float v when v < 120:
+                                    case float v when v < 100:
                                         quickView.BackColor = Color.Orange;
                                         bitmask = 0;
                                         break;
@@ -5703,11 +5703,11 @@ namespace MissionPlanner.GCSViews
                                 value = MainV2.comPort.MAV.cs.boardvoltage;
                                 switch (value)
                                 {
-                                    case float v when v < 4:
+                                    case float v when v < 4.2:
                                         quickView.BackColor = Color.DarkRed;
                                         bitmask = 15;
                                         break;
-                                    case float v when v < 4.5:
+                                    case float v when v < 4.8:
                                         quickView.BackColor = Color.Orange;
                                         bitmask = 0;
                                         break;
@@ -5724,7 +5724,7 @@ namespace MissionPlanner.GCSViews
                                 {
                                     case float v when v > 400:
                                         quickView.BackColor = Color.DarkRed;
-                                        bitmask = 2;
+                                        bitmask = 7;
                                         break;
                                     case float v when v > 200:
                                         quickView.BackColor = Color.Orange;
@@ -5742,7 +5742,7 @@ namespace MissionPlanner.GCSViews
                                 {
                                     case float v when v > 35:
                                         quickView.BackColor = Color.DarkRed;
-                                        bitmask = 3;
+                                        bitmask = 7;
                                         break;
                                     case float v when v > 25:
                                         quickView.BackColor = Color.Orange;
@@ -5760,7 +5760,7 @@ namespace MissionPlanner.GCSViews
                                 {
                                     case float v when v > 15:
                                         quickView.BackColor = Color.DarkRed;
-                                        bitmask = 3;
+                                        bitmask = 15;
                                         break;
                                     case float v when v > 7:
                                         quickView.BackColor = Color.Orange;
@@ -5779,7 +5779,7 @@ namespace MissionPlanner.GCSViews
                                 {
                                     case float v when (v > 90 || v < 10):
                                         quickView.BackColor = Color.DarkRed;
-                                        bitmask = 3;
+                                        bitmask = 15;
                                         break;
                                     case float v when (v > 80 || v < 60):
                                         quickView.BackColor = Color.Orange;
@@ -5796,11 +5796,11 @@ namespace MissionPlanner.GCSViews
                                 value = MainV2.comPort.MAV.cs.vibez + 3 * MainV2.comPort.MAV.cs.vibex + 3 * MainV2.comPort.MAV.cs.vibex;
                                 switch (value)
                                 {
-                                    case float v when v > 10:
+                                    case float v when v > 90:
                                         quickView.BackColor = Color.DarkRed;
-                                        bitmask = 2;
+                                        bitmask = 7;
                                         break;
-                                    case float v when v > 5:
+                                    case float v when v > 30:
                                         quickView.BackColor = Color.Orange;
                                         bitmask = 0;
                                         break;
@@ -5832,7 +5832,7 @@ namespace MissionPlanner.GCSViews
                                 value = MainV2.comPort.MAV.cs.groundspeed;
                                 switch (value)
                                 {
-                                    case float v when (v < 18 || v>35):
+                                    case float v when (v < 17 || v>35):
                                         quickView.BackColor = Color.DarkRed;
                                         bitmask = 15;
                                         break;

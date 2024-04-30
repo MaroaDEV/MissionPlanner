@@ -616,10 +616,10 @@ namespace MissionPlanner.GCSViews
             if (MainV2.comPort.MAV.cs.ter_curalt > 20)
             {
                 // Afficher une fenêtre de confirmation
-                DialogResult result = MessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 // Si l'utilisateur choisit "Non", annuler l'action
-                if (result == DialogResult.No)
+                if (result == (int)DialogResult.No)
                 {
                     return;
                 }
@@ -670,11 +670,11 @@ namespace MissionPlanner.GCSViews
 
         public void qlandClickBox_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Voulez-vous vraiment opérer un QLAND ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            int result = CustomMessageBox.Show("Voulez-vous vraiment opérer un QLAND ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
 
             // Vérifier la réponse de l'utilisateur
-            if (result == DialogResult.Yes)
+            if (result == (int)DialogResult.Yes)
             {
                 try
                 {
@@ -693,11 +693,11 @@ namespace MissionPlanner.GCSViews
         public void rtlClickBox_Click(object sender, EventArgs e)
         {
 
-            DialogResult result = MessageBox.Show("Voulez-vous vraiment commencer un RTL ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            int result = CustomMessageBox.Show("Voulez-vous vraiment commencer un RTL ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
 
             // Vérifier la réponse de l'utilisateur
-            if (result == DialogResult.Yes)
+            if (result == (int)DialogResult.Yes)
             {
 
                 try
@@ -716,11 +716,11 @@ namespace MissionPlanner.GCSViews
 
         private void SetSp30ClickBox_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Voulez-vous vraiment régler la consigne de vitesse à 30 m/s ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            int result = CustomMessageBox.Show("Voulez-vous vraiment régler la consigne de vitesse à 30 m/s ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
 
             // Vérifier la réponse de l'utilisateur
-            if (result == DialogResult.Yes)
+            if (result == (int)DialogResult.Yes)
             {
                 try
                 {
@@ -1117,10 +1117,10 @@ namespace MissionPlanner.GCSViews
             if (MainV2.comPort.MAV.cs.ter_curalt > 20)
             {
                 // Afficher une fenêtre de confirmation
-                DialogResult result = MessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 // Si l'utilisateur choisit "Non", annuler l'action
-                if (result == DialogResult.No)
+                if (result == (int)DialogResult.No)
                 {
                     return;
                 }
@@ -1523,10 +1523,10 @@ namespace MissionPlanner.GCSViews
             if (MainV2.comPort.MAV.cs.ter_curalt > 20)
             {
                 // Afficher une fenêtre de confirmation
-                DialogResult result = MessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 // Si l'utilisateur choisit "Non", annuler l'action
-                if (result == DialogResult.No)
+                if (result == (int)DialogResult.No)
                 {
                     return;
                 }
@@ -1550,10 +1550,10 @@ namespace MissionPlanner.GCSViews
             if (MainV2.comPort.MAV.cs.ter_curalt > 20)
             {
                 // Afficher une fenêtre de confirmation
-                DialogResult result = MessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 // Si l'utilisateur choisit "Non", annuler l'action
-                if (result == DialogResult.No)
+                if (result == (int)DialogResult.No)
                 {
                     return;
                 }
@@ -1993,11 +1993,11 @@ namespace MissionPlanner.GCSViews
         private void BUTrestartmission_Click(object sender, EventArgs e)
         {
 
-            DialogResult result = MessageBox.Show("Voulez-vous vraiment déclencher le parachute ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            int result = CustomMessageBox.Show("Voulez-vous vraiment déclencher le parachute ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
 
             // Vérifier la réponse de l'utilisateur
-            if (result == DialogResult.Yes)
+            if (result == (int)DialogResult.Yes)
             {
                 // ID du canal de servo pour le déclenchement du parachute (à remplacer par votre valeur)
                 int parachuteServoChannel = 13;
@@ -4503,10 +4503,10 @@ namespace MissionPlanner.GCSViews
         private async void modifyandSetSpeed_Click(object sender, EventArgs e)
         {
             // Afficher une fenêtre de confirmation
-            DialogResult result = MessageBox.Show("Attention: set speed est une action dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            int result = CustomMessageBox.Show("Attention: set speed est une action dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             // Si l'utilisateur choisit "Non", annuler l'action
-            if (result == DialogResult.No)
+            if (result == (int)DialogResult.No)
             {
                 return;
             }
@@ -5665,10 +5665,15 @@ namespace MissionPlanner.GCSViews
                         {
                             case "airspeed":                                
                                 value = MainV2.comPort.MAV.cs.airspeed;
+                                quickView.desc = "airspeed (m/s)";
                                 switch (value)
                                 {
                                     case float v when (v < 18 || dual_airspeed_counter > 10):
                                         quickView.BackColor = Color.DarkRed;
+                                        if (dual_airspeed_counter > 10)
+                                        {
+                                            quickView.desc = "Alerte Pitots !";
+                                        }
                                         bitmask = 15;
                                         break;
                                     case float v when v < 21:
@@ -5815,7 +5820,7 @@ namespace MissionPlanner.GCSViews
                                 switch (Math.Abs(value))
                                 {
                                     case float v when v > 10:
-                                        quickView.BackColor = Color.Crimson;
+                                        quickView.BackColor = Color.DarkRed;
                                         bitmask = 3;
                                         break;
                                     case float v when v > 5:

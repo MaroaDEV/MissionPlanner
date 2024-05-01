@@ -1092,6 +1092,39 @@
   <data name="&gt;&gt;BUT_Homealt.ZOrder" xml:space="preserve">
     <value>14</value>
   </data>
+	<data name="BUT_DropPL.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+		<value>Fill</value>
+	</data>
+	<data name="BUT_DropPLt.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+		<value>NoControl</value>
+	</data>
+	<data name="BUT_DropPL.Location" type="System.Drawing.Point, System.Drawing">
+		<value>174, 3</value>
+	</data>
+	<data name="BUT_DropPL.Size" type="System.Drawing.Size, System.Drawing">
+		<value>51, 30</value>
+	</data>
+	<data name="BUT_DropPL.TabIndex" type="System.Int32, mscorlib">
+		<value>69</value>
+	</data>
+	<data name="BUT_DropPL.Text" xml:space="preserve">
+    <value>Drop Payload</value>
+  </data>
+	<data name="BUT_DropPL.ToolTip" xml:space="preserve">
+    <value>Set the current display alt as 0, ie home alt is shown as 0</value>
+  </data>
+	<data name="&gt;&gt;BUT_DropPL.Name" xml:space="preserve">
+    <value>BUT_DropPL</value>
+  </data>
+	<data name="&gt;&gt;BUT_DropPL.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+	<data name="&gt;&gt;BUT_DropPL.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+	<data name="&gt;&gt;BUT_DropPL.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
   <data name="BUTrestartmission.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>

@@ -264,6 +264,9 @@
   <data name="BUT_Homealt.Text" xml:space="preserve">
     <value>Definir alt. d'origine</value>
   </data>
+  <data name="BUT_DropPL.Text" xml:space="preserve">
+    <value>Drop Payload</value>
+  </data>
   <data name="tabQuick.Text" xml:space="preserve">
     <value>Quick</value>
   </data>
@@ -278,6 +281,9 @@
   </data>
   <data name="BUT_Homealt.ToolTip" xml:space="preserve">
     <value>Afficher l'altitude courant comme '0'. (Altitude d'orgine est defini comme '0').</value>
+  </data>
+  <data name="BUT_DropPL.ToolTip" xml:space="preserve">
+    <value>Activation du largage manuel de la charge utile</value>
   </data>
   <data name="recordHudToAVIToolStripMenuItem.Text" xml:space="preserve">
     <value>Enregistrer HUD en AVI</value>

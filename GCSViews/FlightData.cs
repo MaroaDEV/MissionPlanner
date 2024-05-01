@@ -610,6 +610,19 @@ namespace MissionPlanner.GCSViews
             }
         }
 
+        public void BUT_DropPL_Click(object sender, EventArgs e)
+        {
+            // Afficher une fenêtre de confirmation
+            int result = CustomMessageBox.Show("Attention: voulez vous vraiment larguer le colis maintenant ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            // Si l'utilisateur choisit "Non", annuler l'action
+            if (result == (int)DialogResult.No)
+            {
+                return;
+            }
+
+        }
+
         public void BUT_Reboot_Click(object sender, EventArgs e)
         {
             // Vérifier la condition si value > 20

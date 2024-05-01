@@ -68,6 +68,7 @@ namespace MissionPlanner.GCSViews
             this.BUT_joystick = new MissionPlanner.Controls.MyButton();
             this.BUT_RAWSensor = new MissionPlanner.Controls.MyButton();
             this.BUT_Homealt = new MissionPlanner.Controls.MyButton();
+            this.BUT_DropPL = new MissionPlanner.Controls.MyButton();
             this.BUTrestartmission = new MissionPlanner.Controls.CustomButton();
             this.CMB_mountmode = new System.Windows.Forms.ComboBox();
             this.BUT_quickrtl = new MissionPlanner.Controls.MyButton();
@@ -787,6 +788,7 @@ namespace MissionPlanner.GCSViews
             //this.tableLayoutPanel1.Controls.Add(this.BUT_joystick, 2, 3);
             //this.tableLayoutPanel1.Controls.Add(this.BUT_RAWSensor, 3, 2);
             //this.tableLayoutPanel1.Controls.Add(this.BUT_Homealt, 0, 2);
+            //this.tableLayoutPanel1.Controls.Add(this.BUT_DropPL, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.BUTrestartmission, 0, 7);
             //this.tableLayoutPanel1.Controls.Add(this.CMB_mountmode, 0, 3);
             //this.tableLayoutPanel1.Controls.Add(this.BUT_quickrtl, 2, 2);
@@ -1045,6 +1047,17 @@ namespace MissionPlanner.GCSViews
             this.toolTip1.SetToolTip(this.BUT_Homealt, resources.GetString("BUT_Homealt.ToolTip"));
             this.BUT_Homealt.UseVisualStyleBackColor = true;
             this.BUT_Homealt.Click += new System.EventHandler(this.BUT_Homealt_Click);
+            // 
+            // BUT_DropPL
+            // 
+            this.BUT_DropPL.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BUT_DropPL.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BUT_DropPL.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BUT_DropPL, "BUT_DropPL");
+            this.BUT_DropPL.Name = "BUT_DropPL";
+            this.toolTip1.SetToolTip(this.BUT_DropPL, resources.GetString("BUT_DropPL.ToolTip"));
+            this.BUT_DropPL.UseVisualStyleBackColor = true;
+            this.BUT_DropPL.Click += new System.EventHandler(this.BUT_DropPL_Click);
             // 
             // BUTrestartmission
             // 
@@ -2975,6 +2988,7 @@ namespace MissionPlanner.GCSViews
         private Controls.MyButton BUTrestartmission;
         private System.Windows.Forms.ComboBox CMB_action;
         private Controls.MyButton BUT_Homealt;
+        private Controls.MyButton BUT_DropPL;
         private System.Windows.Forms.TrackBar tracklog;
         private Controls.MyButton BUT_playlog;
         private Controls.MyButton BUT_loadtelem;

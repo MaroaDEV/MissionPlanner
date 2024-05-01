@@ -81,7 +81,7 @@ namespace MissionPlanner.Utilities
             colors.Add("Button Mouseover", Color.RoyalBlue, "ColorMouseOver");			// This changes the background color of buttons when the mouse is hovering over a button
             colors.Add("Button Mousedown", Color.Black, "ColorMouseDown");			// This changes the background color of buttons when the mouse is clicked down on a button
             colors.Add("CurrentPPM Background", Color.Green, "CurrentPPMBackground");					// This changes the background colour of the current PPM setting in the flight modes tab
-            colors.Add("Graph Chart Fill", Color.White, "ZedGraphChartFill"); 	// These three variables change the fill colours of Zed Graphs
+            colors.Add("Graph Chart Fill", Color.FromArgb(20, 20, 20), "ZedGraphChartFill"); 	// These three variables change the fill colours of Zed Graphs
             colors.Add("Graph Pane Fill", Color.FromArgb(0x37, 0x37, 0x38), "ZedGraphPaneFill");
             colors.Add("Graph Legend Fill", Color.FromArgb(0x85, 0x84, 0x83), "ZedGraphLegendFill");
             colors.Add("Rich Text Box text", Color.WhiteSmoke, "RTBForeColor");							// This changes the colour of text in rich text boxes
@@ -897,9 +897,9 @@ mc:Ignorable=""d""
                     zg1.GraphPane.Y2Axis.MajorTic.Color = TextColor;
                     zg1.GraphPane.Y2Axis.MinorTic.Color = TextColor;
 
-                    zg1.GraphPane.XAxis.MajorGrid.Color = Color.Black;
-                    zg1.GraphPane.YAxis.MajorGrid.Color = Color.Black;
-                    zg1.GraphPane.Y2Axis.MajorGrid.Color = Color.Black;
+                    zg1.GraphPane.XAxis.MajorGrid.Color = TextColor;
+                    zg1.GraphPane.YAxis.MajorGrid.Color = TextColor;
+                    zg1.GraphPane.Y2Axis.MajorGrid.Color = TextColor;
 
                     zg1.GraphPane.YAxis.Scale.FontSpec.FontColor = TextColor;
                     zg1.GraphPane.YAxis.Title.FontSpec.FontColor = TextColor;
@@ -1201,9 +1201,9 @@ mc:Ignorable=""d""
                         GraphPane.Y2Axis.MajorTic.Color = TextColor;
                         GraphPane.Y2Axis.MinorTic.Color = TextColor;
 
-                        GraphPane.XAxis.MajorGrid.Color = Color.Black;
-                        GraphPane.YAxis.MajorGrid.Color = Color.Black;
-                        GraphPane.Y2Axis.MajorGrid.Color = Color.Black;
+                        GraphPane.XAxis.MajorGrid.Color = TextColor;
+                        GraphPane.YAxis.MajorGrid.Color = TextColor;
+                        GraphPane.Y2Axis.MajorGrid.Color = TextColor;
 
                         GraphPane.YAxis.Scale.FontSpec.FontColor = TextColor;
                         GraphPane.YAxis.Title.FontSpec.FontColor = TextColor;

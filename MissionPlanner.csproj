@@ -62,7 +62,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyName>GCAM</AssemblyName>
+    <AssemblyName>Ground Control Software by AerialMetric</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="APMPlannerXplanes\**" />

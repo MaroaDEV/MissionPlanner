@@ -5700,7 +5700,7 @@ namespace MissionPlanner.GCSViews
                                 }
                                 break;
                             case "boardvoltage":
-                                value = MainV2.comPort.MAV.cs.boardvoltage;
+                                value = MainV2.comPort.MAV.cs.boardvoltage/1000;
                                 switch (value)
                                 {
                                     case float v when v < 4.2:
@@ -5744,7 +5744,25 @@ namespace MissionPlanner.GCSViews
                                         quickView.BackColor = Color.DarkRed;
                                         bitmask = 7;
                                         break;
-                                    case float v when v > 25:
+                                    case float v when v > 5:
+                                        quickView.BackColor = Color.Orange;
+                                        bitmask = 0;
+                                        break;
+                                    default:
+                                        bitmask = 0;
+                                        quickView.BackColor = Color.Green;
+                                        break;
+                                }
+                                break;
+                            case "current":
+                                value = (float)MainV2.comPort.MAV.cs.current;
+                                switch (Math.Abs(value))
+                                {
+                                    case float v when v > 27:
+                                        quickView.BackColor = Color.DarkRed;
+                                        bitmask = 7;
+                                        break;
+                                    case float v when v > 24:
                                         quickView.BackColor = Color.Orange;
                                         bitmask = 0;
                                         break;

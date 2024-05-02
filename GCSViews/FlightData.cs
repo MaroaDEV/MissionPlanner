@@ -6042,18 +6042,18 @@ namespace MissionPlanner.GCSViews
                                 break;
                             case "vibez":
                                 quickView.desc = "VibeSum";                               
-                                value = MainV2.comPort.MAV.cs.vibez + 3 * MainV2.comPort.MAV.cs.vibex + 3 * MainV2.comPort.MAV.cs.vibex;
+                                value = MainV2.comPort.MAV.cs.vibez + MainV2.comPort.MAV.cs.vibex + MainV2.comPort.MAV.cs.vibey;
                                 switch (value)
                                 {
                                     case float v when (!is_cruising):
                                         quickView.BackColor = Color.FromArgb(20, 20, 20);
                                         bitmask = 0;
                                         break;
-                                    case float v when v > 90:
+                                    case float v when v > 20:
                                         quickView.BackColor = Color.DarkRed;
                                         bitmask = 7;
                                         break;
-                                    case float v when v > 30:
+                                    case float v when v > 12:
                                         quickView.BackColor = Color.Orange;
                                         bitmask = 0;
                                         break;

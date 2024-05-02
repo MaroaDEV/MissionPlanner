@@ -200,7 +200,7 @@ namespace MissionPlanner
                 return;
             }
 
-            name = "Ground Control Software by AerialMetric";
+            name = "GCSAM";
 
             try
             {

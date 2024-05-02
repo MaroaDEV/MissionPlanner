@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Ground Control Software by AerialMetric")]
+[assembly: AssemblyTitle("GCSAM")]
 [assembly: AssemblyDescription("Edited version of MissionPlanner for AerialMetric")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Michael Oborne & MaroaDEV")]
-[assembly: AssemblyProduct("Ground Control Software by AerialMetric")]
+[assembly: AssemblyProduct("GCSAM")]
 [assembly: AssemblyCopyright("Copyright ©  2010-2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -17,7 +17,7 @@ namespace MissionPlanner.Utilities
     {
         static Settings _instance;
 
-        public static string AppConfigName { get; set; } = "Ground Control Software by AerialMetric";
+        public static string AppConfigName { get; set; } = "GCSAM";
 
         public static Settings Instance
         {

@@ -625,7 +625,7 @@ namespace MissionPlanner.GCSViews
             MainV2.comPort.doCommand(
                 MAVLink.MAV_CMD.DO_SET_SERVO,
                 11,   // // Servo n°
-                1000,   // Angle de déclenchement du servo
+                2000,   // Angle de déclenchement du servo
                 0,                       // Non utilisé
                 0,                       // Non utilisé
                 0,                       // Non utilisé
@@ -634,7 +634,7 @@ namespace MissionPlanner.GCSViews
             MainV2.comPort.doCommand(
                 MAVLink.MAV_CMD.DO_SET_SERVO,
                 12,   // // Servo n°
-                2000,   // Angle de déclenchement du servo
+                1000,   // Angle de déclenchement du servo
                 0,                       // Non utilisé
                 0,                       // Non utilisé
                 0,                       // Non utilisé
@@ -699,7 +699,7 @@ namespace MissionPlanner.GCSViews
             MainV2.comPort.doCommand(
                 MAVLink.MAV_CMD.DO_SET_SERVO,
                 11,   // Servo n°
-                1000,   // Angle de déclenchement du servo
+                2000,   // Angle de déclenchement du servo
                 0,                       // Non utilisé
                 0,                       // Non utilisé
                 0,                       // Non utilisé
@@ -708,7 +708,7 @@ namespace MissionPlanner.GCSViews
             MainV2.comPort.doCommand(
                 MAVLink.MAV_CMD.DO_SET_SERVO,
                 12,   // Servo n°
-                2000,   // Angle de déclenchement du servo
+                1000,   // Angle de déclenchement du servo
                 0,                       // Non utilisé
                 0,                       // Non utilisé
                 0,                       // Non utilisé
@@ -785,7 +785,7 @@ namespace MissionPlanner.GCSViews
             MainV2.comPort.doCommand(
                 MAVLink.MAV_CMD.DO_SET_SERVO,
                 11,   // Servo n°
-                2000,   // Angle de déclenchement du servo
+                1000,   // Angle de déclenchement du servo
                 0,                       // Non utilisé
                 0,                       // Non utilisé
                 0,                       // Non utilisé
@@ -794,7 +794,7 @@ namespace MissionPlanner.GCSViews
             MainV2.comPort.doCommand(
                 MAVLink.MAV_CMD.DO_SET_SERVO,
                 12,   // Servo n°
-                1000,   // PWM
+                2000,   // PWM
                 0,                       // Non utilisé
                 0,                       // Non utilisé
                 0,                       // Non utilisé

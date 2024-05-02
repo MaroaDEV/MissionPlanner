@@ -33,7 +33,6 @@ using LogAnalyzer = MissionPlanner.Utilities.LogAnalyzer;
 using TableLayoutPanelCellPosition = System.Windows.Forms.TableLayoutPanelCellPosition;
 using UnauthorizedAccessException = System.UnauthorizedAccessException;
 using GMap.NET.MapProviders;
-using System.Speech.Synthesis;
 
 // written by michael oborne
 
@@ -5850,12 +5849,12 @@ namespace MissionPlanner.GCSViews
 
             if ((int)MainV2.comPort.MAV.cs.wpno != prev_wp)
             {
-                wp_dist_loop_count = 73;
+                wp_dist_loop_count = 93;
             }
             wp_dist_loop_count = Math.Max(wp_dist_loop_count - 1, 1);
             prev_wp = (int)MainV2.comPort.MAV.cs.wpno;
 
-            bool is_cruising = (MainV2.comPort.MAV.cs.DistToHome > 800) && ((MainV2.comPort.MAV.cs.mode == "Auto") || (MainV2.comPort.MAV.cs.mode == "RTL"));
+            bool is_cruising = (MainV2.comPort.MAV.cs.DistToHome > 200) && ((MainV2.comPort.MAV.cs.mode == "Auto") || (MainV2.comPort.MAV.cs.mode == "RTL"));
 
             // THE FOLLOWING PART IS EDITED BY DEVS TO ADD THE CUSTOM MONITORING FOR AERIALMETRIC
             foreach (Control control in tableLayoutPanelQuick.Controls)
@@ -5911,7 +5910,7 @@ namespace MissionPlanner.GCSViews
                                 value = MainV2.comPort.MAV.cs.ter_curalt;
                                 switch (value)
                                 {
-                                    case float v when (!is_cruising):
+                                    case float v when (!is_cruising || MainV2.comPort.MAV.cs.DistToHome < 800):
                                         quickView.BackColor = Color.FromArgb(20, 20, 20);
                                         bitmask = 0;
                                         break;
@@ -6030,7 +6029,11 @@ namespace MissionPlanner.GCSViews
                                 quickView.desc = "Throttle (%)";
                                 switch (value)
                                 {
-                                    case float v when (v > 80 || v < 60):
+                                    case float v when (!is_cruising):
+                                        quickView.BackColor = Color.FromArgb(20, 20, 20);
+                                        bitmask = 0;
+                                        break;
+                                    case float v when (v > 80 || v < 40):
                                         quickView.BackColor = Color.Orange;
                                         bitmask = 0;
                                         break;
@@ -6089,7 +6092,7 @@ namespace MissionPlanner.GCSViews
                                         quickView.BackColor = Color.FromArgb(20, 20, 20);
                                         bitmask = 0;
                                         break;
-                                    case float v when (v < 17 || v>35):
+                                    case float v when (v < 15 || v>35):
                                         quickView.BackColor = Color.DarkRed;
                                         bitmask = 15;
                                         break;
@@ -6115,7 +6118,7 @@ namespace MissionPlanner.GCSViews
                         {
                             // Si l'élément existe déjà, mettez à jour son entier avec la valeur de bitmask
                             int index = listOfTuples.IndexOf(existingTuple);
-                            if (listOfTuples[index].Item2 != bitmask && bitmask != 0)
+                            if (listOfTuples[index].Item2 != bitmask && bitmask != 0 && MainV2.comPort.MAV.cs.armed)
                             {
                                 PlayBeepAsync(880, 500); // Play the first beep
                                 Task.Delay(200).Wait(); // Delay for 1 second
@@ -6123,21 +6126,21 @@ namespace MissionPlanner.GCSViews
                                 Task.Delay(200).Wait(); // Delay for 1 second
                                 PlayBeepAsync(880, 500); // Play the first beep
 
-                                // Créer un objet SpeechSynthesizer
-                                //using (SpeechSynthesizer synth = new SpeechSynthesizer())
-                                //{
-                                //    // Sélectionner la voix à utiliser
-                                //    synth.SelectVoiceByHints(VoiceGender.Female, VoiceAge.Adult);
+                            //    //Créer un objet SpeechSynthesizer
+                            //    using (SpeechSynthesizer synth = new SpeechSynthesizer())
+                            //    {
+                            //        // Sélectionner la voix à utiliser
+                            //        synth.SelectVoiceByHints(VoiceGender.Female, VoiceAge.Adult);
 
-                                //    // Définir la vitesse de la parole (de -10 à 10)
-                                //    synth.Rate = 0; // 0 est la vitesse par défaut
+                            //        // Définir la vitesse de la parole (de -10 à 10)
+                            //        synth.Rate = 0; // 0 est la vitesse par défaut
 
-                                //    // Définir le texte à synthétiser
-                                //    string texte = "Alerte " + listOfTuples[index].Item1;
+                            //        // Définir le texte à synthétiser
+                            //        string texte = "Alerte " + listOfTuples[index].Item1;
 
-                                //    // Synthétiser la parole
-                                //    synth.Speak(texte);
-                                //}
+                            //        // Synthétiser la parole
+                            //        synth.Speak(texte);
+                            //    }
                             }
                             listOfTuples[index] = new Tuple<string, int>(existingTuple.Item1, bitmask);
                         }

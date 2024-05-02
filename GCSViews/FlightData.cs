@@ -5810,7 +5810,7 @@ namespace MissionPlanner.GCSViews
                 //if the tab detached wi have to update it 
                 loopCounter++;
 
-                if (loopCounter > 5)
+                if (loopCounter > 15)
                 {
                     // Exécuter votre action une fois sur 5
                     MainV2.comPort.MAV.cs.UpdateCurrentSettings(bindingSourceQuickTab.UpdateDataSource(MainV2.comPort.MAV.cs));
@@ -5847,6 +5847,13 @@ namespace MissionPlanner.GCSViews
                 }
             }
 
+            if ((int)MainV2.comPort.MAV.cs.wpno != prev_wp)
+            {
+                wp_dist_loop_count = 73;
+            }
+            wp_dist_loop_count = Math.Max(wp_dist_loop_count - 1, 1);
+            prev_wp = (int)MainV2.comPort.MAV.cs.wpno;
+
             // THE FOLLOWING PART IS EDITED BY DEVS TO ADD THE CUSTOM MONITORING FOR AERIALMETRIC
             foreach (Control control in tableLayoutPanelQuick.Controls)
             {
@@ -5855,7 +5862,7 @@ namespace MissionPlanner.GCSViews
                 quickView.ForeColor = Color.White;
                 quickView.numberColor = Color.White;
                 quickView.numberColorBackup = Color.White;
-
+                
                 // Bitmask: 1 Para, 2 QLAND, 4 RTL, 8 SetSp30, 16 SetWP
 
 
@@ -5935,11 +5942,15 @@ namespace MissionPlanner.GCSViews
                                 value = MainV2.comPort.MAV.cs.xtrack_error;
                                 switch (value)
                                 {
-                                    case float v when v > 400:
+                                    case float v when (wp_dist_loop_count >= 3):
+                                        quickView.BackColor = Color.FromArgb(20, 20, 20);
+                                        bitmask = 0;
+                                        break;
+                                    case float v when (v > 10 && wp_dist_loop_count <3):
                                         quickView.BackColor = Color.DarkRed;
                                         bitmask = 7;
                                         break;
-                                    case float v when v > 200:
+                                    case float v when (v > 6 && wp_dist_loop_count < 3):
                                         quickView.BackColor = Color.Orange;
                                         bitmask = 0;
                                         break;
@@ -5987,13 +5998,13 @@ namespace MissionPlanner.GCSViews
                                 break;
                             case "pitch":
                                 value = MainV2.comPort.MAV.cs.pitch;
-                                switch (Math.Abs(value))
+                                switch (value)
                                 {
-                                    case float v when v > 15:
+                                    case float v when (v > 15 || v < -10):
                                         quickView.BackColor = Color.DarkRed;
                                         bitmask = 15;
                                         break;
-                                    case float v when v > 7:
+                                    case float v when (v > 8 || v < -3):
                                         quickView.BackColor = Color.Orange;
                                         bitmask = 0;
                                         break;

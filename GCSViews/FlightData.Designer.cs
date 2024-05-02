@@ -3188,6 +3188,8 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.ToolStripMenuItem setGStreamerSourceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem setEKFHomeHereToolStripMenuItem;
         private System.Windows.Forms.TabPage tabPayload;
+        private int prev_wp;
+        private int wp_dist_loop_count;
         private System.Windows.Forms.BindingSource bindingSourcePayloadTab;
         private System.Windows.Forms.TrackBar trackBarYaw;
         private System.Windows.Forms.TrackBar trackBarRoll;

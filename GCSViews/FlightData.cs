@@ -610,7 +610,7 @@ namespace MissionPlanner.GCSViews
             }
         }
 
-        public void BUT_DropPL_Click(object sender, EventArgs e)
+        public async void BUT_DropPL_Click(object sender, EventArgs e)
         {
             // Afficher une fenêtre de confirmation
             int result = CustomMessageBox.Show("Attention: voulez vous vraiment larguer le colis maintenant ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -651,7 +651,7 @@ namespace MissionPlanner.GCSViews
                 0);
 
             // Attendre 5 secondes avant d'envoyer les prochaines commandes
-            System.Threading.Thread.Sleep(5000);
+            await Task.Delay(5000);
 
             // Envoyer une commande MAVLink pour passer tous les servo en position neutre
 

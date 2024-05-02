@@ -69,6 +69,9 @@ namespace MissionPlanner.GCSViews
             this.BUT_RAWSensor = new MissionPlanner.Controls.MyButton();
             this.BUT_Homealt = new MissionPlanner.Controls.MyButton();
             this.BUT_DropPL = new MissionPlanner.Controls.MyButton();
+            this.BUT_DropPLG = new MissionPlanner.Controls.MyButton();
+            this.BUT_NeutralPLG = new MissionPlanner.Controls.MyButton();
+            this.BUT_ClosePLG = new MissionPlanner.Controls.MyButton();
             this.BUTrestartmission = new MissionPlanner.Controls.CustomButton();
             this.CMB_mountmode = new System.Windows.Forms.ComboBox();
             this.BUT_quickrtl = new MissionPlanner.Controls.MyButton();
@@ -823,6 +826,9 @@ namespace MissionPlanner.GCSViews
             this.tableLayoutPanel3.Controls.Add(this.BUT_PreFlightCal, 1, 1);
             this.tableLayoutPanel3.Controls.Add(this.BUT_ARM, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.BUT_Reboot, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.BUT_DropPLG, 2, 2);
+            this.tableLayoutPanel3.Controls.Add(this.BUT_NeutralPLG, 1, 2);
+            this.tableLayoutPanel3.Controls.Add(this.BUT_ClosePLG, 0, 2);
             this.tableLayoutPanel3.SetColumnSpan(this.BUT_ARM, 1);
             this.tableLayoutPanel3.Resize += new System.EventHandler(this.tableLayoutPanel3_Resize);
             // 
@@ -1059,6 +1065,39 @@ namespace MissionPlanner.GCSViews
             this.toolTip1.SetToolTip(this.BUT_DropPL, resources.GetString("BUT_DropPL.ToolTip"));
             this.BUT_DropPL.UseVisualStyleBackColor = true;
             this.BUT_DropPL.Click += new System.EventHandler(this.BUT_DropPL_Click);
+            // 
+            // BUT_DropPLG
+            // 
+            this.BUT_DropPLG.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BUT_DropPLG.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BUT_DropPLG.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BUT_DropPLG, "BUT_DropPLG");
+            this.BUT_DropPLG.Name = "BUT_DropPLG";
+            this.toolTip1.SetToolTip(this.BUT_DropPLG, resources.GetString("BUT_DropPLG.ToolTip"));
+            this.BUT_DropPLG.UseVisualStyleBackColor = true;
+            this.BUT_DropPLG.Click += new System.EventHandler(this.BUT_DropPLG_Click);
+            // 
+            // BUT_NeutralPLG
+            // 
+            this.BUT_NeutralPLG.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BUT_NeutralPLG.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BUT_NeutralPLG.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BUT_NeutralPLG, "BUT_NeutralPLG");
+            this.BUT_NeutralPLG.Name = "BUT_NeutralPLG";
+            this.toolTip1.SetToolTip(this.BUT_NeutralPLG, resources.GetString("BUT_NeutralPLG.ToolTip"));
+            this.BUT_NeutralPLG.UseVisualStyleBackColor = true;
+            this.BUT_NeutralPLG.Click += new System.EventHandler(this.BUT_NeutralPLG_Click);
+            // 
+            // BUT_ClosePLG
+            // 
+            this.BUT_ClosePLG.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BUT_ClosePLG.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BUT_ClosePLG.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BUT_ClosePLG, "BUT_ClosePLG");
+            this.BUT_ClosePLG.Name = "BUT_ClosePLG";
+            this.toolTip1.SetToolTip(this.BUT_ClosePLG, resources.GetString("BUT_ClosePLG.ToolTip"));
+            this.BUT_ClosePLG.UseVisualStyleBackColor = true;
+            this.BUT_ClosePLG.Click += new System.EventHandler(this.BUT_ClosePLG_Click);
             // 
             // BUTrestartmission
             // 
@@ -2990,6 +3029,9 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.ComboBox CMB_action;
         private Controls.MyButton BUT_Homealt;
         private Controls.MyButton BUT_DropPL;
+        private Controls.MyButton BUT_DropPLG;
+        private Controls.MyButton BUT_NeutralPLG;
+        private Controls.MyButton BUT_ClosePLG;
         private System.Windows.Forms.TrackBar tracklog;
         private Controls.MyButton BUT_playlog;
         private Controls.MyButton BUT_loadtelem;

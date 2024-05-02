@@ -621,6 +621,195 @@ namespace MissionPlanner.GCSViews
                 return;
             }
 
+            // Envoyer une commande MAVLink pour passer tous les servo en position de largage
+            MainV2.comPort.doCommand(
+                MAVLink.MAV_CMD.DO_SET_SERVO,
+                11,   // // Servo n°
+                1000,   // Angle de déclenchement du servo
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0);                      // Non utilisé
+            MainV2.comPort.doCommand(
+                MAVLink.MAV_CMD.DO_SET_SERVO,
+                12,   // // Servo n°
+                2000,   // Angle de déclenchement du servo
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0);
+            MainV2.comPort.doCommand(
+                MAVLink.MAV_CMD.DO_SET_SERVO,
+                14,   // Servo n°
+                2000,   // Angle de déclenchement du servo
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0);
+
+            // Attendre 5 secondes avant d'envoyer les prochaines commandes
+            System.Threading.Thread.Sleep(5000);
+
+            // Envoyer une commande MAVLink pour passer tous les servo en position neutre
+
+            MainV2.comPort.doCommand(
+                MAVLink.MAV_CMD.DO_SET_SERVO,
+                11,   // Servo n°
+                1500,   // Angle de déclenchement du servo
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0); 
+            MainV2.comPort.doCommand(
+                MAVLink.MAV_CMD.DO_SET_SERVO,
+                12,   // Servo n°
+                1500,   // Angle de déclenchement du servo
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0);
+
+            CustomMessageBox.Show("Action effectuée");
+
+
+
+        }
+
+        public void BUT_DropPLG_Click(object sender, EventArgs e)
+        {
+            // Vérifier la condition si value > 20
+            if (MainV2.comPort.MAV.cs.ter_curalt > 20)
+            {
+                // Afficher une fenêtre de confirmation
+                int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                // Si l'utilisateur choisit "Non", annuler l'action
+                if (result == (int)DialogResult.No)
+                {
+                    return;
+                }
+            }
+
+            // Envoyer une commande MAVLink pour passer tous les servo en position de largage
+            MainV2.comPort.doCommand(
+                MAVLink.MAV_CMD.DO_SET_SERVO,
+                11,   // Servo n°
+                1000,   // Angle de déclenchement du servo
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0);                      // Non utilisé
+            MainV2.comPort.doCommand(
+                MAVLink.MAV_CMD.DO_SET_SERVO,
+                12,   // Servo n°
+                2000,   // Angle de déclenchement du servo
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0);
+            MainV2.comPort.doCommand(
+                MAVLink.MAV_CMD.DO_SET_SERVO,
+                14,   // Servo n°
+                2000,   // Angle de déclenchement du servo
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0);
+            CustomMessageBox.Show("Action effectuée");
+
+
+        }
+
+        public void BUT_NeutralPLG_Click(object sender, EventArgs e)
+        {
+            // Vérifier la condition si value > 20
+            if (MainV2.comPort.MAV.cs.ter_curalt > 20)
+            {
+                // Afficher une fenêtre de confirmation
+                int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                // Si l'utilisateur choisit "Non", annuler l'action
+                if (result == (int)DialogResult.No)
+                {
+                    return;
+                }
+            }
+
+            // Envoyer une commande MAVLink pour passer tous les servo en position neutre
+            MainV2.comPort.doCommand(
+                MAVLink.MAV_CMD.DO_SET_SERVO,
+                11,   // Servo n°
+                1500,   // Angle de déclenchement du servo
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0);                      // Non utilisé
+            MainV2.comPort.doCommand(
+                MAVLink.MAV_CMD.DO_SET_SERVO,
+                12,   // Servo n°
+                1500,   // Angle de déclenchement du servo
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0);
+            // Pas d'action sur le channel 14 pour la position neutre car le rack n'a pas de position neutre
+            CustomMessageBox.Show("Action effectuée");
+        }
+
+        public void BUT_ClosePLG_Click(object sender, EventArgs e)
+        {
+            // Vérifier la condition si value > 20
+            if (MainV2.comPort.MAV.cs.ter_curalt > 20)
+            {
+                // Afficher une fenêtre de confirmation
+                int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                // Si l'utilisateur choisit "Non", annuler l'action
+                if (result == (int)DialogResult.No)
+                {
+                    return;
+                }
+            }
+
+            // Envoyer une commande MAVLink pour passer tous les servo en position fermée
+            MainV2.comPort.doCommand(
+                MAVLink.MAV_CMD.DO_SET_SERVO,
+                11,   // Servo n°
+                2000,   // Angle de déclenchement du servo
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0);                      // Non utilisé
+            MainV2.comPort.doCommand(
+                MAVLink.MAV_CMD.DO_SET_SERVO,
+                12,   // Servo n°
+                1000,   // PWM
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0);
+            MainV2.comPort.doCommand(
+                MAVLink.MAV_CMD.DO_SET_SERVO,
+                14,   // 0 = Disable, 1 = Enable, 2 = Release 
+                1000,   // Angle de déclenchement du servo
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0);
+            CustomMessageBox.Show("Action effectuée");
         }
 
         public void BUT_Reboot_Click(object sender, EventArgs e)

@@ -1095,7 +1095,7 @@
 	<data name="BUT_DropPL.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
 		<value>Fill</value>
 	</data>
-	<data name="BUT_DropPLt.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+	<data name="BUT_DropPL.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
 		<value>NoControl</value>
 	</data>
 	<data name="BUT_DropPL.Location" type="System.Drawing.Point, System.Drawing">
@@ -1111,7 +1111,7 @@
     <value>Drop Payload</value>
   </data>
 	<data name="BUT_DropPL.ToolTip" xml:space="preserve">
-    <value>Set the current display alt as 0, ie home alt is shown as 0</value>
+    <value>Drop the payload mid air and set servo back to neutral pos</value>
   </data>
 	<data name="&gt;&gt;BUT_DropPL.Name" xml:space="preserve">
     <value>BUT_DropPL</value>
@@ -1125,6 +1125,106 @@
 	<data name="&gt;&gt;BUT_DropPL.ZOrder" xml:space="preserve">
     <value>14</value>
   </data>
+	<data name="BUT_DropPLG.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+		<value>Fill</value>
+	</data>
+	<data name="BUT_DropPLG.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+		<value>NoControl</value>
+	</data>
+	<data name="BUT_DropPLG.Location" type="System.Drawing.Point, System.Drawing">
+		<value>174, 3</value>
+	</data>
+	<data name="BUT_DropPLG.Size" type="System.Drawing.Size, System.Drawing">
+		<value>51, 30</value>
+	</data>
+	<data name="BUT_DropPLG.TabIndex" type="System.Int32, mscorlib">
+		<value>69</value>
+	</data>
+	<data name="BUT_DropPLG.Text" xml:space="preserve">
+    <value>Servos: Drop Position</value>
+  </data>
+	<data name="BUT_DropPLG.ToolTip" xml:space="preserve">
+    <value>Drop Payload (on ground only)</value>
+  </data>
+	<data name="&gt;&gt;BUT_DropPLG.Name" xml:space="preserve">
+    <value>BUT_DropPLG</value>
+  </data>
+	<data name="&gt;&gt;BUT_DropPLG.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+	<data name="&gt;&gt;BUT_DropPLG.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+	<data name="&gt;&gt;BUT_DropPLG.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+	<data name="BUT_NeutralPLG.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+		<value>Fill</value>
+	</data>
+	<data name="BUT_NeutralPLG.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+		<value>NoControl</value>
+	</data>
+	<data name="BUT_NeutralPLG.Location" type="System.Drawing.Point, System.Drawing">
+		<value>174, 3</value>
+	</data>
+	<data name="BUT_NeutralPLG.Size" type="System.Drawing.Size, System.Drawing">
+		<value>51, 30</value>
+	</data>
+	<data name="BUT_NeutralPLG.TabIndex" type="System.Int32, mscorlib">
+		<value>69</value>
+	</data>
+	<data name="BUT_NeutralPLG.Text" xml:space="preserve">
+    <value>Servos: Neutral Position</value>
+  </data>
+	<data name="BUT_NeutralPLG.ToolTip" xml:space="preserve">
+    <value>Set servos to neutral pos</value>
+  </data>
+	<data name="&gt;&gt;BUT_NeutralPLG.Name" xml:space="preserve">
+    <value>BUT_NeutralPLG</value>
+  </data>
+	<data name="&gt;&gt;BUT_NeutralPLG.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+	<data name="&gt;&gt;BUT_NeutralPLG.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+	<data name="&gt;&gt;BUT_NeutralPLG.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+	<data name="BUT_ClosePLG.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+		<value>Fill</value>
+	</data>
+	<data name="BUT_ClosePLG.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+		<value>NoControl</value>
+	</data>
+	<data name="BUT_ClosePLG.Location" type="System.Drawing.Point, System.Drawing">
+		<value>174, 3</value>
+	</data>
+	<data name="BUT_ClosePLG.Size" type="System.Drawing.Size, System.Drawing">
+		<value>51, 30</value>
+	</data>
+	<data name="BUT_ClosePLG.TabIndex" type="System.Int32, mscorlib">
+		<value>69</value>
+	</data>
+	<data name="BUT_ClosePLG.Text" xml:space="preserve">
+    <value>Servos: Closed Position</value>
+  </data>
+	<data name="BUT_ClosePLG.ToolTip" xml:space="preserve">
+    <value>Set servos to closed position (on ground only)</value>
+  </data>
+	<data name="&gt;&gt;BUT_ClosePLG.Name" xml:space="preserve">
+    <value>BUT_ClosePLG</value>
+  </data>
+	<data name="&gt;&gt;BUT_ClosePLG.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+	<data name="&gt;&gt;BUT_ClosePLG.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+	<data name="&gt;&gt;BUT_ClosePLG.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+
   <data name="BUTrestartmission.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>

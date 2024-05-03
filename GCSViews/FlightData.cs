@@ -5989,7 +5989,7 @@ namespace MissionPlanner.GCSViews
                                 }
                                 break;
                             case "current":
-                                value = (float)MainV2.comPort.MAV.cs.current;
+                                value = 0.7f * current_lowpass + 0.3f * (float)MainV2.comPort.MAV.cs.current;
                                 switch (Math.Abs(value))
                                 {
                                     case float v when v > 27:
@@ -6025,7 +6025,7 @@ namespace MissionPlanner.GCSViews
                                 }
                                 break;
                             case "ch3percent":
-                                value = MainV2.comPort.MAV.cs.ch3percent;
+                                value = 0.7f * throttle_lowpass + 0.3f * MainV2.comPort.MAV.cs.ch3percent;
                                 quickView.desc = "Throttle (%)";
                                 switch (value)
                                 {
@@ -6125,22 +6125,10 @@ namespace MissionPlanner.GCSViews
                                 PlayBeepAsync(880, 500); // Play the first beep
                                 Task.Delay(200).Wait(); // Delay for 1 second
                                 PlayBeepAsync(880, 500); // Play the first beep
+                                //Task.Delay(1000).Wait();
+                                //PlayVoiceAsync("alerte " + listOfTuples[index].Item1);
 
-                            //    //Créer un objet SpeechSynthesizer
-                            //    using (SpeechSynthesizer synth = new SpeechSynthesizer())
-                            //    {
-                            //        // Sélectionner la voix à utiliser
-                            //        synth.SelectVoiceByHints(VoiceGender.Female, VoiceAge.Adult);
 
-                            //        // Définir la vitesse de la parole (de -10 à 10)
-                            //        synth.Rate = 0; // 0 est la vitesse par défaut
-
-                            //        // Définir le texte à synthétiser
-                            //        string texte = "Alerte " + listOfTuples[index].Item1;
-
-                            //        // Synthétiser la parole
-                            //        synth.Speak(texte);
-                            //    }
                             }
                             listOfTuples[index] = new Tuple<string, int>(existingTuple.Item1, bitmask);
                         }
@@ -6291,6 +6279,28 @@ namespace MissionPlanner.GCSViews
                 await Task.Yield();
             });
         }
+
+        //static void PlayVoiceAsync(string texte)
+        //{
+        //    Task.Run(async () =>
+        //    {
+        //        //Créer un objet SpeechSynthesizer
+        //        using (System.Speech.Synthesis.SpeechSynthesizer synth = new System.Speech.Synthesis.SpeechSynthesizer())
+        //        {
+        //            // Sélectionner la voix à utiliser
+        //            synth.SelectVoiceByHints(System.Speech.Synthesis.VoiceGender.Female, System.Speech.Synthesis.VoiceAge.Adult);
+
+        //            // Définir la vitesse de la parole (de -10 à 10)
+        //            synth.Rate = 0; // 0 est la vitesse par défaut
+
+        //            // Synthétiser la parole
+        //            synth.Speak(texte);                  
+        //        }
+        //        await Task.Yield();
+        //    });
+        //}
+
+
 
         private void updateMapZoom(int zoom)
         {

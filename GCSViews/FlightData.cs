@@ -5847,6 +5847,9 @@ namespace MissionPlanner.GCSViews
                 }
             }
 
+            this.textBoxSN.Text = "SN " + MainV2.comPort.MAV.sysid.ToString("D3");
+            this.textBoxSN2.Text = "SN " + MainV2.comPort.MAV.sysid.ToString("D3");
+
             if ((int)MainV2.comPort.MAV.cs.wpno != prev_wp)
             {
                 wp_dist_loop_count = 93;
@@ -5947,6 +5950,24 @@ namespace MissionPlanner.GCSViews
                                         break;
                                 }
                                 break;
+                            case "satcount":
+                                value = MainV2.comPort.MAV.cs.satcount;
+                                switch (value)
+                                {
+                                    case float v when (v < 8):
+                                        quickView.BackColor = Color.DarkRed;
+                                        bitmask = 15;
+                                        break;
+                                    case float v when v < 11:
+                                        quickView.BackColor = Color.Orange;
+                                        bitmask = 0;
+                                        break;
+                                    default:
+                                        quickView.BackColor = Color.Green;
+                                        bitmask = 0;
+                                        break;
+                                }
+                                break;
                             case "xtrack_error":
                                 quickView.desc = "Ecart (m)";
                                 value = MainV2.comPort.MAV.cs.xtrack_error;
@@ -5989,7 +6010,9 @@ namespace MissionPlanner.GCSViews
                                 }
                                 break;
                             case "current":
-                                value = 0.7f * current_lowpass + 0.3f * (float)MainV2.comPort.MAV.cs.current;
+                                current_lowpass = 0.7f * current_lowpass + 0.3f * (float)MainV2.comPort.MAV.cs.current;
+                                value = current_lowpass;
+                                quickView.number = value;
                                 switch (Math.Abs(value))
                                 {
                                     case float v when v > 27:
@@ -6024,8 +6047,10 @@ namespace MissionPlanner.GCSViews
                                         break;
                                 }
                                 break;
-                            case "ch3percent":
-                                value = 0.7f * throttle_lowpass + 0.3f * MainV2.comPort.MAV.cs.ch3percent;
+                            case "ch3percent":                               
+                                throttle_lowpass = 0.7f * throttle_lowpass + 0.3f * MainV2.comPort.MAV.cs.ch3percent;
+                                value = throttle_lowpass;
+                                quickView.number = value;
                                 quickView.desc = "Throttle (%)";
                                 switch (value)
                                 {

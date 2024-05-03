@@ -1607,7 +1607,7 @@
     <value>2</value>
   </data>
   <data name="tabActions.Text" xml:space="preserve">
-    <value>Actions</value>
+    <value>Flight Actions</value>
   </data>
   <data name="&gt;&gt;tabActions.Name" xml:space="preserve">
     <value>tabActions</value>

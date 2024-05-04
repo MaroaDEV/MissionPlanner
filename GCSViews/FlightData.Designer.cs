@@ -795,7 +795,7 @@ namespace MissionPlanner.GCSViews
             this.tableLayoutPanel1.Controls.Add(this.BUT_DropPL, 1, 7);
             this.tableLayoutPanel1.Controls.Add(this.BUTrestartmission, 0, 7);
             //this.tableLayoutPanel1.Controls.Add(this.CMB_mountmode, 0, 3);
-            //this.tableLayoutPanel1.Controls.Add(this.BUT_quickrtl, 2, 2);
+            this.tableLayoutPanel1.Controls.Add(this.BUT_quickrtl, 0, 8);
             //this.tableLayoutPanel1.Controls.Add(this.BUT_quickmanual, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.BUT_setwp, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.CMB_modes, 0, 2);
@@ -819,7 +819,7 @@ namespace MissionPlanner.GCSViews
             this.tableLayoutPanel1.SetColumnSpan(this.BUTactiondo, 2);
             this.tableLayoutPanel1.SetColumnSpan(this.BUT_resumemis, 2);
             this.tableLayoutPanel1.SetColumnSpan(this.CMB_setwp, 2);
-
+            this.tableLayoutPanel1.SetColumnSpan(this.BUT_quickrtl, 2);
             this.tableLayoutPanel1.SetColumnSpan(this.BUT_quickauto, 2);
             this.tableLayoutPanel1.SetRowSpan(this.BUT_quickauto, 1);
             this.tableLayoutPanel1.SetColumnSpan(this.BUT_DropPL, 2);

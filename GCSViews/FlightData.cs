@@ -4840,6 +4840,9 @@ namespace MissionPlanner.GCSViews
 
         private void quickView_DoubleClick(object sender, EventArgs e)
         {
+            return;
+
+
             if (MainV2.DisplayConfiguration.lockQuickView)
                 return;
 
@@ -5911,11 +5914,24 @@ namespace MissionPlanner.GCSViews
                                 break;
                             case "ter_curalt":
                                 value = MainV2.comPort.MAV.cs.ter_curalt;
+                                if (MainV2.comPort.MAV.cs.rangefinder1 < MainV2.comPort.MAV.cs.ter_curalt && MainV2.comPort.MAV.cs.rangefinder1 < 150)
+                                {
+                                    value = MainV2.comPort.MAV.cs.rangefinder1;
+                                    quickView.desc = "Lidar";
+                                }
+                                else
+                                {
+                                    quickView.desc = "Terrain AGL";
+                                }
                                 switch (value)
                                 {
                                     case float v when (!is_cruising || MainV2.comPort.MAV.cs.DistToHome < 800):
                                         quickView.BackColor = Color.FromArgb(20, 20, 20);
                                         bitmask = 0;
+                                        break;
+                                    case float v when ((v < 10) &&  MainV2.comPort.MAV.cs.ter_curalt > 60) :
+                                        quickView.BackColor = Color.DarkRed;
+                                        bitmask = 7;
                                         break;
                                     case float v when v < 60:
                                         quickView.BackColor = Color.DarkRed;

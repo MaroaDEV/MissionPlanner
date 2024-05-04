@@ -64,6 +64,7 @@ namespace MissionPlanner.Controls
             _ColorNotEnabled = Color.FromArgb(73, 0x2b, 0x3a, 0x03);
             _ColorMouseOver = Color.FromArgb(73, 0x2b, 0x3a, 0x03);
             _ColorMouseDown = Color.FromArgb(150, 0x2b, 0x3a, 0x03);
+            this.Font = new System.Drawing.Font(this.Font, FontStyle.Bold);
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
@@ -208,6 +209,7 @@ namespace MissionPlanner.Controls
             this.BGGradTop = System.Drawing.Color.DarkRed;
             this.BGGradBot = System.Drawing.Color.Red;
             this.TextColor = System.Drawing.Color.White;
+            this.Font = new System.Drawing.Font(this.Font, FontStyle.Bold);
         }
     }
 }

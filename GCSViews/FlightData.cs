@@ -5864,9 +5864,17 @@ namespace MissionPlanner.GCSViews
 
             if ((int)MainV2.comPort.MAV.cs.wpno != prev_wp)
             {
-                wp_dist_loop_count = 93;
+                wp_dist_loop_count = 4;
+
+                // Démarre une tâche asynchrone pour attendre 10 secondes et continue ensuite
+                WaitForDelay(15000, () =>
+                {
+                    // Cette partie du code s'exécutera après l'attente de 10 secondes
+                    wp_dist_loop_count = 1;
+                    // Continuer avec le reste du code ici
+                });
             }
-            wp_dist_loop_count = Math.Max(wp_dist_loop_count - 1, 1);
+
             prev_wp = (int)MainV2.comPort.MAV.cs.wpno;
 
             bool is_cruising = (MainV2.comPort.MAV.cs.DistToHome > 200) && ((MainV2.comPort.MAV.cs.mode == "Auto") || (MainV2.comPort.MAV.cs.mode == "RTL"));
@@ -6022,7 +6030,7 @@ namespace MissionPlanner.GCSViews
                                 value = MainV2.comPort.MAV.cs.roll;
                                 switch (Math.Abs(value))
                                 {
-                                    case float v when (!is_cruising || wp_dist_loop_count >= 3):
+                                    case float v when ((!is_cruising) || wp_dist_loop_count >= 3):
                                         quickView.BackColor = Color.FromArgb(20, 20, 20);
                                         bitmask = 0;
                                         break;
@@ -6248,6 +6256,18 @@ namespace MissionPlanner.GCSViews
             }
         }
         // to prevent cross thread calls while in a draw and exception
+
+        // Fonction pour attendre de manière asynchrone
+        private void WaitForDelay(int millisecondsDelay, Action callback)
+        {
+            Task.Delay(millisecondsDelay).ContinueWith(task =>
+            {
+                // Exécuter le rappel après l'attente
+                callback?.Invoke();
+            });
+        }
+
+
         private void updateClearRoutes()
         {
             // not async

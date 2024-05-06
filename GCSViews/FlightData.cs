@@ -673,6 +673,15 @@ namespace MissionPlanner.GCSViews
                 0,                       // Non utilisé
                 0,                       // Non utilisé
                 0);
+            MainV2.comPort.doCommand(
+                MAVLink.MAV_CMD.DO_SET_SERVO,
+                14,   // Servo n°
+                1000,   // Angle de déclenchement du servo
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0);
 
             CustomMessageBox.Show("Action effectuée");
 
@@ -5917,11 +5926,13 @@ namespace MissionPlanner.GCSViews
                                 if (MainV2.comPort.MAV.cs.rangefinder1 < MainV2.comPort.MAV.cs.ter_curalt && MainV2.comPort.MAV.cs.rangefinder1 < 150)
                                 {
                                     value = MainV2.comPort.MAV.cs.rangefinder1;
+                                    quickView.number = value;
                                     quickView.desc = "Lidar";
                                 }
                                 else
                                 {
                                     quickView.desc = "Terrain AGL";
+                                    quickView.number = value;
                                 }
                                 switch (value)
                                 {

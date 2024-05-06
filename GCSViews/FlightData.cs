@@ -6022,11 +6022,15 @@ namespace MissionPlanner.GCSViews
                                 value = MainV2.comPort.MAV.cs.roll;
                                 switch (Math.Abs(value))
                                 {
+                                    case float v when (!is_cruising):
+                                        quickView.BackColor = Color.FromArgb(20, 20, 20);
+                                        bitmask = 0;
+                                        break;
                                     case float v when v > 35:
                                         quickView.BackColor = Color.DarkRed;
                                         bitmask = 7;
                                         break;
-                                    case float v when v > 5:
+                                    case float v when v > 4:
                                         quickView.BackColor = Color.Orange;
                                         bitmask = 0;
                                         break;
@@ -6060,6 +6064,10 @@ namespace MissionPlanner.GCSViews
                                 value = MainV2.comPort.MAV.cs.pitch;
                                 switch (value)
                                 {
+                                    case float v when (!is_cruising):
+                                        quickView.BackColor = Color.FromArgb(20, 20, 20);
+                                        bitmask = 0;
+                                        break;
                                     case float v when (v > 15 || v < -10):
                                         quickView.BackColor = Color.DarkRed;
                                         bitmask = 15;

@@ -6041,7 +6041,7 @@ namespace MissionPlanner.GCSViews
                                 }
                                 break;
                             case "current":
-                                current_lowpass = 0.7f * current_lowpass + 0.3f * (float)MainV2.comPort.MAV.cs.current;
+                                current_lowpass = 0.95f * current_lowpass + 0.05f * (float)MainV2.comPort.MAV.cs.current;
                                 value = current_lowpass;
                                 quickView.number = value;
                                 switch (Math.Abs(value))
@@ -6130,7 +6130,7 @@ namespace MissionPlanner.GCSViews
                                 value = MainV2.comPort.MAV.cs.climbrate;
                                 switch (Math.Abs(value))
                                 {
-                                    case float v when v > 10:
+                                    case float v when v > 7:
                                         quickView.BackColor = Color.DarkRed;
                                         bitmask = 3;
                                         break;

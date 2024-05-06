@@ -5867,7 +5867,7 @@ namespace MissionPlanner.GCSViews
                 wp_dist_loop_count = 4;
 
                 // Démarre une tâche asynchrone pour attendre 10 secondes et continue ensuite
-                WaitForDelay(15000, () =>
+                WaitForDelay(25000, () =>
                 {
                     // Cette partie du code s'exécutera après l'attente de 10 secondes
                     wp_dist_loop_count = 1;
@@ -6054,6 +6054,10 @@ namespace MissionPlanner.GCSViews
                                 quickView.number = value;
                                 switch (Math.Abs(value))
                                 {
+                                    case float v when (!is_cruising):
+                                        quickView.BackColor = Color.FromArgb(20, 20, 20);
+                                        bitmask = 0;
+                                        break;
                                     case float v when v > 27:
                                         quickView.BackColor = Color.DarkRed;
                                         bitmask = 4;
@@ -6072,7 +6076,7 @@ namespace MissionPlanner.GCSViews
                                 value = MainV2.comPort.MAV.cs.pitch;
                                 switch (value)
                                 {
-                                    case float v when (!is_cruising):
+                                    case float v when ((!is_cruising) || wp_dist_loop_count >= 3):
                                         quickView.BackColor = Color.FromArgb(20, 20, 20);
                                         bitmask = 0;
                                         break;

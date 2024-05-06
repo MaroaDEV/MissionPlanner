@@ -6076,11 +6076,11 @@ namespace MissionPlanner.GCSViews
                                         quickView.BackColor = Color.FromArgb(20, 20, 20);
                                         bitmask = 0;
                                         break;
-                                    case float v when (v > 15 || v < -10):
+                                    case float v when (v > 12 || v < -12):
                                         quickView.BackColor = Color.DarkRed;
                                         bitmask = 15;
                                         break;
-                                    case float v when (v > 8 || v < -3):
+                                    case float v when (v > 5 || v < -5):
                                         quickView.BackColor = Color.Orange;
                                         bitmask = 0;
                                         break;

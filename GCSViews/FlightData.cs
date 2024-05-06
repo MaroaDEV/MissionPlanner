@@ -6022,11 +6022,11 @@ namespace MissionPlanner.GCSViews
                                 value = MainV2.comPort.MAV.cs.roll;
                                 switch (Math.Abs(value))
                                 {
-                                    case float v when (!is_cruising):
+                                    case float v when (!is_cruising || wp_dist_loop_count >= 3):
                                         quickView.BackColor = Color.FromArgb(20, 20, 20);
                                         bitmask = 0;
                                         break;
-                                    case float v when v > 35:
+                                    case float v when v > 8:
                                         quickView.BackColor = Color.DarkRed;
                                         bitmask = 7;
                                         break;
@@ -6148,20 +6148,8 @@ namespace MissionPlanner.GCSViews
                                 value = MainV2.comPort.MAV.cs.groundspeed;
                                 switch (value)
                                 {
-                                    case float v when (!is_cruising):
-                                        quickView.BackColor = Color.FromArgb(20, 20, 20);
-                                        bitmask = 0;
-                                        break;
-                                    case float v when (v < 15 || v>35):
-                                        quickView.BackColor = Color.DarkRed;
-                                        bitmask = 15;
-                                        break;
-                                    case float v when (v < 21 || v > 28):
-                                        quickView.BackColor = Color.Orange;
-                                        bitmask = 0;
-                                        break;
                                     default:
-                                        quickView.BackColor = Color.Green;
+                                        quickView.BackColor = Color.FromArgb(20, 20, 20);
                                         bitmask = 0;
                                         break;
                                 }

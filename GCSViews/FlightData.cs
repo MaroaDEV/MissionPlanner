@@ -5941,7 +5941,7 @@ namespace MissionPlanner.GCSViews
                                         bitmask = 0;
                                         break;
                                     case float v when ((v < 10) &&  MainV2.comPort.MAV.cs.ter_curalt > 60) :
-                                        quickView.BackColor = Color.DarkRed;
+                                        quickView.BackColor = Color.Orange;
                                         bitmask = 7;
                                         break;
                                     case float v when v < 60:
@@ -5965,7 +5965,7 @@ namespace MissionPlanner.GCSViews
                                 {
                                     case float v when v < 4.2:
                                         quickView.BackColor = Color.DarkRed;
-                                        bitmask = 15;
+                                        bitmask = 7;
                                         break;
                                     case float v when v < 4.8:
                                         quickView.BackColor = Color.Orange;
@@ -5983,7 +5983,7 @@ namespace MissionPlanner.GCSViews
                                 {
                                     case float v when (v < 8):
                                         quickView.BackColor = Color.DarkRed;
-                                        bitmask = 15;
+                                        bitmask = 7;
                                         break;
                                     case float v when v < 11:
                                         quickView.BackColor = Color.Orange;
@@ -6048,7 +6048,7 @@ namespace MissionPlanner.GCSViews
                                 {
                                     case float v when v > 27:
                                         quickView.BackColor = Color.DarkRed;
-                                        bitmask = 7;
+                                        bitmask = 4;
                                         break;
                                     case float v when v > 24:
                                         quickView.BackColor = Color.Orange;
@@ -6083,7 +6083,7 @@ namespace MissionPlanner.GCSViews
                                 }
                                 break;
                             case "ch3percent":                               
-                                throttle_lowpass = 0.7f * throttle_lowpass + 0.3f * MainV2.comPort.MAV.cs.ch3percent;
+                                throttle_lowpass = 0.95f * throttle_lowpass + 0.05f * MainV2.comPort.MAV.cs.ch3percent;
                                 value = throttle_lowpass;
                                 quickView.number = value;
                                 quickView.desc = "Throttle (%)";
@@ -6132,7 +6132,7 @@ namespace MissionPlanner.GCSViews
                                 {
                                     case float v when v > 7:
                                         quickView.BackColor = Color.DarkRed;
-                                        bitmask = 3;
+                                        bitmask = 11;
                                         break;
                                     case float v when v > 5:
                                         quickView.BackColor = Color.Orange;

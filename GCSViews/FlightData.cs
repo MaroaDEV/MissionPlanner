@@ -4851,10 +4851,12 @@ namespace MissionPlanner.GCSViews
         {
             if (!MainV2.instance.dev_mode)
                 return;
+
             this.contextMenuStripQuickView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.setViewCountToolStripMenuItem,
             this.undockToolStripMenuItem
             });
+
             if (MainV2.DisplayConfiguration.lockQuickView)
                 return;
 
@@ -5989,7 +5991,9 @@ namespace MissionPlanner.GCSViews
                                 }
                                 break;
                             case "satcount":
-                                value = MainV2.comPort.MAV.cs.satcount;
+                                value = Math.Min(MainV2.comPort.MAV.cs.satcount, MainV2.comPort.MAV.cs.satcount2);
+                                quickView.desc = "Min Sat Count";
+                                quickView.number = value;
                                 switch (value)
                                 {
                                     case float v when (v < 8):

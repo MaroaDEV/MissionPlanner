@@ -4849,9 +4849,12 @@ namespace MissionPlanner.GCSViews
 
         private void quickView_DoubleClick(object sender, EventArgs e)
         {
-            return;
-
-
+            if (!MainV2.instance.dev_mode)
+                return;
+            this.contextMenuStripQuickView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.setViewCountToolStripMenuItem,
+            this.undockToolStripMenuItem
+            });
             if (MainV2.DisplayConfiguration.lockQuickView)
                 return;
 

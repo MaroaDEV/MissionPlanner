@@ -4770,14 +4770,66 @@ namespace MissionPlanner
 
         private void MenuArduPilot_Click(object sender, EventArgs e)
         {
-            try
+            // Utilisation de System.Windows.Forms sans importation au début du fichier
+
+            if (dev_mode)
             {
-                System.Diagnostics.Process.Start("https://ardupilot.org/?utm_source=Menu&utm_campaign=MP");
+                dev_mode = false;
+                System.Windows.Forms.MessageBox.Show("Dev mode off.");
+                return;
             }
-            catch
+
+            // Création d'une boîte de dialogue pour saisir le mot de passe
+            System.Windows.Forms.Form form = new System.Windows.Forms.Form();
+            form.Text = "Password";
+            form.Size = new System.Drawing.Size(300, 150);
+            form.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+
+            System.Windows.Forms.Label label = new System.Windows.Forms.Label();
+            label.Text = "Please enter the password:";
+            label.Location = new System.Drawing.Point(20, 20);
+            label.AutoSize = true;
+
+            System.Windows.Forms.TextBox textBox = new System.Windows.Forms.TextBox();
+            textBox.PasswordChar = '*';
+            textBox.Location = new System.Drawing.Point(20, 50);
+            textBox.Size = new System.Drawing.Size(250, 20);
+
+            System.Windows.Forms.Button buttonOk = new System.Windows.Forms.Button();
+            buttonOk.Text = "OK";
+            buttonOk.Location = new System.Drawing.Point(70, 90);
+            buttonOk.Click += (senderOk, eOk) =>
             {
-                CustomMessageBox.Show("Failed to open url https://ardupilot.org");
-            }
+                // Vérifier le mot de passe saisi
+                if (textBox.Text == "MaroaDev")
+                {
+                    dev_mode = true;
+                    System.Windows.Forms.MessageBox.Show("Dev mode activated.");
+                }
+                else
+                {
+                    dev_mode = false;
+                    System.Windows.Forms.MessageBox.Show("Incorrect password. Dev mode off.");
+                }
+
+                form.Close(); // Fermer la boîte de dialogue après vérification
+            };
+
+            System.Windows.Forms.Button buttonCancel = new System.Windows.Forms.Button();
+            buttonCancel.Text = "Cancel";
+            buttonCancel.Location = new System.Drawing.Point(150, 90);
+            buttonCancel.Click += (senderCancel, eCancel) =>
+            {
+                dev_mode = false; // Si l'utilisateur annule, désactiver le mode dev
+                form.Close(); // Fermer la boîte de dialogue
+            };
+
+            form.Controls.Add(label);
+            form.Controls.Add(textBox);
+            form.Controls.Add(buttonOk);
+            form.Controls.Add(buttonCancel);
+
+            form.ShowDialog(); // Afficher la boîte de dialogue de saisie du mot de passe
         }
 
         private void connectionListToolStripMenuItem_Click(object sender, EventArgs e)

@@ -38,6 +38,7 @@ namespace MissionPlanner.GCSViews
             this.multiLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabQuick = new System.Windows.Forms.TabPage();
             this.tableLayoutPanelQuick = new System.Windows.Forms.TableLayoutPanel();
+            this.Autonav = new System.Windows.Forms.CheckBox();
             this.quickView6 = new MissionPlanner.Controls.QuickView();
             this.contextMenuStripQuickView = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.setViewCountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -797,6 +798,7 @@ namespace MissionPlanner.GCSViews
             this.tableLayoutPanel1.Controls.Add(this.BUTrestartmission, 0, 7);
             //this.tableLayoutPanel1.Controls.Add(this.CMB_mountmode, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.BUT_quickrtl, 0, 8);
+            this.tableLayoutPanel1.Controls.Add(this.Autonav, 3, 0);
             //this.tableLayoutPanel1.Controls.Add(this.BUT_quickmanual, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.BUT_setwp, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.CMB_modes, 0, 2);
@@ -1150,6 +1152,15 @@ namespace MissionPlanner.GCSViews
             this.toolTip1.SetToolTip(this.BUT_quickrtl, resources.GetString("BUT_quickrtl.ToolTip"));
             this.BUT_quickrtl.UseVisualStyleBackColor = true;
             this.BUT_quickrtl.Click += new System.EventHandler(this.BUT_quickrtl_Click);
+            // 
+            // Autonav
+            // 
+            this.Autonav.Text = "AutoFill";
+            this.Autonav.Checked = true;
+            this.Autonav.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.Autonav.Name = "AutoNav";
+            this.Autonav.UseVisualStyleBackColor = true;
+
             // 
             // BUT_Reboot
             // 
@@ -3268,6 +3279,7 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.CheckedListBox fault_clb;
         private System.Windows.Forms.Label NACp_lbl;
         private System.Windows.Forms.Label NIC_lbl;
+        private System.Windows.Forms.CheckBox Autonav;
         private System.Windows.Forms.TextBox NACp_tb;
         private System.Windows.Forms.TextBox NIC_tb;
         private ToolStripMenuItem showIconsToolStripMenuItem;

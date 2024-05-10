@@ -25,7 +25,7 @@ namespace MissionPlanner
                 // Vérifier si Excel est ouvert
                 excelApp = (Excel.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
 
-                int i = (int)MainV2.comPort.MAV.cs.wpno;
+                int i = (int)MainV2.comPort.MAV.cs.wpno - 1;
 
                 // Vérifier si une seule feuille est ouverte
                 if (excelApp.Workbooks.Count != 1)
@@ -38,11 +38,14 @@ namespace MissionPlanner
                 workbook = excelApp.ActiveWorkbook;
                 worksheet = (Excel.Worksheet)workbook.Sheets[1];
 
+                System.DateTime dateTime = MainV2.comPort.MAV.cs.datetime;
+                string heure = dateTime.ToString("HH:mm:ss");
+
                 // Vérifier si les cellules sont vides avant d'écrire
                 if (IsEmpty(worksheet.Cells[5 + i, "M"].Value) && IsEmpty(worksheet.Cells[5 + i, "Q"].Value) && IsEmpty(worksheet.Cells[5 + i, "U"].Value))
                 {
                     // Écrire dans les cellules spécifiées
-                    worksheet.Cells[5 + i, "M"].Value = MainV2.comPort.MAV.cs.datetime;
+                    worksheet.Cells[5 + i, "M"].Value = heure;
                     worksheet.Cells[5 + i, "Q"].Value = MainV2.comPort.MAV.cs.battery_usedmah;
                     worksheet.Cells[5 + i, "U"].Value = MainV2.comPort.MAV.cs.battery_voltage;
                 }

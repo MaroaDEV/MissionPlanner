@@ -5871,8 +5871,12 @@ namespace MissionPlanner.GCSViews
             {
                 wp_dist_loop_count = 4;
 
-                NavWrite navWriter = new NavWrite();
-                navWriter.Write();
+                if (Autonav.Checked)
+                {
+
+                    NavWrite navWriter = new NavWrite();
+                    navWriter.Write();
+                }
 
                 // Démarre une tâche asynchrone pour attendre 10 secondes et continue ensuite
                 WaitForDelay(25000, () =>

@@ -840,42 +840,11 @@ namespace MissionPlanner.GCSViews
                 CustomMessageBox.Show("Are you sure you want to do " + actions.Preflight_Reboot_Shutdown.ToString() + " ?", "Action",
                 MessageBoxButtons.YesNo) == (int)DialogResult.Yes)
             {
-                try
-                {
-                    ((Control)sender).Enabled = false;
-
-                    int param1 = 0;
-                    int param2 = 0;
-                    int param3 = 1;
-
-
-                    MAVLink.MAV_CMD cmd;
-                    try
-                    {
-                        cmd = (MAVLink.MAV_CMD)Enum.Parse(typeof(MAVLink.MAV_CMD), actions.Preflight_Reboot_Shutdown.ToString().ToUpper());
-                    }
-                    catch (ArgumentException ex)
-                    {
-                        cmd = (MAVLink.MAV_CMD)Enum.Parse(typeof(MAVLink.MAV_CMD),
-                            "DO_START_" + actions.Preflight_Reboot_Shutdown.ToString().ToUpper());
-                    }
-
-                    if (MainV2.comPort.doCommand(cmd, param1, param2, param3, 0, 0, 0, 0))
-                    {
-
-                    }
-                    else
-                    {
-                        CustomMessageBox.Show(Strings.CommandFailed + " " + cmd, Strings.ERROR);
-                    }
-                }
-                catch
-                {
-                    CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
-                }
-
+                MainV2.comPort.doReboot();
                 ((Control)sender).Enabled = true;
+                return;
             }
+            
 
         }
 
@@ -5873,9 +5842,22 @@ namespace MissionPlanner.GCSViews
 
                 if (Autonav.Checked)
                 {
-
+                    int curr_wp = (int)MainV2.comPort.MAV.cs.wpno;
+                   
                     NavWrite navWriter = new NavWrite();
-                    navWriter.Write();
+                    switch (curr_wp - prev_wp)
+                    {
+                        case 2:
+                            break;
+                            navWriter.Write(curr_wp - 1);
+                        case 3:
+                            navWriter.Write(curr_wp-2);
+                            break;
+                        default:
+                            navWriter.Write(curr_wp);
+                            break;
+                    }
+                    navWriter.Write(curr_wp);
                 }
 
                 // Démarre une tâche asynchrone pour attendre 10 secondes et continue ensuite

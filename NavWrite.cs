@@ -14,7 +14,7 @@ namespace MissionPlanner
         {
             return cellValue == null || string.IsNullOrWhiteSpace(cellValue.ToString());
         }
-        public void Write()
+        public void Write(int curr_wp)
         {
             Excel.Application excelApp = null;
             Excel.Workbook workbook = null;
@@ -25,7 +25,7 @@ namespace MissionPlanner
                 // Vérifier si Excel est ouvert
                 excelApp = (Excel.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
 
-                int i = (int)MainV2.comPort.MAV.cs.wpno - 1;
+                int i = curr_wp;
 
                 // Vérifier si une seule feuille est ouverte
                 if (excelApp.Workbooks.Count != 1)
@@ -55,6 +55,12 @@ namespace MissionPlanner
                     Console.WriteLine("Contenu de la cellule M: " + worksheet.Cells[5 + i, "M"].Value);
                     Console.WriteLine("Contenu de la cellule Q: " + worksheet.Cells[5 + i, "Q"].Value);
                     Console.WriteLine("Contenu de la cellule U: " + worksheet.Cells[5 + i, "U"].Value);
+                }
+                if (i == 1)
+                {
+                    worksheet.Cells[15, "D"].Value = heure;
+                    worksheet.Cells[14, "D"].Value = MainV2.comPort.MAV.cs.battery_usedmah;
+                    worksheet.Cells[5 + i, "U"].Value = MainV2.comPort.MAV.cs.battery_voltage;
                 }
             }
             catch (Exception ex)

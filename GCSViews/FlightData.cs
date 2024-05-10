@@ -5848,16 +5848,15 @@ namespace MissionPlanner.GCSViews
                     switch (curr_wp - prev_wp)
                     {
                         case 2:
+                            navWriter.Write(curr_wp - 2);
                             break;
-                            navWriter.Write(curr_wp - 1);
                         case 3:
-                            navWriter.Write(curr_wp-2);
+                            navWriter.Write(curr_wp - 3);
                             break;
                         default:
-                            navWriter.Write(curr_wp);
+                            navWriter.Write(curr_wp - 1);
                             break;
                     }
-                    navWriter.Write(curr_wp);
                 }
 
                 // Démarre une tâche asynchrone pour attendre 10 secondes et continue ensuite

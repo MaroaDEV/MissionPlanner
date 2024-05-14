@@ -3227,6 +3227,7 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.ToolStripMenuItem setEKFHomeHereToolStripMenuItem;
         private System.Windows.Forms.TabPage tabPayload;
         private int prev_wp;
+        private int methodCallCount = 0;
         private int wp_dist_loop_count;
         private string idno;
         private System.Windows.Forms.BindingSource bindingSourcePayloadTab;

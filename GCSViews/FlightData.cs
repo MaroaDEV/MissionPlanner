@@ -1801,11 +1801,15 @@ namespace MissionPlanner.GCSViews
             }
             wp_dist_loop_count = 4;
             // Démarre une tâche asynchrone pour attendre 10 secondes et continue ensuite
-            WaitForDelay(35000, () =>
+            methodCallCount++;
+            // Démarre une tâche asynchrone pour attendre 10 secondes et continue ensuite
+            WaitForDelay(28000, () =>
             {
                 // Cette partie du code s'exécutera après l'attente de 10 secondes
-                wp_dist_loop_count = 1;
-                // Continuer avec le reste du code ici
+                if (--methodCallCount == 0)
+                {
+                    wp_dist_loop_count = 1;
+                }
             });
             ((Control) sender).Enabled = true;
         }
@@ -5840,12 +5844,13 @@ namespace MissionPlanner.GCSViews
                 }
             }
 
-            this.textBoxSN.Text = "SN " + MainV2.comPort.MAV.sysid.ToString("D3");
+            this.textBoxSN.Text = "S2N " + MainV2.comPort.MAV.sysid.ToString("D3");
             this.textBoxSN2.Text = "SN " + MainV2.comPort.MAV.sysid.ToString("D3");
 
             if ((int)MainV2.comPort.MAV.cs.wpno != prev_wp)
             {
                 wp_dist_loop_count = 4;
+                methodCallCount++;
 
                 if (Autonav.Checked)
                 {
@@ -5870,7 +5875,10 @@ namespace MissionPlanner.GCSViews
                 WaitForDelay(28000, () =>
                 {
                     // Cette partie du code s'exécutera après l'attente de 10 secondes
-                    wp_dist_loop_count = 1;
+                    if (--methodCallCount == 0)
+                    {
+                        wp_dist_loop_count = 1;
+                    }
                     // Continuer avec le reste du code ici
                 });
             }

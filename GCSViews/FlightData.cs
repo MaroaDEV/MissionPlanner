@@ -5844,7 +5844,7 @@ namespace MissionPlanner.GCSViews
                 }
             }
 
-            this.textBoxSN.Text = "S2N " + MainV2.comPort.MAV.sysid.ToString("D3");
+            this.textBoxSN.Text = "SN " + MainV2.comPort.MAV.sysid.ToString("D3");
             this.textBoxSN2.Text = "SN " + MainV2.comPort.MAV.sysid.ToString("D3");
 
             if ((int)MainV2.comPort.MAV.cs.wpno != prev_wp)
@@ -5939,9 +5939,9 @@ namespace MissionPlanner.GCSViews
                                 break;
                             case "ter_curalt":
                                 value = MainV2.comPort.MAV.cs.ter_curalt;
-                                if (MainV2.comPort.MAV.cs.rangefinder1 < MainV2.comPort.MAV.cs.ter_curalt && MainV2.comPort.MAV.cs.rangefinder1 < 150)
+                                if (MainV2.comPort.MAV.cs.rangefinder1*0.01f < MainV2.comPort.MAV.cs.ter_curalt && MainV2.comPort.MAV.cs.rangefinder1*0.01f < 150)
                                 {
-                                    value = MainV2.comPort.MAV.cs.rangefinder1;
+                                    value = MainV2.comPort.MAV.cs.rangefinder1*0.01f;
                                     quickView.number = value;
                                     quickView.desc = "Lidar";
                                 }
@@ -6062,6 +6062,7 @@ namespace MissionPlanner.GCSViews
                                 current_lowpass = 0.95f * current_lowpass + 0.05f * (float)MainV2.comPort.MAV.cs.current;
                                 value = current_lowpass;
                                 quickView.number = value;
+                                quickView.desc = "Curr0 (A)";
                                 switch (Math.Abs(value))
                                 {
                                     case float v when (!is_cruising):

@@ -1799,7 +1799,14 @@ namespace MissionPlanner.GCSViews
             {
                 CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
             }
-
+            wp_dist_loop_count = 4;
+            // Démarre une tâche asynchrone pour attendre 10 secondes et continue ensuite
+            WaitForDelay(35000, () =>
+            {
+                // Cette partie du code s'exécutera après l'attente de 10 secondes
+                wp_dist_loop_count = 1;
+                // Continuer avec le reste du code ici
+            });
             ((Control) sender).Enabled = true;
         }
 
@@ -5860,7 +5867,7 @@ namespace MissionPlanner.GCSViews
                 }
 
                 // Démarre une tâche asynchrone pour attendre 10 secondes et continue ensuite
-                WaitForDelay(25000, () =>
+                WaitForDelay(28000, () =>
                 {
                     // Cette partie du code s'exécutera après l'attente de 10 secondes
                     wp_dist_loop_count = 1;

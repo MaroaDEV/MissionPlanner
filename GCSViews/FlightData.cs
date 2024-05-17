@@ -503,7 +503,15 @@ namespace MissionPlanner.GCSViews
                             b.Format += new ConvertEventHandler(BindingTypeToNumber);
                             b.Parse += new ConvertEventHandler(NumberToBindingType);
 
-                            QV.DataBindings.Add(b);
+                            // ADD HERE STUFF YOU DON'T WANT TO BE UPDATED HERE
+                            if (QV.Tag != null)
+                            {
+                                if (QV.Tag.ToString() != "satcount" && QV.Tag.ToString() != "ter_curalt" && QV.Tag.ToString() != "press_abs" && QV.Tag.ToString() != "current")
+                                {
+                                    QV.DataBindings.Add(b);
+                                }
+                            }
+                            
                         }
                         catch (Exception ex)
                         {
@@ -5912,7 +5920,38 @@ namespace MissionPlanner.GCSViews
                         {
                             case "airspeed":                                
                                 value = MainV2.comPort.MAV.cs.airspeed;
-                                quickView.desc = "airspeed (m/s)";
+                                quickView.desc = "AS";
+                                switch (value)
+                                {
+                                    case float v when (!is_cruising):
+                                        quickView.BackColor = Color.FromArgb(20, 20, 20);
+                                        bitmask = 0;
+                                        break;
+                                    case float v when (v < 21 || dual_airspeed_counter > 10):
+                                        quickView.BackColor = Color.DarkRed;
+                                        if (dual_airspeed_counter > 10)
+                                        {
+                                            quickView.desc = "Alerte Pitots !";
+                                        }
+                                        bitmask = 15;
+                                        break;
+                                    case float v when v < 21.7:
+                                        quickView.BackColor = Color.Orange;
+                                        bitmask = 0;
+                                        break;
+                                    default:
+                                        quickView.BackColor = Color.Green;
+                                        bitmask = 0;
+                                        break;
+                                }
+                                break;
+                            case "press_abs":
+                                value = MainV2.comPort.MAV.cs.airspeed;
+                                float speed1 = MainV2.comPort.MAV.cs.press_abs * 10f;
+                                float speed2 = MainV2.comPort.MAV.cs.press_abs2 * 10f;
+                                // Formater la chaîne de formatage pour speed1 et speed2 avec une police plus petite
+                                quickView.numberformat = $"{speed1:000} / {speed2:000}";
+                                quickView.desc = "AS1/2";
                                 switch (value)
                                 {
                                     case float v when (!is_cruising):
@@ -5939,24 +5978,19 @@ namespace MissionPlanner.GCSViews
                                 break;
                             case "ter_curalt":
                                 value = MainV2.comPort.MAV.cs.ter_curalt;
-                                if (MainV2.comPort.MAV.cs.rangefinder1*0.01f < MainV2.comPort.MAV.cs.ter_curalt && MainV2.comPort.MAV.cs.rangefinder1*0.01f < 150)
-                                {
-                                    value = MainV2.comPort.MAV.cs.rangefinder1*0.01f;
-                                    quickView.number = value;
-                                    quickView.desc = "Lidar";
-                                }
-                                else
-                                {
-                                    quickView.desc = "Terrain AGL";
-                                    quickView.number = value;
-                                }
+                                quickView.desc = "alt/rng";
+                                int alt1 = (int)Math.Truncate(MainV2.comPort.MAV.cs.rangefinder1 * 0.01f);
+                                int alt2 = (int)Math.Truncate(MainV2.comPort.MAV.cs.ter_curalt);
+
+                                // Utiliser les valeurs entières pour former la chaîne de formatage
+                                quickView.numberformat = $"{alt2:D3} / {alt1:D3}";
                                 switch (value)
                                 {
                                     case float v when (!is_cruising || MainV2.comPort.MAV.cs.DistToHome < 800):
                                         quickView.BackColor = Color.FromArgb(20, 20, 20);
                                         bitmask = 0;
                                         break;
-                                    case float v when ((v < 10) &&  MainV2.comPort.MAV.cs.ter_curalt > 60) :
+                                    case float v when (alt1 < 10 &&  v > 60) :
                                         quickView.BackColor = Color.Orange;
                                         bitmask = 7;
                                         break;
@@ -5975,6 +6009,7 @@ namespace MissionPlanner.GCSViews
                                 }
                                 break;
                             case "boardvoltage":
+                                quickView.desc = "V board";
                                 value = MainV2.comPort.MAV.cs.boardvoltage/1000;
                                 quickView.number = value;
                                 switch (value)
@@ -5994,9 +6029,16 @@ namespace MissionPlanner.GCSViews
                                 }
                                 break;
                             case "satcount":
-                                value = Math.Min(MainV2.comPort.MAV.cs.satcount, MainV2.comPort.MAV.cs.satcount2);
-                                quickView.desc = "Min Sat Count";
-                                quickView.number = value;
+                                // Convertir les valeurs float en entiers en tronquant les décimales
+                                int sat1 = (int)Math.Truncate(MainV2.comPort.MAV.cs.satcount);
+                                int sat2 = (int)Math.Truncate(MainV2.comPort.MAV.cs.satcount2);
+
+                                quickView.desc = "Sat";
+
+                                // Utiliser les valeurs entières pour former la chaîne de formatage
+                                quickView.numberformat = $"{sat1:D2} / {sat2:D2}";
+
+                                value = (float)Math.Min(MainV2.comPort.MAV.cs.satcount,MainV2.comPort.MAV.cs.satcount2);
                                 switch (value)
                                 {
                                     case float v when (v < 8):
@@ -6014,7 +6056,7 @@ namespace MissionPlanner.GCSViews
                                 }
                                 break;
                             case "xtrack_error":
-                                quickView.desc = "Ecart (m)";
+                                quickView.desc = "Ecart";
                                 value = MainV2.comPort.MAV.cs.xtrack_error;
                                 switch (value)
                                 {
@@ -6037,6 +6079,7 @@ namespace MissionPlanner.GCSViews
                                 }
                                 break;
                             case "roll":
+                                quickView.desc = "roll";
                                 value = MainV2.comPort.MAV.cs.roll;
                                 switch (Math.Abs(value))
                                 {
@@ -6062,18 +6105,19 @@ namespace MissionPlanner.GCSViews
                                 current_lowpass = 0.95f * current_lowpass + 0.05f * (float)MainV2.comPort.MAV.cs.current;
                                 value = current_lowpass;
                                 quickView.number = value;
-                                quickView.desc = "Curr0 (A)";
+                                float currlaw = 9.7649f + 4.37f * MainV2.comPort.MAV.cs.nav_pitch;
+                                quickView.desc = "Curr";
                                 switch (Math.Abs(value))
                                 {
                                     case float v when (!is_cruising):
                                         quickView.BackColor = Color.FromArgb(20, 20, 20);
                                         bitmask = 0;
                                         break;
-                                    case float v when v > 27:
+                                    case float v when (v > Math.Max(25.2f,(2.0f+currlaw)*1.35f)) :
                                         quickView.BackColor = Color.DarkRed;
                                         bitmask = 4;
                                         break;
-                                    case float v when v > 24:
+                                    case float v when ((v > Math.Max(25.2f, currlaw * 1.25f)) || (v < 5)):
                                         quickView.BackColor = Color.Orange;
                                         bitmask = 0;
                                         break;
@@ -6084,6 +6128,7 @@ namespace MissionPlanner.GCSViews
                                 }
                                 break;
                             case "pitch":
+                                quickView.desc = "pitch";
                                 value = MainV2.comPort.MAV.cs.pitch;
                                 switch (value)
                                 {
@@ -6109,7 +6154,7 @@ namespace MissionPlanner.GCSViews
                                 throttle_lowpass = 0.95f * throttle_lowpass + 0.05f * MainV2.comPort.MAV.cs.ch3percent;
                                 value = throttle_lowpass;
                                 quickView.number = value;
-                                quickView.desc = "Throttle (%)";
+                                quickView.desc = "Throttle";
                                 switch (value)
                                 {
                                     case float v when (!is_cruising):
@@ -6127,7 +6172,7 @@ namespace MissionPlanner.GCSViews
                                 }
                                 break;
                             case "vibez":
-                                quickView.desc = "VibeSum";                               
+                                quickView.desc = "Vibe+";                               
                                 value = MainV2.comPort.MAV.cs.vibez + MainV2.comPort.MAV.cs.vibex + MainV2.comPort.MAV.cs.vibey;
                                 switch (value)
                                 {
@@ -6150,6 +6195,7 @@ namespace MissionPlanner.GCSViews
                                 }
                                 break;
                             case "climbrate":
+                                quickView.desc = "climb spd";
                                 value = MainV2.comPort.MAV.cs.climbrate;
                                 switch (Math.Abs(value))
                                 {
@@ -6168,6 +6214,7 @@ namespace MissionPlanner.GCSViews
                                 }
                                 break;
                             case "groundspeed":
+                                quickView.desc = "GS";
                                 value = MainV2.comPort.MAV.cs.groundspeed;
                                 switch (value)
                                 {

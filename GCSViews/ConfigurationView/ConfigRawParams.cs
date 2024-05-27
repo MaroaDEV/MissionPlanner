@@ -372,6 +372,53 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             }
         }
 
+        private void BUT_comparelight_Click(object sender, EventArgs e)
+        {
+            var param2 = new Dictionary<string, double>();
+
+            using (var ofd = new OpenFileDialog
+            {
+                AddExtension = true,
+                DefaultExt = ".param",
+                RestoreDirectory = true,
+                Filter = ParamFile.FileMask
+            })
+            {
+                var dr = ofd.ShowDialog();
+                if (dr == DialogResult.OK)
+                {
+                    param2 = ParamFile.loadParamFile(ofd.FileName);
+
+                    // Liste des paramètres à ignorer
+                    var ignoreParams = new HashSet<string>
+                    {
+                        "AHRS_TRIM_X", "AHRS_TRIM_Y", "ARSPD_OFFSET", "ARSPD2_OFFSET",
+                        "BATT_AMP_PERVLT", "BATT_CRT_VOLT", "BATT_LOW_VOLT", "BATT_VOLT_MULT",
+                        "BATT2_AMP_PERVLT", "BATT2_CRT_VOLT", "BATT2_LOW_VOLT", "BATT2_VOLT_MULT",
+                        "BRD_VBUS_MIN", "CAN_D1_UC_POOL", "COMPASS_DEC", "COMPASS_ODI_X", "COMPASS_ODI_Y",
+                        "COMPASS_ODI_Z", "COMPASS_OFS_X", "COMPASS_OFS_Y", "COMPASS_OFS_Z", "COMPASS_OFS2_X",
+                        "COMPASS_OFS2_Y", "COMPASS_OFS2_Z", "COMPASS_OFS3_X", "COMPASS_OFS3_Y", "COMPASS_OFS3_Z",
+                        "INS_ACC1_CALTEMP", "INS_ACC2_CALTEMP", "INS_ACC2OFFS_Y", "INS_ACC3_CALTEMP",
+                        "INS_ACC3OFFS_X", "INS_ACC3SCAL_Y", "INS_ACCOFFS_X", "INS_ACCOFFS_Y", "INS_ACCOFFS_Z",
+                        "INS_GYR1_CALTEMP", "INS_GYR2_CALTEMP", "INS_GYR2OFFS_X", "INS_GYR2OFFS_Y",
+                        "INS_GYR2OFFS_Z", "INS_GYR3_CALTEMP", "INS_GYR3OFFS_X", "INS_GYR3OFFS_Y",
+                        "INS_GYR3OFFS_Z", "INS_GYROFFS_X", "INS_GYROFFS_Y", "INS_GYROFFS_Z",
+                        "MIS_TOTAL", "Q_M_BAT_VOLT_MAX", "Q_M_BAT_VOLT_MIN", "STAT_BOOTCNT",
+                        "STAT_FLTTIME", "STAT_RESET", "STAT_RUNTIME"
+                    };
+
+                    // Filtrer les paramètres dans param2
+                    param2 = param2.Where(kv => !ignoreParams.Contains(kv.Key))
+                                   .ToDictionary(kv => kv.Key, kv => kv.Value);
+
+                    Form paramCompareForm = new ParamCompare(Params, MainV2.comPort.MAV.param, param2);
+
+                    ThemeManager.ApplyThemeTo(paramCompareForm);
+                    paramCompareForm.ShowDialog();
+                }
+            }
+        }
+
         private void BUT_rerequestparams_Click(object sender, EventArgs e)
         {
             if (!MainV2.comPort.BaseStream.IsOpen)

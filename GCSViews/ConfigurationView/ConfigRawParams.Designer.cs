@@ -37,6 +37,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.BUT_compare = new MissionPlanner.Controls.MyButton();
+            this.BUT_comparelight = new MissionPlanner.Controls.MyButton();
             this.BUT_rerequestparams = new MissionPlanner.Controls.MyButton();
             this.BUT_writePIDS = new MissionPlanner.Controls.MyButton();
             this.BUT_save = new MissionPlanner.Controls.MyButton();
@@ -79,6 +80,14 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             this.BUT_compare.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
             this.BUT_compare.UseVisualStyleBackColor = true;
             this.BUT_compare.Click += new System.EventHandler(this.BUT_compare_Click);
+            // 
+            // BUT_comparelight
+            // 
+            resources.ApplyResources(this.BUT_comparelight, "BUT_comparelight");
+            this.BUT_comparelight.Name = "BUT_comparelight";
+            this.BUT_comparelight.TextColorNotEnabled = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(87)))), ((int)(((byte)(4)))));
+            this.BUT_comparelight.UseVisualStyleBackColor = true;
+            this.BUT_comparelight.Click += new System.EventHandler(this.BUT_comparelight_Click);
             // 
             // BUT_rerequestparams
             // 
@@ -322,19 +331,20 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 11);
             this.tableLayoutPanel1.Controls.Add(this.BUT_refreshTable, 0, 16);
-            this.tableLayoutPanel1.Controls.Add(this.chk_none_default, 0, 14);
-            this.tableLayoutPanel1.Controls.Add(this.txt_search, 0, 12);
+            this.tableLayoutPanel1.Controls.Add(this.chk_none_default, 0, 15);
+            this.tableLayoutPanel1.Controls.Add(this.txt_search, 0, 13);
             this.tableLayoutPanel1.Controls.Add(this.BUT_load, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.BUT_save, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.BUT_rerequestparams, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.BUT_commitToFlash, 0, 6);
+            this.tableLayoutPanel1.Controls.Add(this.BUT_commitToFlash, 0, 7);
             this.tableLayoutPanel1.Controls.Add(this.BUT_writePIDS, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.BUT_reset_params, 0, 10);
+            this.tableLayoutPanel1.Controls.Add(this.BUT_reset_params, 0, 12);
             this.tableLayoutPanel1.Controls.Add(this.BUT_compare, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.BUT_paramfileload, 0, 9);
-            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 7);
-            this.tableLayoutPanel1.Controls.Add(this.CMB_paramfiles, 0, 8);
-            this.tableLayoutPanel1.Controls.Add(this.chk_modified, 0, 13);
+            this.tableLayoutPanel1.Controls.Add(this.BUT_comparelight, 0, 6);
+            this.tableLayoutPanel1.Controls.Add(this.BUT_paramfileload, 0, 10);
+            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 8);
+            this.tableLayoutPanel1.Controls.Add(this.CMB_paramfiles, 0, 9);
+            this.tableLayoutPanel1.Controls.Add(this.chk_modified, 0, 14);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             // 
             // ConfigRawParams
@@ -357,6 +367,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
         #endregion
 
         private Controls.MyButton BUT_compare;
+        private Controls.MyButton BUT_comparelight;
         private Controls.MyButton BUT_rerequestparams;
         private Controls.MyButton BUT_writePIDS;
         private Controls.MyButton BUT_save;

@@ -1215,6 +1215,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GCSViews\ConfigurationView\ConfigAdvanced.ko-KR.resx">
       <DependentUpon>ConfigAdvanced.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GCSViews\ConfigurationView\ConfigFFT.resx">
       <DependentUpon>ConfigFFT.cs</DependentUpon>
@@ -4554,6 +4555,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Log\LogBrowse.resx">
       <DependentUpon>LogBrowse.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Log\LogBrowse.ar.resx">
       <DependentUpon>LogBrowse.cs</DependentUpon>

@@ -1318,6 +1318,39 @@
   <data name="&gt;&gt;BUT_quickrtl.ZOrder" xml:space="preserve">
     <value>17</value>
   </data>
+  <data name="BUT_changecolor.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="BUT_changecolor.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_changecolor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>117, 75</value>
+  </data>
+  <data name="BUT_changecolorl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 30</value>
+  </data>
+  <data name="BUT_changecolor.TabIndex" type="System.Int32, mscorlib">
+    <value>75</value>
+  </data>
+  <data name="BUT_changecolor.Text" xml:space="preserve">
+    <value>Change Color</value>
+  </data>
+  <data name="BUT_changecolor.ToolTip" xml:space="preserve">
+    <value>Change plane icon color</value>
+  </data>
+  <data name="&gt;&gt;BUT_changecolor.Name" xml:space="preserve">
+    <value>BUT_changecolor</value>
+  </data>
+  <data name="&gt;&gt;BUT_changecolor.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_changecolor.Parent" xml:space="preserve">
+    <value>tableLayoutPanel3</value>
+  </data>
+  <data name="&gt;&gt;BUT_changecolor.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
   <data name="BUT_quickmanual.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>

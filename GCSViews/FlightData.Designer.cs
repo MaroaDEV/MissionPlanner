@@ -78,6 +78,7 @@ namespace MissionPlanner.GCSViews
             this.BUT_quickrtl = new MissionPlanner.Controls.MyButton();
             this.BUT_Reboot = new MissionPlanner.Controls.MyButton();
             this.BUT_quickmanual = new MissionPlanner.Controls.MyButton();
+            this.BUT_changecolor = new MissionPlanner.Controls.MyButton();
             this.BUT_PreFlightCal = new MissionPlanner.Controls.MyButton();
             this.BUT_setwp = new MissionPlanner.Controls.MyButton();
             this.CMB_modes = new System.Windows.Forms.ComboBox();
@@ -838,6 +839,7 @@ namespace MissionPlanner.GCSViews
             // tableLayoutPanel3
             // 
             resources.ApplyResources(this.tableLayoutPanel3, "tableLayoutPanel3");
+            this.tableLayoutPanel3.Controls.Add(this.BUT_changecolor, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.BUT_quickmanual, 0, 2);
             this.tableLayoutPanel3.Controls.Add(this.BUT_PreFlightCal, 1,2);
             this.tableLayoutPanel3.Controls.Add(this.BUT_ARM, 0, 1);
@@ -1183,6 +1185,17 @@ namespace MissionPlanner.GCSViews
             this.toolTip1.SetToolTip(this.BUT_quickmanual, resources.GetString("BUT_quickmanual.ToolTip"));
             this.BUT_quickmanual.UseVisualStyleBackColor = true;
             this.BUT_quickmanual.Click += new System.EventHandler(this.BUT_quickmanual_Click);
+            // 
+            // BUT_changecolor
+            // 
+            this.BUT_changecolor.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BUT_changecolor.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BUT_changecolor.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BUT_changecolor, "BUT_changecolor");
+            this.BUT_changecolor.Name = "BUT_changecolor";
+            this.toolTip1.SetToolTip(this.BUT_changecolor, resources.GetString("BUT_changecolor.ToolTip"));
+            this.BUT_changecolor.UseVisualStyleBackColor = true;
+            this.BUT_changecolor.Click += new System.EventHandler(this.BUT_changecolor_Click);
             // 
             // BUT_PreFlightCal
             // 
@@ -3092,6 +3105,7 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.ComboBox CMB_setwp;
         private Controls.MyButton BUT_setwp;
         private Controls.MyButton BUT_quickmanual;
+        private Controls.MyButton BUT_changecolor;
         private Controls.MyButton BUT_PreFlightCal;
         private Controls.MyButton BUT_quickrtl;
         private Controls.MyButton BUT_Reboot;
@@ -3161,6 +3175,7 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private int loopCounter;
+        public int colorchangeid;
         private float current_lowpass;
         private float throttle_lowpass;
         public System.Windows.Forms.TabPage tabScripts;

@@ -76,7 +76,8 @@ namespace MissionPlanner
             {
                 return (new GMapMarkerPlane(MAV.sysid - 1, portlocation, MAV.cs.yaw,
                     MAV.cs.groundcourse, MAV.cs.nav_bearing, MAV.cs.target_bearing,
-                    (float)CurrentState.toDistDisplayUnit(MAV.cs.radius))
+                    (float)CurrentState.toDistDisplayUnit(MAV.cs.radius),
+                    GCSViews.FlightData.instance.colorchangeid)
                 {
                     ToolTipText = ArduPilot.Common.speechConversion(MAV, "" + Settings.Instance["mapicondesc"]),
                     ToolTipMode = String.IsNullOrEmpty(Settings.Instance["mapicondesc"]) ? MarkerTooltipMode.Never : MarkerTooltipMode.Always,

@@ -52,9 +52,11 @@ namespace MissionPlanner.Maps
         float radius = -1;
         float target = -1;
         int which = 0;
+        int colorchangeid = 0;
+
 
         public GMapMarkerPlane(int which, PointLatLng p, float heading, float cog, float nav_bearing, float target,
-            float radius)
+            float radius, int colorchange)
             : base(p)
         {
             this.heading = heading;
@@ -64,6 +66,7 @@ namespace MissionPlanner.Maps
             this.radius = radius;
             this.which = which;
             Size = icon.Size;
+            this.colorchangeid = colorchange;
         }
 
         public float Cog { get => cog; set => cog = value; }
@@ -185,19 +188,21 @@ namespace MissionPlanner.Maps
             // the plane
             g.TranslateTransform(-2, -2);
 
-            if (which % 7 == 0)
+            int colormark = which + colorchangeid;
+
+            if (colormark % 7 == 0)
                 g.FillPolygon(Brushes.Red, plane);
-            if (which % 7 == 1)
+            if (colormark % 7 == 1)
                 g.FillPolygon(Brushes.Black, plane);
-            if (which % 7 == 2)
+            if (colormark % 7 == 2)
                 g.FillPolygon(Brushes.Blue, plane);
-            if (which % 7 == 3)
+            if (colormark % 7 == 3)
                 g.FillPolygon(Brushes.LimeGreen, plane);
-            if (which % 7 == 4)
+            if (colormark % 7 == 4)
                 g.FillPolygon(Brushes.Yellow, plane);
-            if (which % 7 == 5)
+            if (colormark % 7 == 5)
                 g.FillPolygon(Brushes.Orange, plane);
-            if (which % 7 == 6)
+            if (colormark % 7 == 6)
                 g.FillPolygon(Brushes.Pink, plane);
 
             g.Transform = temp;

@@ -24,7 +24,6 @@ namespace MissionPlanner
         public static GMapMarker getMAVMarker(MAVState MAV, GMapOverlay overlay = null)
         {
             PointLatLng portlocation = MAV.cs.Location;
-
             if(overlay!= null)
             {
                 var existing = overlay.Markers.Where((a)=>a.Tag == MAV).ToArray();                
@@ -74,15 +73,28 @@ namespace MissionPlanner
 
             if (MAV.aptype == MAVLink.MAV_TYPE.FIXED_WING || MAV.aptype >= MAVLink.MAV_TYPE.VTOL_DUOROTOR && MAV.aptype <= MAVLink.MAV_TYPE.VTOL_RESERVED5)
             {
-                return (new GMapMarkerPlane(MAV.sysid - 1, portlocation, MAV.cs.yaw,
+                if (MAV.sysid == MainV2.comPort.sysidcurrent)
+                {
+                    return (new GMapMarkerPlane(MAV.sysid - 1, portlocation, MAV.cs.yaw,
                     MAV.cs.groundcourse, MAV.cs.nav_bearing, MAV.cs.target_bearing,
                     (float)CurrentState.toDistDisplayUnit(MAV.cs.radius),
                     GCSViews.FlightData.instance.colorchangeid)
+                    {
+                        ToolTipText = ArduPilot.Common.speechConversion(MAV, "" + Settings.Instance["mapicondesc"]),
+                        ToolTipMode = String.IsNullOrEmpty(Settings.Instance["mapicondesc"]) ? MarkerTooltipMode.Never : MarkerTooltipMode.Always,
+                        Tag = MAV
+                    });
+                }
+
+                return (new GMapMarkerPlane(MAV.sysid - 1, portlocation, MAV.cs.yaw,
+                    MAV.cs.groundcourse, MAV.cs.nav_bearing, MAV.cs.target_bearing,
+                    (float)CurrentState.toDistDisplayUnit(MAV.cs.radius),
+                    0)
                 {
                     ToolTipText = ArduPilot.Common.speechConversion(MAV, "" + Settings.Instance["mapicondesc"]),
                     ToolTipMode = String.IsNullOrEmpty(Settings.Instance["mapicondesc"]) ? MarkerTooltipMode.Never : MarkerTooltipMode.Always,
                     Tag = MAV
-                });
+                }) ;
             }
             else if (MAV.aptype == MAVLink.MAV_TYPE.GROUND_ROVER)
             {

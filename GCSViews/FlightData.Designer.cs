@@ -85,6 +85,12 @@ namespace MissionPlanner.GCSViews
             this.CMB_modes = new System.Windows.Forms.ComboBox();
             this.textBoxSN = new TextBox();
             this.textBoxSN2 = new TextBox();
+            this.textBox11low = new TextBox();
+            this.textBox11high = new TextBox();
+            this.textBox12low = new TextBox();
+            this.textBox12high = new TextBox();
+            this.textBox11servo = new System.Windows.Forms.Label();
+            this.textBox12servo = new System.Windows.Forms.Label();
             this.BUT_quickauto = new MissionPlanner.Controls.MyButton();
             this.BUT_setmode = new MissionPlanner.Controls.MyButton();
             this.tabPagemessages = new System.Windows.Forms.TabPage();
@@ -849,6 +855,12 @@ namespace MissionPlanner.GCSViews
             this.tableLayoutPanel3.Controls.Add(this.BUT_DropPLG, 2, 3);
             this.tableLayoutPanel3.Controls.Add(this.BUT_NeutralPLG, 1, 3);
             this.tableLayoutPanel3.Controls.Add(this.BUT_ClosePLG, 0, 3);
+            this.tableLayoutPanel3.Controls.Add(this.textBox11low, 1, 5);
+            this.tableLayoutPanel3.Controls.Add(this.textBox11high, 2, 5);
+            this.tableLayoutPanel3.Controls.Add(this.textBox12low, 1, 6);
+            this.tableLayoutPanel3.Controls.Add(this.textBox12high, 2, 6);
+            this.tableLayoutPanel3.Controls.Add(this.textBox11servo, 0, 5);
+            this.tableLayoutPanel3.Controls.Add(this.textBox12servo, 0, 6);
             this.tableLayoutPanel3.SetColumnSpan(this.BUT_ARM, 1);
             // Création de la TextBox
             // Ajout du texte "SN xxx"
@@ -856,6 +868,30 @@ namespace MissionPlanner.GCSViews
             this.textBoxSN.Font = new System.Drawing.Font("Microsoft Sans Serif", 18f, System.Drawing.FontStyle.Regular); // 24f est la taille de police désirée
             this.textBoxSN.AutoSize = true;
             // Alignement du texte au centre
+            // textBow11low
+            this.textBox11low.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.textBox11low.Text = "1000";
+            // textBow11high
+            this.textBox11high.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.textBox11high.Text = "2000";
+            // textBow12low
+            this.textBox12low.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.textBox12low.Text = "1000";
+            // textBow12high
+            this.textBox12high.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.textBox12high.Text = "2000";
+            // textBow11servo
+            this.textBox11servo.Text = "Servo11 low/high:";
+            this.textBox11servo.BackColor = System.Drawing.Color.FromArgb(20, 20, 20);
+            this.textBox11servo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7f, System.Drawing.FontStyle.Regular);
+            // textBow12servo
+            this.textBox12servo.Text = "Servo12 low/high:";
+            this.textBox12servo.BackColor = System.Drawing.Color.FromArgb(20, 20, 20);
+            this.textBox12servo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7f, System.Drawing.FontStyle.Regular);
+
+
+
+
             textBoxSN.TextAlign = HorizontalAlignment.Center;
             // Taille de la TextBox pour s'adapter au texte
             // Ajout du GroupBox à la tabGroundActions
@@ -3286,6 +3322,12 @@ namespace MissionPlanner.GCSViews
         private Controls.QuickView quickView5;
         private TextBox textBoxSN;
         private TextBox textBoxSN2;
+        private TextBox textBox11low;
+        private TextBox textBox11high;
+        private TextBox textBox12low;
+        private TextBox textBox12high;
+        private System.Windows.Forms.Label textBox11servo;
+        private System.Windows.Forms.Label textBox12servo;
         private System.Windows.Forms.ToolStripMenuItem poiatcoordsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem flyToCoordsToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;

@@ -1640,10 +1640,10 @@
 		<value>0, 0</value>
 	</data>
 	<data name="tableLayoutPanel3.RowCount" type="System.Int32, mscorlib">
-		<value>4</value>
+		<value>6</value>
 	</data>
 	<data name="tableLayoutPanel3.Size" type="System.Drawing.Size, System.Drawing">
-		<value>287, 230</value>
+		<value>287, 300</value>
 	</data>
 	<data name="tableLayoutPanel3.TabIndex" type="System.Int32, mscorlib">
 		<value>78</value>

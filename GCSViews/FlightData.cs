@@ -1785,6 +1785,33 @@ namespace MissionPlanner.GCSViews
 
         }
 
+        private void BUT_FBW_Click(object sender, EventArgs e)
+        {
+            // Vérifier la condition si value > 20
+            if (MainV2.comPort.MAV.cs.ter_curalt > 20)
+            {
+                // Afficher une fenêtre de confirmation
+                int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                // Si l'utilisateur choisit "Non", annuler l'action
+                if (result == (int)DialogResult.No)
+                {
+                    return;
+                }
+            }
+            try
+            {
+                ((Control)sender).Enabled = false;
+                MainV2.comPort.setMode("FBWA");
+            }
+            catch
+            {
+                CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+            }
+
+            ((Control)sender).Enabled = true;
+        }
+
         private void BUT_PreFlightCal_Click(object sender, EventArgs e)
         {
             // Vérifier la condition si value > 20

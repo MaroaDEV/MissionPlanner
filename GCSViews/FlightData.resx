@@ -1351,6 +1351,39 @@
   <data name="&gt;&gt;BUT_changecolor.ZOrder" xml:space="preserve">
     <value>17</value>
   </data>
+  <data name="BUT_FBW.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="BUT_FBW.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BUT_FBW.Location" type="System.Drawing.Point, System.Drawing">
+    <value>117, 75</value>
+  </data>
+  <data name="BUT_FBW.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 30</value>
+  </data>
+  <data name="BUT_FBW.TabIndex" type="System.Int32, mscorlib">
+    <value>75</value>
+  </data>
+  <data name="BUT_FBW.Text" xml:space="preserve">
+    <value>FBW A</value>
+  </data>
+  <data name="BUT_FBW.ToolTip" xml:space="preserve">
+    <value>Set mode to FBWA</value>
+  </data>
+  <data name="&gt;&gt;BUT_FBW.Name" xml:space="preserve">
+    <value>BUT_FBW</value>
+  </data>
+  <data name="&gt;&gt;BUT_FBW.Type" xml:space="preserve">
+    <value>MissionPlanner.Controls.MyButton, MissionPlanner.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;BUT_FBW.Parent" xml:space="preserve">
+    <value>tableLayoutPanel3</value>
+  </data>
+  <data name="&gt;&gt;BUT_FBW.ZOrder" xml:space="preserve">
+    <value>17</value>
+  </data>
   <data name="BUT_quickmanual.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>

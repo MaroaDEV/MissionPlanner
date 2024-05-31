@@ -79,6 +79,7 @@ namespace MissionPlanner.GCSViews
             this.BUT_Reboot = new MissionPlanner.Controls.MyButton();
             this.BUT_quickmanual = new MissionPlanner.Controls.MyButton();
             this.BUT_changecolor = new MissionPlanner.Controls.MyButton();
+            this.BUT_FBW = new MissionPlanner.Controls.MyButton();
             this.BUT_PreFlightCal = new MissionPlanner.Controls.MyButton();
             this.BUT_setwp = new MissionPlanner.Controls.MyButton();
             this.CMB_modes = new System.Windows.Forms.ComboBox();
@@ -840,8 +841,9 @@ namespace MissionPlanner.GCSViews
             // 
             resources.ApplyResources(this.tableLayoutPanel3, "tableLayoutPanel3");
             this.tableLayoutPanel3.Controls.Add(this.BUT_changecolor, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.BUT_FBW, 1, 2);
             this.tableLayoutPanel3.Controls.Add(this.BUT_quickmanual, 0, 2);
-            this.tableLayoutPanel3.Controls.Add(this.BUT_PreFlightCal, 1,2);
+            this.tableLayoutPanel3.Controls.Add(this.BUT_PreFlightCal, 2,2);
             this.tableLayoutPanel3.Controls.Add(this.BUT_ARM, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.BUT_Reboot, 1, 1);
             this.tableLayoutPanel3.Controls.Add(this.BUT_DropPLG, 2, 3);
@@ -1196,6 +1198,17 @@ namespace MissionPlanner.GCSViews
             this.toolTip1.SetToolTip(this.BUT_changecolor, resources.GetString("BUT_changecolor.ToolTip"));
             this.BUT_changecolor.UseVisualStyleBackColor = true;
             this.BUT_changecolor.Click += new System.EventHandler(this.BUT_changecolor_Click);
+            // 
+            // BUT_FBW
+            // 
+            this.BUT_FBW.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BUT_FBW.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BUT_FBW.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BUT_FBW, "BUT_FBW");
+            this.BUT_FBW.Name = "BUT_FBW";
+            this.toolTip1.SetToolTip(this.BUT_FBW, resources.GetString("BUT_FBW.ToolTip"));
+            this.BUT_FBW.UseVisualStyleBackColor = true;
+            this.BUT_FBW.Click += new System.EventHandler(this.BUT_FBW_Click);
             // 
             // BUT_PreFlightCal
             // 
@@ -3106,6 +3119,7 @@ namespace MissionPlanner.GCSViews
         private Controls.MyButton BUT_setwp;
         private Controls.MyButton BUT_quickmanual;
         private Controls.MyButton BUT_changecolor;
+        private Controls.MyButton BUT_FBW;
         private Controls.MyButton BUT_PreFlightCal;
         private Controls.MyButton BUT_quickrtl;
         private Controls.MyButton BUT_Reboot;

@@ -631,6 +631,8 @@ namespace MissionPlanner.GCSViews
 
             // Envoyer une commande MAVLink pour passer tous les servo en position de largage
             MainV2.comPort.doCommand(
+                (byte)MainV2.comPort.sysidcurrent,
+                (byte)MainV2.comPort.compidcurrent,
                 MAVLink.MAV_CMD.DO_SET_SERVO,
                 11,   // // Servo n°
                 2000,   // Angle de déclenchement du servo
@@ -640,6 +642,8 @@ namespace MissionPlanner.GCSViews
                 0,                       // Non utilisé
                 0);                      // Non utilisé
             MainV2.comPort.doCommand(
+                (byte)MainV2.comPort.sysidcurrent,
+                (byte)MainV2.comPort.compidcurrent,
                 MAVLink.MAV_CMD.DO_SET_SERVO,
                 12,   // // Servo n°
                 1000,   // Angle de déclenchement du servo
@@ -649,6 +653,8 @@ namespace MissionPlanner.GCSViews
                 0,                       // Non utilisé
                 0);
             MainV2.comPort.doCommand(
+                (byte)MainV2.comPort.sysidcurrent,
+                (byte)MainV2.comPort.compidcurrent,
                 MAVLink.MAV_CMD.DO_SET_SERVO,
                 14,   // Servo n°
                 2000,   // Angle de déclenchement du servo
@@ -664,6 +670,8 @@ namespace MissionPlanner.GCSViews
             // Envoyer une commande MAVLink pour passer tous les servo en position neutre
 
             MainV2.comPort.doCommand(
+                (byte)MainV2.comPort.sysidcurrent,
+                (byte)MainV2.comPort.compidcurrent,
                 MAVLink.MAV_CMD.DO_SET_SERVO,
                 11,   // Servo n°
                 1500,   // Angle de déclenchement du servo
@@ -673,6 +681,8 @@ namespace MissionPlanner.GCSViews
                 0,                       // Non utilisé
                 0); 
             MainV2.comPort.doCommand(
+                (byte)MainV2.comPort.sysidcurrent,
+                (byte)MainV2.comPort.compidcurrent,
                 MAVLink.MAV_CMD.DO_SET_SERVO,
                 12,   // Servo n°
                 1500,   // Angle de déclenchement du servo
@@ -682,6 +692,8 @@ namespace MissionPlanner.GCSViews
                 0,                       // Non utilisé
                 0);
             MainV2.comPort.doCommand(
+                (byte)MainV2.comPort.sysidcurrent,
+                (byte)MainV2.comPort.compidcurrent,
                 MAVLink.MAV_CMD.DO_SET_SERVO,
                 14,   // Servo n°
                 1000,   // Angle de déclenchement du servo
@@ -714,6 +726,8 @@ namespace MissionPlanner.GCSViews
 
             // Envoyer une commande MAVLink pour passer tous les servo en position de largage
             MainV2.comPort.doCommand(
+                (byte)MainV2.comPort.sysidcurrent,
+                (byte)MainV2.comPort.compidcurrent,
                 MAVLink.MAV_CMD.DO_SET_SERVO,
                 11,   // Servo n°
                 2000,   // Angle de déclenchement du servo
@@ -723,6 +737,8 @@ namespace MissionPlanner.GCSViews
                 0,                       // Non utilisé
                 0);                      // Non utilisé
             MainV2.comPort.doCommand(
+                (byte)MainV2.comPort.sysidcurrent,
+                (byte)MainV2.comPort.compidcurrent,
                 MAVLink.MAV_CMD.DO_SET_SERVO,
                 12,   // Servo n°
                 1000,   // Angle de déclenchement du servo
@@ -732,6 +748,8 @@ namespace MissionPlanner.GCSViews
                 0,                       // Non utilisé
                 0);
             MainV2.comPort.doCommand(
+                (byte)MainV2.comPort.sysidcurrent,
+                (byte)MainV2.comPort.compidcurrent,
                 MAVLink.MAV_CMD.DO_SET_SERVO,
                 14,   // Servo n°
                 2000,   // Angle de déclenchement du servo
@@ -762,6 +780,8 @@ namespace MissionPlanner.GCSViews
 
             // Envoyer une commande MAVLink pour passer tous les servo en position neutre
             MainV2.comPort.doCommand(
+                (byte)MainV2.comPort.sysidcurrent,
+                (byte)MainV2.comPort.compidcurrent,
                 MAVLink.MAV_CMD.DO_SET_SERVO,
                 11,   // Servo n°
                 1500,   // Angle de déclenchement du servo
@@ -771,6 +791,8 @@ namespace MissionPlanner.GCSViews
                 0,                       // Non utilisé
                 0);                      // Non utilisé
             MainV2.comPort.doCommand(
+                (byte)MainV2.comPort.sysidcurrent,
+                (byte)MainV2.comPort.compidcurrent,
                 MAVLink.MAV_CMD.DO_SET_SERVO,
                 12,   // Servo n°
                 1500,   // Angle de déclenchement du servo
@@ -800,6 +822,8 @@ namespace MissionPlanner.GCSViews
 
             // Envoyer une commande MAVLink pour passer tous les servo en position fermée
             MainV2.comPort.doCommand(
+                (byte)MainV2.comPort.sysidcurrent,
+                (byte)MainV2.comPort.compidcurrent,
                 MAVLink.MAV_CMD.DO_SET_SERVO,
                 11,   // Servo n°
                 1000,   // Angle de déclenchement du servo
@@ -809,6 +833,8 @@ namespace MissionPlanner.GCSViews
                 0,                       // Non utilisé
                 0);                      // Non utilisé
             MainV2.comPort.doCommand(
+                (byte)MainV2.comPort.sysidcurrent,
+                (byte)MainV2.comPort.compidcurrent,
                 MAVLink.MAV_CMD.DO_SET_SERVO,
                 12,   // Servo n°
                 2000,   // PWM
@@ -818,6 +844,8 @@ namespace MissionPlanner.GCSViews
                 0,                       // Non utilisé
                 0);
             MainV2.comPort.doCommand(
+                (byte)MainV2.comPort.sysidcurrent,
+                (byte)MainV2.comPort.compidcurrent,
                 MAVLink.MAV_CMD.DO_SET_SERVO,
                 14,   // 0 = Disable, 1 = Enable, 2 = Release 
                 1000,   // Angle de déclenchement du servo
@@ -2226,6 +2254,8 @@ namespace MissionPlanner.GCSViews
 
                 // Envoyer une commande MAVLink pour définir la position du servo
                 MainV2.comPort.doCommand(
+                    (byte)MainV2.comPort.sysidcurrent,
+                    (byte)MainV2.comPort.compidcurrent,
                     MAVLink.MAV_CMD.DO_PARACHUTE,
                     2,   // 0 = Disable, 1 = Enable, 2 = Release 
                     0,   // Angle de déclenchement du servo

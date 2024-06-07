@@ -614,7 +614,7 @@ namespace MissionPlanner.GCSViews
             //this.tabControlactions.Controls.Add(this.tabPagePreFlight);
             //this.tabControlactions.Controls.Add(this.tabGauges);
             //this.tabControlactions.Controls.Add(this.tabTransponder);
-            //this.tabControlactions.Controls.Add(this.tabStatus);
+            this.tabControlactions.Controls.Add(this.tabStatus);
             this.tabControlactions.Controls.Add(this.tabServo);
             //this.tabControlactions.Controls.Add(this.tabAuxFunction);
             //this.tabControlactions.Controls.Add(this.tabScripts);

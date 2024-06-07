@@ -39,6 +39,7 @@ namespace MissionPlanner.GCSViews
             this.tabQuick = new System.Windows.Forms.TabPage();
             this.tableLayoutPanelQuick = new System.Windows.Forms.TableLayoutPanel();
             this.Autonav = new System.Windows.Forms.CheckBox();
+            this.Rack = new System.Windows.Forms.CheckBox();
             this.quickView6 = new MissionPlanner.Controls.QuickView();
             this.contextMenuStripQuickView = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.setViewCountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -848,6 +849,7 @@ namespace MissionPlanner.GCSViews
             resources.ApplyResources(this.tableLayoutPanel3, "tableLayoutPanel3");
             this.tableLayoutPanel3.Controls.Add(this.BUT_changecolor, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.BUT_FBW, 1, 2);
+            this.tableLayoutPanel3.Controls.Add(this.Rack, 2, 0);
             this.tableLayoutPanel3.Controls.Add(this.BUT_quickmanual, 0, 2);
             this.tableLayoutPanel3.Controls.Add(this.BUT_PreFlightCal, 2,2);
             this.tableLayoutPanel3.Controls.Add(this.BUT_ARM, 0, 1);
@@ -1200,7 +1202,14 @@ namespace MissionPlanner.GCSViews
             this.Autonav.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Autonav.Name = "AutoNav";
             this.Autonav.UseVisualStyleBackColor = true;
-
+            // 
+            // Rack
+            // 
+            this.Rack.Text = "Rack";
+            this.Rack.Checked = false;
+            this.Rack.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.Rack.Name = "Rack";
+            this.Rack.UseVisualStyleBackColor = true;
             // 
             // BUT_Reboot
             // 
@@ -3352,6 +3361,7 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.Label NACp_lbl;
         private System.Windows.Forms.Label NIC_lbl;
         private System.Windows.Forms.CheckBox Autonav;
+        private System.Windows.Forms.CheckBox Rack;
         private System.Windows.Forms.TextBox NACp_tb;
         private System.Windows.Forms.TextBox NIC_tb;
         private ToolStripMenuItem showIconsToolStripMenuItem;

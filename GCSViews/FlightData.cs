@@ -723,41 +723,50 @@ namespace MissionPlanner.GCSViews
                     return;
                 }
             }
+            if (!Rack.Checked)
+            {
+                // Envoyer une commande MAVLink pour passer tous les servo en position de largage
+                MainV2.comPort.doCommand(
+                    (byte)MainV2.comPort.sysidcurrent,
+                    (byte)MainV2.comPort.compidcurrent,
+                    MAVLink.MAV_CMD.DO_SET_SERVO,
+                    11,   // Servo n°
+                    int.Parse(textBox11high.Text),   // Angle de déclenchement du servo
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0);                      // Non utilisé
+                MainV2.comPort.doCommand(
+                    (byte)MainV2.comPort.sysidcurrent,
+                    (byte)MainV2.comPort.compidcurrent,
+                    MAVLink.MAV_CMD.DO_SET_SERVO,
+                    12,   // Servo n°
+                    int.Parse(textBox12low.Text),   // Angle de déclenchement du servo
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0);
 
-            // Envoyer une commande MAVLink pour passer tous les servo en position de largage
-            MainV2.comPort.doCommand(
-                (byte)MainV2.comPort.sysidcurrent,
-                (byte)MainV2.comPort.compidcurrent,
-                MAVLink.MAV_CMD.DO_SET_SERVO,
-                11,   // Servo n°
-                int.Parse(textBox11high.Text),   // Angle de déclenchement du servo
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0);                      // Non utilisé
-            MainV2.comPort.doCommand(
-                (byte)MainV2.comPort.sysidcurrent,
-                (byte)MainV2.comPort.compidcurrent,
-                MAVLink.MAV_CMD.DO_SET_SERVO,
-                12,   // Servo n°
-                int.Parse(textBox12low.Text),   // Angle de déclenchement du servo
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0);
-            MainV2.comPort.doCommand(
-                (byte)MainV2.comPort.sysidcurrent,
-                (byte)MainV2.comPort.compidcurrent,
-                MAVLink.MAV_CMD.DO_SET_SERVO,
-                14,   // Servo n°
-                2000,   // Angle de déclenchement du servo
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0);
+            }
+
+            else
+            {
+                MainV2.comPort.doCommand(
+                    (byte)MainV2.comPort.sysidcurrent,
+                    (byte)MainV2.comPort.compidcurrent,
+                    MAVLink.MAV_CMD.DO_SET_SERVO,
+                    14,   // Servo n°
+                    2000,   // Angle de déclenchement du servo
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0);
+            }
+
+
             CustomMessageBox.Show("Action effectuée");
 
 
@@ -777,9 +786,10 @@ namespace MissionPlanner.GCSViews
                     return;
                 }
             }
-
-            // Envoyer une commande MAVLink pour passer tous les servo en position neutre
-            MainV2.comPort.doCommand(
+            if (!Rack.Checked)
+            {
+                // Envoyer une commande MAVLink pour passer tous les servo en position neutre
+                MainV2.comPort.doCommand(
                 (byte)MainV2.comPort.sysidcurrent,
                 (byte)MainV2.comPort.compidcurrent,
                 MAVLink.MAV_CMD.DO_SET_SERVO,
@@ -790,7 +800,7 @@ namespace MissionPlanner.GCSViews
                 0,                       // Non utilisé
                 0,                       // Non utilisé
                 0);                      // Non utilisé
-            MainV2.comPort.doCommand(
+                MainV2.comPort.doCommand(
                 (byte)MainV2.comPort.sysidcurrent,
                 (byte)MainV2.comPort.compidcurrent,
                 MAVLink.MAV_CMD.DO_SET_SERVO,
@@ -802,6 +812,7 @@ namespace MissionPlanner.GCSViews
                 0,                       // Non utilisé
                 0);
             // Pas d'action sur le channel 14 pour la position neutre car le rack n'a pas de position neutre
+            }
             CustomMessageBox.Show("Action effectuée");
         }
 
@@ -819,41 +830,46 @@ namespace MissionPlanner.GCSViews
                     return;
                 }
             }
-
-            // Envoyer une commande MAVLink pour passer tous les servo en position fermée
-            MainV2.comPort.doCommand(
-                (byte)MainV2.comPort.sysidcurrent,
-                (byte)MainV2.comPort.compidcurrent,
-                MAVLink.MAV_CMD.DO_SET_SERVO,
-                11,   // Servo n°
-                int.Parse(textBox11low.Text),   // Angle de déclenchement du servo
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0);                      // Non utilisé
-            MainV2.comPort.doCommand(
-                (byte)MainV2.comPort.sysidcurrent,
-                (byte)MainV2.comPort.compidcurrent,
-                MAVLink.MAV_CMD.DO_SET_SERVO,
-                12,   // Servo n°
-                int.Parse(textBox12high.Text),   // PWM
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0);
-            MainV2.comPort.doCommand(
-                (byte)MainV2.comPort.sysidcurrent,
-                (byte)MainV2.comPort.compidcurrent,
-                MAVLink.MAV_CMD.DO_SET_SERVO,
-                14,   // 0 = Disable, 1 = Enable, 2 = Release 
-                1000,   // Angle de déclenchement du servo
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0);
+            if (!Rack.Checked)
+            {
+                // Envoyer une commande MAVLink pour passer tous les servo en position fermée
+                MainV2.comPort.doCommand(
+                    (byte)MainV2.comPort.sysidcurrent,
+                    (byte)MainV2.comPort.compidcurrent,
+                    MAVLink.MAV_CMD.DO_SET_SERVO,
+                    11,   // Servo n°
+                    int.Parse(textBox11low.Text),   // Angle de déclenchement du servo
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0);                      // Non utilisé
+                MainV2.comPort.doCommand(
+                    (byte)MainV2.comPort.sysidcurrent,
+                    (byte)MainV2.comPort.compidcurrent,
+                    MAVLink.MAV_CMD.DO_SET_SERVO,
+                    12,   // Servo n°
+                    int.Parse(textBox12high.Text),   // PWM
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0);
+            }
+            else
+            {
+                MainV2.comPort.doCommand(
+                    (byte)MainV2.comPort.sysidcurrent,
+                    (byte)MainV2.comPort.compidcurrent,
+                    MAVLink.MAV_CMD.DO_SET_SERVO,
+                    14,   // 0 = Disable, 1 = Enable, 2 = Release 
+                    1000,   // Angle de déclenchement du servo
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0);
+            }
             CustomMessageBox.Show("Action effectuée");
         }
 

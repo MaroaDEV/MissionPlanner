@@ -5977,10 +5977,23 @@ namespace MissionPlanner.GCSViews
                     }
                 }
 
-                // Démarre une tâche asynchrone pour attendre 10 secondes et continue ensuite
-                int delta_bearing = ((int) Math.Abs((prev_bearing - MainV2.comPort.MAV.cs.target_bearing)%360));
-                Int32 delay_bearing = (int)((Int32) Math.Abs(45000 * (Math.Min(delta_bearing, 360 - delta_bearing))* 0.005555));
+                // Convertir les cap en entiers pour appliquer le modulo correctement
+                int prevBearingInt = (int)prev_bearing;
+                int targetBearingInt = (int)MainV2.comPort.MAV.cs.target_bearing;
+
+                // Calcule l'écart de cap entre deux segments et utilise le plus petit angle de rotation (0° à 180°)
+                int delta_bearing = (prevBearingInt - targetBearingInt) % 360;
+
+                // Calcule le temps de virage basé sur l'écart de cap
+                int delay_bearing = (int)(45000 * Math.Min(delta_bearing,360 - delta_bearing) * 0.005555);
+
+                if (delta_bearing < 0) delta_bearing += 360;
+
+                // Met à jour le cap précédent
                 prev_bearing = MainV2.comPort.MAV.cs.target_bearing;
+
+                Console.WriteLine("Delta Bearing: " + delta_bearing);
+                Console.WriteLine("Delay Bearing: " + delay_bearing);
 
                 WaitForDelay(10000 + delay_bearing, () =>
                 {
@@ -6189,7 +6202,7 @@ namespace MissionPlanner.GCSViews
                                         quickView.BackColor = Color.FromArgb(20, 20, 20);
                                         bitmask = 0;
                                         break;
-                                    case float v when v > 8:
+                                    case float v when v > 9:
                                         quickView.BackColor = Color.DarkRed;
                                         bitmask = 7;
                                         break;

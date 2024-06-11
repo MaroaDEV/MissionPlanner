@@ -5978,7 +5978,11 @@ namespace MissionPlanner.GCSViews
                 }
 
                 // Démarre une tâche asynchrone pour attendre 10 secondes et continue ensuite
-                WaitForDelay(28000, () =>
+                int delta_bearing = ((int) Math.Abs((prev_bearing - MainV2.comPort.MAV.cs.target_bearing))%180);
+                Int32 delay_bearing = (int)((Int32) 47000 * (delta_bearing)* 0.005555);
+                prev_bearing = MainV2.comPort.MAV.cs.target_bearing;
+
+                WaitForDelay(5000 + delay_bearing, () =>
                 {
                     // Cette partie du code s'exécutera après l'attente de 10 secondes
                     if (--methodCallCount == 0)
@@ -6158,7 +6162,7 @@ namespace MissionPlanner.GCSViews
                                 value = MainV2.comPort.MAV.cs.xtrack_error;
                                 switch (value)
                                 {
-                                    case float v when (wp_dist_loop_count >= 3):
+                                    case float v when (!is_cruising || wp_dist_loop_count >= 3):
                                         quickView.BackColor = Color.FromArgb(20, 20, 20);
                                         bitmask = 0;
                                         break;

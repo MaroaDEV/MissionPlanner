@@ -1207,7 +1207,7 @@ namespace MissionPlanner.GCSViews
             // 
             this.Rack.Text = "Rack";
             this.Rack.Checked = false;
-            this.Rack.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.Rack.CheckState = System.Windows.Forms.CheckState.Unchecked;
             this.Rack.Name = "Rack";
             this.Rack.UseVisualStyleBackColor = true;
             // 
@@ -3301,6 +3301,7 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.ToolStripMenuItem setEKFHomeHereToolStripMenuItem;
         private System.Windows.Forms.TabPage tabPayload;
         private int prev_wp;
+        private float prev_bearing;
         private int methodCallCount = 0;
         private int wp_dist_loop_count;
         private string idno;

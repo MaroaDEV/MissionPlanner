@@ -5979,10 +5979,10 @@ namespace MissionPlanner.GCSViews
 
                 // Démarre une tâche asynchrone pour attendre 10 secondes et continue ensuite
                 int delta_bearing = ((int) Math.Abs((prev_bearing - MainV2.comPort.MAV.cs.target_bearing)%360));
-                Int32 delay_bearing = (int)((Int32) Math.Abs(47000 * (Math.Min(delta_bearing, 360 - delta_bearing))* 0.005555));
+                Int32 delay_bearing = (int)((Int32) Math.Abs(45000 * (Math.Min(delta_bearing, 360 - delta_bearing))* 0.005555));
                 prev_bearing = MainV2.comPort.MAV.cs.target_bearing;
 
-                WaitForDelay(5000 + delay_bearing, () =>
+                WaitForDelay(10000 + delay_bearing, () =>
                 {
                     // Cette partie du code s'exécutera après l'attente de 10 secondes
                     if (--methodCallCount == 0)

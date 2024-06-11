@@ -6215,11 +6215,11 @@ namespace MissionPlanner.GCSViews
                                         quickView.BackColor = Color.FromArgb(20, 20, 20);
                                         bitmask = 0;
                                         break;
-                                    case float v when (v > Math.Max(25.2f,(2.0f+currlaw)*1.35f)) :
+                                    case float v when (v > Math.Max(25.2f,(4.0f+currlaw)*1.45f)) :
                                         quickView.BackColor = Color.DarkRed;
                                         bitmask = 4;
                                         break;
-                                    case float v when ((v > Math.Max(25.2f, currlaw * 1.25f)) || (v < 5)):
+                                    case float v when ((v > Math.Max(25.2f, 1.0f + currlaw * 1.35f)) || (v < 5)):
                                         quickView.BackColor = Color.Orange;
                                         bitmask = 0;
                                         break;

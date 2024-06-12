@@ -6018,6 +6018,8 @@ namespace MissionPlanner.GCSViews
 
                 if (delta_bearing < 0) delta_bearing = Math.Abs(delta_bearing + 360);
 
+                if (Math.Min(delta_bearing, 360 - delta_bearing) < 5) delta_bearing = 180;
+
                 // Calcule le temps de virage basé sur l'écart de cap
                 int delay_bearing = (int)(41000 * Math.Min(delta_bearing,360 - delta_bearing) * 0.005555);
 

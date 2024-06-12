@@ -618,6 +618,38 @@ namespace MissionPlanner.GCSViews
             }
         }
 
+        public void BUT_camon_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                MainV2.comPort.doCommand((byte)MainV2.comPort.sysidcurrent,
+                                         (byte)MainV2.comPort.compidcurrent, 
+                                         MAVLink.MAV_CMD.VIDEO_START_STREAMING, 
+                                         0, 0, 0, 0, 0, 0, 0);
+            }
+            catch
+            {
+                CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+            }
+
+        }
+
+        public void BUT_camoff_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                MainV2.comPort.doCommand((byte)MainV2.comPort.sysidcurrent,
+                                         (byte)MainV2.comPort.compidcurrent,
+                                         MAVLink.MAV_CMD.VIDEO_STOP_STREAMING,
+                                         0, 0, 0, 0, 0, 0, 0);
+            }
+            catch
+            {
+                CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+            }
+
+        }
+
         public async void BUT_DropPL_Click(object sender, EventArgs e)
         {
             // Afficher une fenêtre de confirmation
@@ -5987,16 +6019,12 @@ namespace MissionPlanner.GCSViews
                 if (delta_bearing < 0) delta_bearing = Math.Abs(delta_bearing + 360);
 
                 // Calcule le temps de virage basé sur l'écart de cap
-                int delay_bearing = (int)(45000 * Math.Min(delta_bearing,360 - delta_bearing) * 0.005555);
-
-
-                // Met à jour le cap précédent
-                prev_bearing = MainV2.comPort.MAV.cs.target_bearing;
+                int delay_bearing = (int)(41000 * Math.Min(delta_bearing,360 - delta_bearing) * 0.005555);
 
                 Console.WriteLine("Delta Bearing: " + delta_bearing);
                 Console.WriteLine("Delay Bearing: " + delay_bearing);
 
-                WaitForDelay(10000 + delay_bearing, () =>
+                WaitForDelay(8000 + delay_bearing, () =>
                 {
                     // Cette partie du code s'exécutera après l'attente de 10 secondes
                     if (--methodCallCount == 0)
@@ -6005,6 +6033,10 @@ namespace MissionPlanner.GCSViews
                     }
                     // Continuer avec le reste du code ici
                 });
+            }
+            else
+            {
+                prev_bearing = MainV2.comPort.MAV.cs.target_bearing;
             }
 
             prev_wp = (int)MainV2.comPort.MAV.cs.wpno;

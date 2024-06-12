@@ -72,6 +72,8 @@ namespace MissionPlanner.GCSViews
             this.BUT_Homealt = new MissionPlanner.Controls.MyButton();
             this.BUT_DropPL = new MissionPlanner.Controls.MyButton();
             this.BUT_DropPLG = new MissionPlanner.Controls.MyButton();
+            this.BUT_camon = new MissionPlanner.Controls.MyButton();
+            this.BUT_camoff = new MissionPlanner.Controls.MyButton();
             this.BUT_NeutralPLG = new MissionPlanner.Controls.MyButton();
             this.BUT_ClosePLG = new MissionPlanner.Controls.MyButton();
             this.BUTrestartmission = new MissionPlanner.Controls.CustomButton();
@@ -796,23 +798,25 @@ namespace MissionPlanner.GCSViews
             //this.tableLayoutPanel1.Controls.Add(this.BUTactiondo, 1, 0);
             //this.tableLayoutPanel1.Controls.Add(this.BUT_resumemis, 1, 2);
             //this.tableLayoutPanel1.Controls.Add(this.modifyandSetAlt, 4, 1);
-            this.tableLayoutPanel1.Controls.Add(this.modifyandSetSpeed, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.CMB_setwp, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.modifyandSetSpeed, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.CMB_setwp, 0, 2);
             //this.tableLayoutPanel1.Controls.Add(this.BUT_ARM, 0, 4);
             //this.tableLayoutPanel1.Controls.Add(this.BUT_mountmode, 1, 3);
             //this.tableLayoutPanel1.Controls.Add(this.BUT_joystick, 2, 3);
             //this.tableLayoutPanel1.Controls.Add(this.BUT_RAWSensor, 3, 2);
             //this.tableLayoutPanel1.Controls.Add(this.BUT_Homealt, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.BUT_DropPL, 1, 7);
+            this.tableLayoutPanel1.Controls.Add(this.BUT_camon, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.BUT_camoff, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.BUTrestartmission, 0, 7);
             //this.tableLayoutPanel1.Controls.Add(this.CMB_mountmode, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.BUT_quickrtl, 0, 8);
             this.tableLayoutPanel1.Controls.Add(this.Autonav, 3, 0);
             //this.tableLayoutPanel1.Controls.Add(this.BUT_quickmanual, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.BUT_setwp, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.CMB_modes, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.BUT_quickauto, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.BUT_setmode, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.BUT_setwp, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.CMB_modes, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.BUT_quickauto, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.BUT_setmode, 1, 3);
 
             // Création de la TextBox
             // Ajout du texte "SN xxx"
@@ -835,12 +839,14 @@ namespace MissionPlanner.GCSViews
             this.tableLayoutPanel1.SetColumnSpan(this.BUT_quickauto, 2);
             this.tableLayoutPanel1.SetRowSpan(this.BUT_quickauto, 1);
             this.tableLayoutPanel1.SetColumnSpan(this.BUT_DropPL, 2);
+            this.tableLayoutPanel1.SetColumnSpan(this.BUT_camon, 2);
+            this.tableLayoutPanel1.SetColumnSpan(this.BUT_camoff, 2);
             this.tableLayoutPanel1.SetColumnSpan(this.BUT_Homealt, 2);
             this.tableLayoutPanel1.SetColumnSpan(this.BUT_setwp, 2);
             this.tableLayoutPanel1.SetColumnSpan(this.CMB_modes, 2);
             this.tableLayoutPanel1.SetColumnSpan(this.BUT_setmode, 2);
             this.tableLayoutPanel1.SetColumnSpan(this.BUTrestartmission, 2);
-            this.tableLayoutPanel1.SetRowSpan(this.modifyandSetSpeed, 3);
+            this.tableLayoutPanel1.SetRowSpan(this.modifyandSetSpeed, 2);
             this.tableLayoutPanel1.SetColumnSpan(this.modifyandSetSpeed, 3);
             this.tableLayoutPanel1.Resize += new System.EventHandler(this.tableLayoutPanel1_Resize);
             // 
@@ -1123,6 +1129,28 @@ namespace MissionPlanner.GCSViews
             this.toolTip1.SetToolTip(this.BUT_Homealt, resources.GetString("BUT_Homealt.ToolTip"));
             this.BUT_Homealt.UseVisualStyleBackColor = true;
             this.BUT_Homealt.Click += new System.EventHandler(this.BUT_Homealt_Click);
+            // 
+            // BUT_camon
+            // 
+            this.BUT_camon.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BUT_camon.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BUT_camon.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BUT_camon, "BUT_camon");
+            this.BUT_camon.Name = "BUT_camon";
+            this.toolTip1.SetToolTip(this.BUT_camon, resources.GetString("BUT_camon.ToolTip"));
+            this.BUT_camon.UseVisualStyleBackColor = true;
+            this.BUT_camon.Click += new System.EventHandler(this.BUT_camon_Click);
+            // 
+            // BUT_camoff
+            // 
+            this.BUT_camoff.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BUT_camoff.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BUT_camoff.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BUT_camoff, "BUT_camoff");
+            this.BUT_camoff.Name = "BUT_camoff";
+            this.toolTip1.SetToolTip(this.BUT_camoff, resources.GetString("BUT_camoff.ToolTip"));
+            this.BUT_camoff.UseVisualStyleBackColor = true;
+            this.BUT_camoff.Click += new System.EventHandler(this.BUT_camoff_Click);
             // 
             // BUT_DropPL
             // 
@@ -3136,6 +3164,8 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.ComboBox CMB_action;
         private Controls.MyButton BUT_Homealt;
         private Controls.MyButton BUT_DropPL;
+        private Controls.MyButton BUT_camon;
+        private Controls.MyButton BUT_camoff;
         private Controls.MyButton BUT_DropPLG;
         private Controls.MyButton BUT_NeutralPLG;
         private Controls.MyButton BUT_ClosePLG;

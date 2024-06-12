@@ -5984,10 +5984,11 @@ namespace MissionPlanner.GCSViews
                 // Calcule l'écart de cap entre deux segments et utilise le plus petit angle de rotation (0° à 180°)
                 int delta_bearing = (prevBearingInt - targetBearingInt) % 360;
 
+                if (delta_bearing < 0) delta_bearing = Math.Abs(delta_bearing + 360);
+
                 // Calcule le temps de virage basé sur l'écart de cap
                 int delay_bearing = (int)(45000 * Math.Min(delta_bearing,360 - delta_bearing) * 0.005555);
 
-                if (delta_bearing < 0) delta_bearing += 360;
 
                 // Met à jour le cap précédent
                 prev_bearing = MainV2.comPort.MAV.cs.target_bearing;

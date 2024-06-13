@@ -3267,6 +3267,8 @@ namespace MissionPlanner.GCSViews
         public int colorchangeid;
         private float current_lowpass;
         private float throttle_lowpass;
+        private float dist_mem;
+        private float dist_toreduce;
         public System.Windows.Forms.TabPage tabScripts;
         private Controls.MyButton BUT_edit_selected;
         private System.Windows.Forms.Label labelSelectedScript;

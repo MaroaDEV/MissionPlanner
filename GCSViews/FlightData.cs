@@ -1935,18 +1935,18 @@ namespace MissionPlanner.GCSViews
             {
                 CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
             }
-            wp_dist_loop_count = 4;
-            // Démarre une tâche asynchrone pour attendre 10 secondes et continue ensuite
-            methodCallCount++;
-            // Démarre une tâche asynchrone pour attendre 10 secondes et continue ensuite
-            WaitForDelay(28000, () =>
-            {
-                // Cette partie du code s'exécutera après l'attente de 10 secondes
-                if (--methodCallCount == 0)
-                {
-                    wp_dist_loop_count = 1;
-                }
-            });
+            //wp_dist_loop_count = 4;
+            //// Démarre une tâche asynchrone pour attendre 10 secondes et continue ensuite
+            //methodCallCount++;
+            //// Démarre une tâche asynchrone pour attendre 10 secondes et continue ensuite
+            //WaitForDelay(28000, () =>
+            //{
+            //    // Cette partie du code s'exécutera après l'attente de 10 secondes
+            //    if (--methodCallCount == 0)
+            //    {
+            //        wp_dist_loop_count = 1;
+            //    }
+            //});
             ((Control) sender).Enabled = true;
         }
 
@@ -5988,8 +5988,8 @@ namespace MissionPlanner.GCSViews
             if ((int)MainV2.comPort.MAV.cs.wpno != prev_wp)
             {
                 wp_dist_loop_count = 4;
-                methodCallCount++;
-
+                //methodCallCount++;
+                dist_mem = MainV2.comPort.MAV.cs.wp_dist;
                 if (Autonav.Checked)
                 {
                     int curr_wp = (int)MainV2.comPort.MAV.cs.wpno;
@@ -6020,30 +6020,33 @@ namespace MissionPlanner.GCSViews
 
                 if (Math.Min(delta_bearing, 360 - delta_bearing) < 5) delta_bearing = 180;
 
-                // Calcule le temps de virage basé sur l'écart de cap
-                int delay_bearing = (int)(41000 * Math.Min(delta_bearing,360 - delta_bearing) * 0.005555);
+                dist_toreduce = 1000 * delta_bearing * 0.005555f;
+
+                //// Calcule le temps de virage basé sur l'écart de cap
+                //int delay_bearing = (int)(41000 * Math.Min(delta_bearing,360 - delta_bearing) * 0.005555);
 
                 Console.WriteLine("Delta Bearing: " + delta_bearing);
-                Console.WriteLine("Delay Bearing: " + delay_bearing);
+                // Console.WriteLine("Delay Bearing: " + delay_bearing);
 
-                WaitForDelay(8000 + delay_bearing, () =>
-                {
-                    // Cette partie du code s'exécutera après l'attente de 10 secondes
-                    if (--methodCallCount == 0)
-                    {
-                        wp_dist_loop_count = 1;
-                    }
-                    // Continuer avec le reste du code ici
-                });
+                //WaitForDelay(8000 + delay_bearing, () =>
+                //{
+                //    // Cette partie du code s'exécutera après l'attente de 10 secondes
+                //    if (--methodCallCount == 0)
+                //    {
+                //        wp_dist_loop_count = 1;
+                //    }
+                //    // Continuer avec le reste du code ici
+                //});
             }
             else
             {
                 prev_bearing = MainV2.comPort.MAV.cs.target_bearing;
+                if (MainV2.comPort.MAV.cs.wp_dist < dist_mem - (100.0f + dist_toreduce)) wp_dist_loop_count = 1;
             }
 
             prev_wp = (int)MainV2.comPort.MAV.cs.wpno;
 
-            bool is_cruising = (MainV2.comPort.MAV.cs.DistToHome > 200) && ((MainV2.comPort.MAV.cs.mode == "Auto") || (MainV2.comPort.MAV.cs.mode == "RTL"));
+            bool is_cruising = (MainV2.comPort.MAV.cs.DistToHome > 200) && (MainV2.comPort.MAV.cs.mode == "Auto");
 
             // THE FOLLOWING PART IS EDITED BY DEVS TO ADD THE CUSTOM MONITORING FOR AERIALMETRIC
             foreach (Control control in tableLayoutPanelQuick.Controls)
@@ -6388,11 +6391,12 @@ namespace MissionPlanner.GCSViews
                             int index = listOfTuples.IndexOf(existingTuple);
                             if (listOfTuples[index].Item2 != bitmask && bitmask != 0 && MainV2.comPort.MAV.cs.armed)
                             {
-                                PlayBeepAsync(880, 500); // Play the first beep
-                                Task.Delay(200).Wait(); // Delay for 1 second
-                                PlayBeepAsync(880, 500); // Play the first beep
-                                Task.Delay(200).Wait(); // Delay for 1 second
-                                PlayBeepAsync(880, 500); // Play the first beep
+                                Console.Beep(880, 500);
+                                //PlayBeepAsync(880, 500); // Play the first beep
+                                //Task.Delay(200).Wait(); // Delay for 1 second
+                                //PlayBeepAsync(880, 500); // Play the first beep
+                                //Task.Delay(200).Wait(); // Delay for 1 second
+                                //PlayBeepAsync(880, 500); // Play the first beep
                                 //Task.Delay(1000).Wait();
                                 //PlayVoiceAsync("alerte " + listOfTuples[index].Item1);
 

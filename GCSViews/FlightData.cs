@@ -6046,7 +6046,7 @@ namespace MissionPlanner.GCSViews
 
             prev_wp = (int)MainV2.comPort.MAV.cs.wpno;
 
-            bool is_cruising = (MainV2.comPort.MAV.cs.DistToHome > 200) && (MainV2.comPort.MAV.cs.mode == "Auto");
+            bool is_cruising = (MainV2.comPort.MAV.cs.DistToHome > 800) && (MainV2.comPort.MAV.cs.mode == "Auto");
 
             // THE FOLLOWING PART IS EDITED BY DEVS TO ADD THE CUSTOM MONITORING FOR AERIALMETRIC
             foreach (Control control in tableLayoutPanelQuick.Controls)
@@ -6080,7 +6080,7 @@ namespace MissionPlanner.GCSViews
                                         quickView.BackColor = Color.FromArgb(20, 20, 20);
                                         bitmask = 0;
                                         break;
-                                    case float v when (v < 21 || dual_airspeed_counter > 10):
+                                    case float v when (v < 20.7 || dual_airspeed_counter > 10):
                                         quickView.BackColor = Color.DarkRed;
                                         if (dual_airspeed_counter > 10)
                                         {
@@ -6111,7 +6111,7 @@ namespace MissionPlanner.GCSViews
                                         quickView.BackColor = Color.FromArgb(20, 20, 20);
                                         bitmask = 0;
                                         break;
-                                    case float v when (v < 21 || dual_airspeed_counter > 10):
+                                    case float v when (v < 20.7 || dual_airspeed_counter > 10):
                                         quickView.BackColor = Color.DarkRed;
                                         if (dual_airspeed_counter > 10)
                                         {

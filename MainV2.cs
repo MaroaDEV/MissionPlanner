@@ -3548,12 +3548,12 @@ namespace MissionPlanner
                 {
                     if (image == null)
                     {
-                        GCSViews.FlightData.myhud.bgimage = null;
+                        GCSViews.FlightData.videohud.bgimage = null;
                         return;
                     }
 
-                    var old = GCSViews.FlightData.myhud.bgimage;
-                    GCSViews.FlightData.myhud.bgimage = new Bitmap(image.Width, image.Height, 4 * image.Width,
+                    var old = GCSViews.FlightData.videohud.bgimage;
+                    GCSViews.FlightData.videohud.bgimage = new Bitmap(image.Width, image.Height, 4 * image.Width,
                         PixelFormat.Format32bppPArgb,
                         image.LockBits(Rectangle.Empty, null, SKColorType.Bgra8888)
                             .Scan0);
@@ -3571,12 +3571,12 @@ namespace MissionPlanner
                 {
                     if (image == null)
                     {
-                        GCSViews.FlightData.myhud.bgimage = null;
+                        GCSViews.FlightData.videohud.bgimage = null;
                         return;
                     }
 
-                    var old = GCSViews.FlightData.myhud.bgimage;
-                    GCSViews.FlightData.myhud.bgimage = new Bitmap(image.Width,
+                    var old = GCSViews.FlightData.videohud.bgimage;
+                    GCSViews.FlightData.videohud.bgimage = new Bitmap(image.Width,
                         image.Height,
                         4 * image.Width,
                         PixelFormat.Format32bppPArgb,
@@ -3595,12 +3595,12 @@ namespace MissionPlanner
                 {
                     if (image == null)
                     {
-                        GCSViews.FlightData.myhud.bgimage = null;
+                        GCSViews.FlightData.videohud.bgimage = null;
                         return;
                     }
 
-                    var old = GCSViews.FlightData.myhud.bgimage;
-                    GCSViews.FlightData.myhud.bgimage = new Bitmap(image.Width, image.Height, 4 * image.Width,
+                    var old = GCSViews.FlightData.videohud.bgimage;
+                    GCSViews.FlightData.videohud.bgimage = new Bitmap(image.Width, image.Height, 4 * image.Width,
                         PixelFormat.Format32bppPArgb,
                         image.LockBits(Rectangle.Empty, null, SKColorType.Bgra8888).Scan0);
                     if (old != null)

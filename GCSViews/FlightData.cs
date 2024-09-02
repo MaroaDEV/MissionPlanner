@@ -43,6 +43,7 @@ namespace MissionPlanner.GCSViews
         public static FlightData instance;
         public static GMapOverlay kmlpolygons;
         public static HUD myhud;
+        public static HUD videohud;
         public static myGMAP mymap;
         public static bool threadrun;
         public SplitContainer MainHcopy;
@@ -620,6 +621,23 @@ namespace MissionPlanner.GCSViews
 
         public void BUT_camon_Click(object sender, EventArgs e)
         {
+            CamPic.Size = new System.Drawing.Size(600, 600);
+
+            dropoutV = new Form();
+            dropoutV.Text = "Cam Stream";
+            dropoutV.Size = new Size(CamPic.Width, CamPic.Height + 20); // Augmenter la hauteur pour le label
+            dropoutV.Controls.Add(CamPic);
+
+            
+
+
+
+
+            dropoutV.Resize += dropoutV_Resize;
+            dropoutV.FormClosed += dropoutV_FormClosed;
+            dropoutV.StartPosition = FormStartPosition.CenterScreen; // Assuming RestoreStartupLocation sets this
+            dropoutV.Show();
+
             try
             {
                 MainV2.comPort.doCommand((byte)MainV2.comPort.sysidcurrent,
@@ -636,6 +654,7 @@ namespace MissionPlanner.GCSViews
 
         public void BUT_camoff_Click(object sender, EventArgs e)
         {
+            
             try
             {
                 MainV2.comPort.doCommand((byte)MainV2.comPort.sysidcurrent,
@@ -648,6 +667,18 @@ namespace MissionPlanner.GCSViews
                 CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
             }
 
+            if (dropoutV != null && !dropoutV.IsDisposed)
+            {
+                dropoutV.Controls.Clear();
+                CamPic.Controls.Clear();
+                dropoutV.Close();
+                
+            }
+
+        }
+        private void dropoutV_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            BUT_camoff_Click(sender, e);
         }
 
         public async void BUT_DropPL_Click(object sender, EventArgs e)
@@ -2353,9 +2384,29 @@ namespace MissionPlanner.GCSViews
             }
         }
 
-    void cam_camimage(Image camimage)
+        void cam_camimage(Image camimage)
         {
-            hud1.bgimage = camimage;
+            DateTime windt = DateTime.Now;
+            DateTime mavdt = MainV2.comPort.MAV.cs.datetime;
+
+            // Calculate and set delay text
+            TimeSpan delay = windt - mavdt;
+            DelaiLabel.Text = $"délai = {delay.TotalSeconds:F0} s";
+            DelaiLabel.AutoSize = true;
+            DelaiLabel.ForeColor = Color.White;
+            DelaiLabel.BackColor = Color.Black;
+            DelaiLabel.Font = new Font(DelaiLabel.Font.FontFamily, 12, FontStyle.Bold);
+            DelaiLabel.Location = new Point(10, 10); // Position in the top left corner of CamPic
+
+
+
+            // Set the PictureBox properties
+            CamPic.Image = camimage;
+            CamPic.SizeMode = PictureBoxSizeMode.StretchImage;
+            CamPic.Dock = DockStyle.Fill;
+
+            CamPic.Controls.Add(DelaiLabel);
+            CamPic.Controls.SetChildIndex(DelaiLabel, 0);
         }
 
         private void CB_tuning_CheckedChanged(object sender, EventArgs e)
@@ -3121,6 +3172,10 @@ namespace MissionPlanner.GCSViews
             if (hud1.Parent == SubMainLeft.Panel1)
                 SubMainLeft.Panel1Collapsed = false;
             huddropout = false;
+        }
+        void dropoutV_Resize(object sender, EventArgs e)
+        {
+
         }
 
         void dropout_Resize(object sender, EventArgs e)
@@ -7016,7 +7071,7 @@ namespace MissionPlanner.GCSViews
 
         private void hud1_Load(object sender, EventArgs e)
         {
-
+           
         }
 
         private void tabStatus_Paint(object sender, PaintEventArgs e)

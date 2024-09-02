@@ -15,6 +15,9 @@ namespace MissionPlanner.GCSViews
             this.MainH = new System.Windows.Forms.SplitContainer();
             this.SubMainLeft = new System.Windows.Forms.SplitContainer();
             this.hud1 = new MissionPlanner.Controls.HUD();
+            // Create a new PictureBox
+            this.CamPic = new PictureBox();
+            this.DelaiLabel = new System.Windows.Forms.Label();
             this.contextMenuStripHud = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.videoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recordHudToAVIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -461,6 +464,7 @@ namespace MissionPlanner.GCSViews
             this.hud1.Load += new System.EventHandler(this.hud1_Load);
             this.hud1.DoubleClick += new System.EventHandler(this.hud1_DoubleClick);
             this.hud1.Resize += new System.EventHandler(this.hud1_Resize);
+            ///
             ///
             /// ShowActionsBox
             ///
@@ -3156,6 +3160,9 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.SplitContainer SubMainLeft;
         private System.Windows.Forms.ToolStripMenuItem goHereToolStripMenuItem;
         private Controls.HUD hud1;
+        private Form dropoutV; // Define dropout at the class level
+        private PictureBox CamPic;
+        private System.Windows.Forms.Label DelaiLabel;
         private Controls.MyButton BUT_clear_track;
         private System.Windows.Forms.CheckBox CB_tuning;
         private Controls.MyButton BUT_RAWSensor;

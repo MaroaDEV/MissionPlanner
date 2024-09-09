@@ -32,8 +32,8 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             pictureAntennaTracker.Tag = APFirmware.MAV_TYPE.ANTENNA_TRACKER;
             pictureBoxHeli.Tag = APFirmware.MAV_TYPE.HELICOPTER;
             pictureBoxSub.Tag = APFirmware.MAV_TYPE.SUBMARINE;
-            pictureBoxRover.Tag = APFirmware.MAV_TYPE.GROUND_ROVER;
-            pictureBoxOctaQuad.Tag = APFirmware.MAV_TYPE.Copter;
+            pictureBoxRover.Tag = "Load AerialMetric Firmware";
+            pictureBoxOctaQuad.Tag = "Load Ardupilot Firmware";
             pictureBoxOcta.Tag = APFirmware.MAV_TYPE.Copter;
             pictureBoxY6.Tag = APFirmware.MAV_TYPE.Copter;
             pictureBoxTri.Tag = APFirmware.MAV_TYPE.Copter;
@@ -51,7 +51,7 @@ namespace MissionPlanner.GCSViews.ConfigurationView
             // Disable all ImageLabels
             foreach (Control c in this.Controls)
             {
-                if (c is ImageLabel)
+                if (c is ImageLabel && c != pictureBoxRover)
                 {
                     c.Enabled = false;
                 }
@@ -105,12 +105,12 @@ namespace MissionPlanner.GCSViews.ConfigurationView
 
             this.BeginInvoke((MethodInvoker)delegate
            {
-               if (String.IsNullOrEmpty(first.MavFirmwareVersionStr))
-                   imageLabel.Text = first.VehicleType?.ToString() + " " + first.MavFirmwareVersion.ToString() + " " +
-                                     first.MavFirmwareVersionType.ToString();
-               else
-                   imageLabel.Text = first.VehicleType?.ToString() + " " + first.MavFirmwareVersionStr + " " +
-                                     first.MavFirmwareVersionType.ToString();
+               //if (String.IsNullOrEmpty(first.MavFirmwareVersionStr))
+               //    imageLabel.Text = first.VehicleType?.ToString() + " " + first.MavFirmwareVersion.ToString() + " " +
+               //                      first.MavFirmwareVersionType.ToString();
+               //else
+               //    imageLabel.Text = first.VehicleType?.ToString() + " " + first.MavFirmwareVersionStr + " " +
+               //                      first.MavFirmwareVersionType.ToString();
 
                // Re-enable this ImageLabel
                imageLabel.Enabled = true;

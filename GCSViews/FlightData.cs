@@ -32,6 +32,7 @@ using ZedGraph;
 using LogAnalyzer = MissionPlanner.Utilities.LogAnalyzer;
 using TableLayoutPanelCellPosition = System.Windows.Forms.TableLayoutPanelCellPosition;
 using UnauthorizedAccessException = System.UnauthorizedAccessException;
+using GMap.NET.MapProviders;
 
 // written by michael oborne
 
@@ -6357,5 +6358,596 @@ namespace MissionPlanner.GCSViews
                 CustomMessageBox.Show(Strings.CommandFailed + ex.ToString(), Strings.ERROR);
             }
         }
+
+        // Edit MD
+        public void qlandClickBox_Click(object sender, EventArgs e)
+        {
+            int result = CustomMessageBox.Show("Voulez-vous vraiment opérer un QLAND ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+
+            // Vérifier la réponse de l'utilisateur
+            if (result == (int)DialogResult.Yes)
+            {
+                try
+                {
+                    ((Control)sender).Enabled = false;
+                    MainV2.comPort.setMode("QLAND");
+                }
+                catch
+                {
+                    CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+                }
+
+                ((Control)sender).Enabled = true;
+            }
+        }
+
+        public void rtlClickBox_Click(object sender, EventArgs e)
+        {
+
+            int result = CustomMessageBox.Show("Voulez-vous vraiment commencer un RTL ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+
+            // Vérifier la réponse de l'utilisateur
+            if (result == (int)DialogResult.Yes)
+            {
+
+                try
+                {
+                    ((Control)sender).Enabled = false;
+                    MainV2.comPort.setMode("RTL");
+                }
+                catch
+                {
+                    CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+                }
+
+                ((Control)sender).Enabled = true;
+            }
+        }
+        private void SetSp30ClickBox_Click(object sender, EventArgs e)
+        {
+            int result = CustomMessageBox.Show("Voulez-vous vraiment régler la consigne de vitesse à 30 m/s ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+
+            // Vérifier la réponse de l'utilisateur
+            if (result == (int)DialogResult.Yes)
+            {
+                try
+                {
+                    MainV2.comPort.doCommandAsync(MainV2.comPort.MAV.sysid, MainV2.comPort.MAV.compid,
+                            MAVLink.MAV_CMD.DO_CHANGE_SPEED, 0, 30.0f, 0, 0, 0, 0, 0)
+                        .ConfigureAwait(true);
+                }
+                catch
+                {
+                    CustomMessageBox.Show(Strings.ErrorCommunicating, Strings.ERROR);
+                }
+            }
+
+        }
+
+        private void tabControlactions_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            for (int i = 0; i < tabControlactions.TabPages.Count; i++)
+            {
+                if (tabControlactions.GetTabRect(i).Contains(e.Location))
+                {
+                    TabPage clickedTab = tabControlactions.TabPages[i];
+                    int originalIndex = tabControlactions.TabPages.IndexOf(clickedTab); // Store the original index
+                    tabControlactions.TabPages.Remove(clickedTab);
+
+                    TabControl detachedTabControl = new TabControl();
+                    TabPage detachedTabPage = new TabPage(clickedTab.Text);
+
+                    // Copy the controls from the original tab to the new tab
+                    foreach (Control control in clickedTab.Controls)
+                    {
+                        detachedTabPage.Controls.Add(control);
+                    }
+
+                    detachedTabControl.TabPages.Add(detachedTabPage);
+
+                    Form detachedForm = new Form();
+                    detachedForm.Text = clickedTab.Text;
+
+                    // Set the TopMost property of the detached form to true
+                    detachedForm.TopMost = true;
+
+                    detachedForm.FormClosed += (formSender, formClosedEventArgs) =>
+                    {
+                        // Move the controls from detachedTabPage back to clickedTab
+                        clickedTab.Controls.Clear();
+                        foreach (Control control in detachedTabPage.Controls)
+                        {
+                            clickedTab.Controls.Add(control);
+                        }
+                        // Add clickedTab back at its original index
+                        tabControlactions.TabPages.Insert(originalIndex, clickedTab);
+                    };
+                    detachedTabPage.Dock = DockStyle.Fill;
+                    detachedTabControl.Dock = DockStyle.Fill;
+                    detachedForm.Controls.Add(detachedTabControl);
+
+                    detachedForm.Show();
+                    break;
+                }
+            }
+        }
+        private void tableLayoutPanel1_Resize(object sender, EventArgs e)
+        {
+            tableLayoutPanel1.Width = tabQuick.Width;
+            tableLayoutPanel1.AutoScroll = false;
+        }
+        private void tableLayoutPanel3_Resize(object sender, EventArgs e)
+        {
+            tableLayoutPanel3.Width = tabQuick.Width;
+            tableLayoutPanel3.AutoScroll = false;
+        }
+
+        private void tableLayoutPanel4_Resize(object sender, EventArgs e)
+        {
+            tableLayoutPanel4.Width = tabQuick.Width;
+            tableLayoutPanel4.AutoScroll = false;
+        }
+        public void BUT_camon_Click(object sender, EventArgs e)
+        {
+            CamPic.Size = new System.Drawing.Size(600, 600);
+
+            dropoutV = new Form();
+            dropoutV.Text = "Cam Stream";
+            dropoutV.Size = new Size(CamPic.Width, CamPic.Height + 20); // Augmenter la hauteur pour le label
+            dropoutV.Controls.Add(CamPic);
+
+
+
+
+
+
+            dropoutV.Resize += dropoutV_Resize;
+            dropoutV.FormClosed += dropoutV_FormClosed;
+            dropoutV.StartPosition = FormStartPosition.CenterScreen; // Assuming RestoreStartupLocation sets this
+            dropoutV.Show();
+
+            try
+            {
+                MainV2.comPort.doCommand((byte)MainV2.comPort.sysidcurrent,
+                                         (byte)MainV2.comPort.compidcurrent,
+                                         MAVLink.MAV_CMD.VIDEO_START_STREAMING,
+                                         0, 0, 0, 0, 0, 0, 0);
+            }
+            catch
+            {
+                CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+            }
+
+        }
+        public void BUT_camoff_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                MainV2.comPort.doCommand((byte)MainV2.comPort.sysidcurrent,
+                                         (byte)MainV2.comPort.compidcurrent,
+                                         MAVLink.MAV_CMD.VIDEO_STOP_STREAMING,
+                                         0, 0, 0, 0, 0, 0, 0);
+            }
+            catch
+            {
+                CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+            }
+
+            if (dropoutV != null && !dropoutV.IsDisposed)
+            {
+                dropoutV.Controls.Clear();
+                CamPic.Controls.Clear();
+                dropoutV.Close();
+
+            }
+
+        }
+        private void dropoutV_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            BUT_camoff_Click(sender, e);
+        }
+
+        public async void BUT_DropPL_Click(object sender, EventArgs e)
+        {
+            // Je vais essayer d'enlever les méthodes async dans cette fonction aussi
+            // Afficher une fenêtre de confirmation
+            int result = CustomMessageBox.Show("Attention: voulez vous vraiment larguer le colis maintenant ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            // Si l'utilisateur choisit "Non", annuler l'action
+            if (result == (int)DialogResult.No)
+            {
+                return;
+            }
+
+            // Envoyer une commande MAVLink pour passer tous les servo en position de largage
+            MainV2.comPort.doCommand(
+                (byte)MainV2.comPort.sysidcurrent,
+                (byte)MainV2.comPort.compidcurrent,
+                MAVLink.MAV_CMD.DO_SET_SERVO,
+                11,   // // Servo n°
+                int.Parse(textBox11high.Text),   // Angle de déclenchement du servo
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0);                      // Non utilisé
+            MainV2.comPort.doCommand(
+                (byte)MainV2.comPort.sysidcurrent,
+                (byte)MainV2.comPort.compidcurrent,
+                MAVLink.MAV_CMD.DO_SET_SERVO,
+                12,   // // Servo n°
+                int.Parse(textBox12low.Text),   // Angle de déclenchement du servo
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0);
+            MainV2.comPort.doCommand(
+                (byte)MainV2.comPort.sysidcurrent,
+                (byte)MainV2.comPort.compidcurrent,
+                MAVLink.MAV_CMD.DO_SET_SERVO,
+                14,   // Servo n°
+                2000,   // Angle de déclenchement du servo
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0);
+
+            // Attendre 5 secondes avant d'envoyer les prochaines commandes
+            await Task.Delay(5000);
+
+            // Envoyer une commande MAVLink pour passer tous les servo en position neutre
+
+            MainV2.comPort.doCommand(
+                (byte)MainV2.comPort.sysidcurrent,
+                (byte)MainV2.comPort.compidcurrent,
+                MAVLink.MAV_CMD.DO_SET_SERVO,
+                11,   // Servo n°
+                1500,   // Angle de déclenchement du servo
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0);
+            MainV2.comPort.doCommand(
+                (byte)MainV2.comPort.sysidcurrent,
+                (byte)MainV2.comPort.compidcurrent,
+                MAVLink.MAV_CMD.DO_SET_SERVO,
+                12,   // Servo n°
+                1500,   // Angle de déclenchement du servo
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0);
+            MainV2.comPort.doCommand(
+                (byte)MainV2.comPort.sysidcurrent,
+                (byte)MainV2.comPort.compidcurrent,
+                MAVLink.MAV_CMD.DO_SET_SERVO,
+                14,   // Servo n°
+                1000,   // Angle de déclenchement du servo
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0);
+
+            CustomMessageBox.Show("Action effectuée");
+
+
+
+        }
+
+        public void BUT_DropPLG_Click(object sender, EventArgs e)
+        {
+            // Vérifier la condition si value > 20
+            if (MainV2.comPort.MAV.cs.ter_curalt > 20)
+            {
+                // Afficher une fenêtre de confirmation
+                int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                // Si l'utilisateur choisit "Non", annuler l'action
+                if (result == (int)DialogResult.No)
+                {
+                    return;
+                }
+            }
+            if (!Rack.Checked)
+            {
+                // Envoyer une commande MAVLink pour passer tous les servo en position de largage
+                MainV2.comPort.doCommand(
+                    (byte)MainV2.comPort.sysidcurrent,
+                    (byte)MainV2.comPort.compidcurrent,
+                    MAVLink.MAV_CMD.DO_SET_SERVO,
+                    11,   // Servo n°
+                    int.Parse(textBox11high.Text),   // Angle de déclenchement du servo
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0);                      // Non utilisé
+                MainV2.comPort.doCommand(
+                    (byte)MainV2.comPort.sysidcurrent,
+                    (byte)MainV2.comPort.compidcurrent,
+                    MAVLink.MAV_CMD.DO_SET_SERVO,
+                    12,   // Servo n°
+                    int.Parse(textBox12low.Text),   // Angle de déclenchement du servo
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0);
+
+            }
+
+            else
+            {
+                MainV2.comPort.doCommand(
+                    (byte)MainV2.comPort.sysidcurrent,
+                    (byte)MainV2.comPort.compidcurrent,
+                    MAVLink.MAV_CMD.DO_SET_SERVO,
+                    14,   // Servo n°
+                    2000,   // Angle de déclenchement du servo
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0);
+            }
+
+
+            CustomMessageBox.Show("Action effectuée");
+
+
+        }
+
+        public void BUT_NeutralPLG_Click(object sender, EventArgs e)
+        {
+            // Vérifier la condition si value > 20
+            if (MainV2.comPort.MAV.cs.ter_curalt > 20)
+            {
+                // Afficher une fenêtre de confirmation
+                int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                // Si l'utilisateur choisit "Non", annuler l'action
+                if (result == (int)DialogResult.No)
+                {
+                    return;
+                }
+            }
+            if (!Rack.Checked)
+            {
+                // Envoyer une commande MAVLink pour passer tous les servo en position neutre
+                MainV2.comPort.doCommand(
+                (byte)MainV2.comPort.sysidcurrent,
+                (byte)MainV2.comPort.compidcurrent,
+                MAVLink.MAV_CMD.DO_SET_SERVO,
+                11,   // Servo n°
+                1500,   // Angle de déclenchement du servo
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0);                      // Non utilisé
+                MainV2.comPort.doCommand(
+                (byte)MainV2.comPort.sysidcurrent,
+                (byte)MainV2.comPort.compidcurrent,
+                MAVLink.MAV_CMD.DO_SET_SERVO,
+                12,   // Servo n°
+                1500,   // Angle de déclenchement du servo
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0,                       // Non utilisé
+                0);
+                // Pas d'action sur le channel 14 pour la position neutre car le rack n'a pas de position neutre
+            }
+            CustomMessageBox.Show("Action effectuée");
+        }
+
+        public void BUT_ClosePLG_Click(object sender, EventArgs e)
+        {
+            // Vérifier la condition si value > 20
+            if (MainV2.comPort.MAV.cs.ter_curalt > 20)
+            {
+                // Afficher une fenêtre de confirmation
+                int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                // Si l'utilisateur choisit "Non", annuler l'action
+                if (result == (int)DialogResult.No)
+                {
+                    return;
+                }
+            }
+            if (!Rack.Checked)
+            {
+                // Envoyer une commande MAVLink pour passer tous les servo en position fermée
+                MainV2.comPort.doCommand(
+                    (byte)MainV2.comPort.sysidcurrent,
+                    (byte)MainV2.comPort.compidcurrent,
+                    MAVLink.MAV_CMD.DO_SET_SERVO,
+                    11,   // Servo n°
+                    int.Parse(textBox11low.Text),   // Angle de déclenchement du servo
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0);                      // Non utilisé
+                MainV2.comPort.doCommand(
+                    (byte)MainV2.comPort.sysidcurrent,
+                    (byte)MainV2.comPort.compidcurrent,
+                    MAVLink.MAV_CMD.DO_SET_SERVO,
+                    12,   // Servo n°
+                    int.Parse(textBox12high.Text),   // PWM
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0);
+            }
+            else
+            {
+                MainV2.comPort.doCommand(
+                    (byte)MainV2.comPort.sysidcurrent,
+                    (byte)MainV2.comPort.compidcurrent,
+                    MAVLink.MAV_CMD.DO_SET_SERVO,
+                    14,   // 0 = Disable, 1 = Enable, 2 = Release 
+                    1000,   // Angle de déclenchement du servo
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0);
+            }
+            CustomMessageBox.Show("Action effectuée");
+        }
+
+        public void BUT_Reboot_Click(object sender, EventArgs e)
+        {
+            // Vérifier la condition si value > 20
+            if (MainV2.comPort.MAV.cs.ter_curalt > 20)
+            {
+                // Afficher une fenêtre de confirmation
+                int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                // Si l'utilisateur choisit "Non", annuler l'action
+                if (result == (int)DialogResult.No)
+                {
+                    return;
+                }
+            }
+
+            if (
+                CustomMessageBox.Show("Are you sure you want to do " + actions.Preflight_Reboot_Shutdown.ToString() + " ?", "Action",
+                MessageBoxButtons.YesNo) == (int)DialogResult.Yes)
+            {
+                MainV2.comPort.doReboot();
+                ((Control)sender).Enabled = true;
+                return;
+            }
+        }
+        void dropoutV_Resize(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BUT_changecolor_Click(object sender, EventArgs e)
+        {
+            // Vérifier la condition si value > 20
+            if (MainV2.comPort.MAV.cs.ter_curalt > 20)
+            {
+                // Afficher une fenêtre de confirmation
+                int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                // Si l'utilisateur choisit "Non", annuler l'action
+                if (result == (int)DialogResult.No)
+                {
+                    return;
+                }
+            }
+            try
+            {
+                colorchangeid = colorchangeid + 1;
+            }
+            catch
+            {
+                CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+            }
+
+        }
+
+        private void BUT_FBW_Click(object sender, EventArgs e)
+        {
+            // Vérifier la condition si value > 20
+            if (MainV2.comPort.MAV.cs.ter_curalt > 20)
+            {
+                // Afficher une fenêtre de confirmation
+                int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                // Si l'utilisateur choisit "Non", annuler l'action
+                if (result == (int)DialogResult.No)
+                {
+                    return;
+                }
+            }
+            try
+            {
+                ((Control)sender).Enabled = false;
+                MainV2.comPort.setMode("FBWA");
+            }
+            catch
+            {
+                CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+            }
+
+    ((Control)sender).Enabled = true;
+        }
+
+        private void BUT_PreFlightCal_Click(object sender, EventArgs e)
+        {
+            // Vérifier la condition si value > 20
+            if (MainV2.comPort.MAV.cs.ter_curalt > 20)
+            {
+                // Afficher une fenêtre de confirmation
+                int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                // Si l'utilisateur choisit "Non", annuler l'action
+                if (result == (int)DialogResult.No)
+                {
+                    return;
+                }
+            }
+            if (
+                CustomMessageBox.Show("Are you sure you want to do " + actions.Preflight_Calibration.ToString() + " ?", "Action",
+                MessageBoxButtons.YesNo) == (int)DialogResult.Yes)
+            {
+                try
+                {
+                    ((Control)sender).Enabled = false;
+
+                    int param1 = 0;
+                    int param2 = 0;
+                    int param3 = 1;
+
+                    // request gyro
+
+                    if (MainV2.comPort.MAV.cs.firmware == Firmwares.ArduCopter2)
+                        param1 = 1; // gyro
+                    param3 = 1; // baro / airspeed
+
+                    MAVLink.MAV_CMD cmd;
+                    try
+                    {
+                        cmd = (MAVLink.MAV_CMD)Enum.Parse(typeof(MAVLink.MAV_CMD), actions.Preflight_Calibration.ToString().ToUpper());
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        cmd = (MAVLink.MAV_CMD)Enum.Parse(typeof(MAVLink.MAV_CMD),
+                            "DO_START_" + actions.Preflight_Calibration.ToString().ToUpper());
+                    }
+
+                    if (MainV2.comPort.doCommand(cmd, param1, param2, param3, 0, 0, 0, 0))
+                    {
+
+                    }
+                    else
+                    {
+                        CustomMessageBox.Show(Strings.CommandFailed + " " + cmd, Strings.ERROR);
+                    }
+                }
+                catch
+                {
+                    CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+                }
+
+                ((Control)sender).Enabled = true;
+            }
+        }
+        // end
     }
 }

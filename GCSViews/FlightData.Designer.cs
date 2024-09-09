@@ -1,4 +1,7 @@
 ﻿using System.Windows.Forms;
+using System.Collections.Generic;
+using System;
+
 
 namespace MissionPlanner.GCSViews
 {
@@ -8,6 +11,38 @@ namespace MissionPlanner.GCSViews
 
         private void InitializeComponent()
         {
+            // Edit MD
+            this.CamPic = new PictureBox();
+            this.DelaiLabel = new System.Windows.Forms.Label();
+            this.Autonav = new System.Windows.Forms.CheckBox();
+            this.Rack = new System.Windows.Forms.CheckBox();
+            this.tabGroundActions = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.BUT_DropPL = new MissionPlanner.Controls.MyButton();
+            this.BUT_DropPLG = new MissionPlanner.Controls.MyButton();
+            this.BUT_camon = new MissionPlanner.Controls.MyButton();
+            this.BUT_camoff = new MissionPlanner.Controls.MyButton();
+            this.BUT_NeutralPLG = new MissionPlanner.Controls.MyButton();
+            this.BUT_ClosePLG = new MissionPlanner.Controls.MyButton();
+            this.BUTrestartmission = new MissionPlanner.Controls.CustomButton();
+            this.BUT_Reboot = new MissionPlanner.Controls.MyButton();
+            this.BUT_changecolor = new MissionPlanner.Controls.MyButton();
+            this.BUT_FBW = new MissionPlanner.Controls.MyButton();
+            this.BUT_PreFlightCal = new MissionPlanner.Controls.MyButton();
+            this.textBoxSN = new TextBox();
+            this.textBoxSN2 = new TextBox();
+            this.textBox11low = new TextBox();
+            this.textBox11high = new TextBox();
+            this.textBox12low = new TextBox();
+            this.textBox12high = new TextBox();
+            this.textBox11servo = new System.Windows.Forms.Label();
+            this.textBox12servo = new System.Windows.Forms.Label();
+            this.comboBoxMapType = new System.Windows.Forms.ComboBox(); //Add combomap
+            this.tableLayoutPanel3.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
+
+            //end
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FlightData));
             this.MainH = new System.Windows.Forms.SplitContainer();
@@ -566,6 +601,7 @@ namespace MissionPlanner.GCSViews
             this.tabControlactions.ContextMenuStrip = this.contextMenuStripactionstab;
             this.tabControlactions.Controls.Add(this.tabQuick);
             this.tabControlactions.Controls.Add(this.tabActions);
+            this.tabControlactions.Controls.Add(this.tabGroundActions);
             this.tabControlactions.Controls.Add(this.tabPagemessages);
             this.tabControlactions.Controls.Add(this.tabActionsSimple);
             this.tabControlactions.Controls.Add(this.tabPagePreFlight);
@@ -735,31 +771,31 @@ namespace MissionPlanner.GCSViews
             // 
             // tableLayoutPanel1
             // 
-            resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
-            this.tableLayoutPanel1.Controls.Add(this.BUT_SendMSG, 2, 4);
-            this.tableLayoutPanel1.Controls.Add(this.BUT_abortland, 4, 4);
-            this.tableLayoutPanel1.Controls.Add(this.modifyandSetLoiterRad, 4, 2);
-            this.tableLayoutPanel1.Controls.Add(this.BUT_clear_track, 4, 3);
-            this.tableLayoutPanel1.Controls.Add(this.CMB_action, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.BUTactiondo, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.BUT_resumemis, 3, 4);
-            this.tableLayoutPanel1.Controls.Add(this.modifyandSetAlt, 4, 1);
-            this.tableLayoutPanel1.Controls.Add(this.modifyandSetSpeed, 4, 0);
-            this.tableLayoutPanel1.Controls.Add(this.CMB_setwp, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.BUT_ARM, 3, 3);
-            this.tableLayoutPanel1.Controls.Add(this.BUT_mountmode, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.BUT_joystick, 2, 3);
-            this.tableLayoutPanel1.Controls.Add(this.BUT_RAWSensor, 3, 2);
-            this.tableLayoutPanel1.Controls.Add(this.BUT_Homealt, 3, 0);
-            this.tableLayoutPanel1.Controls.Add(this.BUTrestartmission, 3, 1);
-            this.tableLayoutPanel1.Controls.Add(this.CMB_mountmode, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.BUT_quickrtl, 2, 2);
-            this.tableLayoutPanel1.Controls.Add(this.BUT_quickmanual, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.BUT_setwp, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.CMB_modes, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.BUT_quickauto, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.BUT_setmode, 1, 2);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            //resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
+            //this.tableLayoutPanel1.Controls.Add(this.BUT_SendMSG, 2, 4);
+            //this.tableLayoutPanel1.Controls.Add(this.BUT_abortland, 4, 4);
+            //this.tableLayoutPanel1.Controls.Add(this.modifyandSetLoiterRad, 4, 2);
+            //this.tableLayoutPanel1.Controls.Add(this.BUT_clear_track, 4, 3);
+            //this.tableLayoutPanel1.Controls.Add(this.CMB_action, 0, 0);
+            //this.tableLayoutPanel1.Controls.Add(this.BUTactiondo, 1, 0);
+            //this.tableLayoutPanel1.Controls.Add(this.BUT_resumemis, 3, 4);
+            //this.tableLayoutPanel1.Controls.Add(this.modifyandSetAlt, 4, 1);
+            //this.tableLayoutPanel1.Controls.Add(this.modifyandSetSpeed, 4, 0);
+            //this.tableLayoutPanel1.Controls.Add(this.CMB_setwp, 0, 1);
+            //this.tableLayoutPanel1.Controls.Add(this.BUT_ARM, 3, 3);
+            //this.tableLayoutPanel1.Controls.Add(this.BUT_mountmode, 1, 3);
+            //this.tableLayoutPanel1.Controls.Add(this.BUT_joystick, 2, 3);
+            //this.tableLayoutPanel1.Controls.Add(this.BUT_RAWSensor, 3, 2);
+            //this.tableLayoutPanel1.Controls.Add(this.BUT_Homealt, 3, 0);
+            //this.tableLayoutPanel1.Controls.Add(this.BUTrestartmission, 3, 1);
+            //this.tableLayoutPanel1.Controls.Add(this.CMB_mountmode, 0, 3);
+            //this.tableLayoutPanel1.Controls.Add(this.BUT_quickrtl, 2, 2);
+            //this.tableLayoutPanel1.Controls.Add(this.BUT_quickmanual, 2, 1);
+            //this.tableLayoutPanel1.Controls.Add(this.BUT_setwp, 1, 1);
+            //this.tableLayoutPanel1.Controls.Add(this.CMB_modes, 0, 2);
+            //this.tableLayoutPanel1.Controls.Add(this.BUT_quickauto, 2, 0);
+            //this.tableLayoutPanel1.Controls.Add(this.BUT_setmode, 1, 2);
+            //this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             // 
             // BUT_SendMSG
             // 
@@ -883,14 +919,14 @@ namespace MissionPlanner.GCSViews
             // 
             resources.ApplyResources(this.modifyandSetSpeed, "modifyandSetSpeed");
             this.modifyandSetSpeed.ButtonText = "Change Speed";
-            this.modifyandSetSpeed.DecimalPlaces = 1;
+            this.modifyandSetSpeed.DecimalPlaces = 0;
             this.modifyandSetSpeed.Increment = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.modifyandSetSpeed.Maximum = new decimal(new int[] {
-            1000,
+            40,
             0,
             0,
             0});
@@ -901,7 +937,7 @@ namespace MissionPlanner.GCSViews
             0});
             this.modifyandSetSpeed.Name = "modifyandSetSpeed";
             this.modifyandSetSpeed.Value = new decimal(new int[] {
-            100,
+            25,
             0,
             0,
             0});
@@ -976,9 +1012,9 @@ namespace MissionPlanner.GCSViews
             // 
             // BUTrestartmission
             // 
-            this.BUTrestartmission.ColorMouseDown = System.Drawing.Color.Empty;
-            this.BUTrestartmission.ColorMouseOver = System.Drawing.Color.Empty;
-            this.BUTrestartmission.ColorNotEnabled = System.Drawing.Color.Empty;
+            // this.BUTrestartmission.ColorMouseDown = System.Drawing.Color.Empty;
+            // this.BUTrestartmission.ColorMouseOver = System.Drawing.Color.Empty;
+            // this.BUTrestartmission.ColorNotEnabled = System.Drawing.Color.Empty;
             resources.ApplyResources(this.BUTrestartmission, "BUTrestartmission");
             this.BUTrestartmission.Name = "BUTrestartmission";
             this.toolTip1.SetToolTip(this.BUTrestartmission, resources.GetString("BUTrestartmission.ToolTip"));
@@ -2895,9 +2931,359 @@ namespace MissionPlanner.GCSViews
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceStatusTab)).EndInit();
             this.ResumeLayout(false);
 
+            // Edit MD
+            ///
+            /// ShowActionsBox
+            ///
+            this.parachuteClickBox = new Controls.MyButton();
+            this.qlandClickBox = new Controls.MyButton();
+            this.rtlClickBox = new Controls.MyButton();
+            this.setSp30ClickBox = new Controls.MyButton();
+            this.setWPClickBox = new Controls.MyButton();
+
+            this.SuspendLayout();
+
+            // Set properties for each checkbox
+            this.parachuteClickBox.Text = "Parachute";
+            this.parachuteClickBox.Click += BUTrestartmission_Click;
+            this.qlandClickBox.Text = "QLAND";
+            this.qlandClickBox.Click += qlandClickBox_Click;
+            this.rtlClickBox.Text = "RTL";
+            this.rtlClickBox.Click += rtlClickBox_Click;
+            this.setSp30ClickBox.Text = "SetSp30";
+            this.setSp30ClickBox.Click += SetSp30ClickBox_Click;
+            this.setWPClickBox.Text = "SetWP";
+
+
+            // Set form properties
+            this.ClientSize = new System.Drawing.Size(200, 150);
+            this.Text = "Actions";
+
+            this.ResumeLayout(false);
+
+            //this.tabControlactions.Controls.Add(this.tabGroundActions);
+            this.tabControlactions.MouseDoubleClick += new MouseEventHandler(tabControlactions_MouseDoubleClick);
+
+            // tabGroundActions
+            // 
+            this.tabGroundActions.Controls.Add(this.tableLayoutPanel3);
+            this.tabGroundActions.Name = "tabGroundActions";
+            this.tabGroundActions.UseVisualStyleBackColor = true;
+            // tabFlightActions
+            resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
+            this.tableLayoutPanel1.Controls.Add(this.modifyandSetSpeed, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.CMB_setwp, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.BUT_DropPL, 1, 7);
+            this.tableLayoutPanel1.Controls.Add(this.BUT_camon, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.BUT_camoff, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.BUTrestartmission, 0, 7);
+            this.tableLayoutPanel1.Controls.Add(this.BUT_quickrtl, 0, 8);
+            this.tableLayoutPanel1.Controls.Add(this.Autonav, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.BUT_setwp, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.CMB_modes, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.BUT_quickauto, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.BUT_setmode, 1, 3);
+            
+            // Création de la TextBox
+            // Ajout du texte "SN xxx"
+            this.textBoxSN2.ReadOnly = true;
+            this.textBoxSN2.Font = new System.Drawing.Font("Microsoft Sans Serif", 18f, System.Drawing.FontStyle.Regular); // 24f est la taille de police désirée
+            this.textBoxSN2.AutoSize = true;
+            // Alignement du texte au centre
+            textBoxSN2.TextAlign = HorizontalAlignment.Center;
+            // Taille de la TextBox pour s'adapter au texte
+            // Ajout du GroupBox à la tabGroundActions
+            this.tableLayoutPanel1.Controls.Add(textBoxSN2, 0, 0);
+
+            // Flight actions
+            this.tableLayoutPanel1.SetColumnSpan(this.textBoxSN2, 2);
+            this.tableLayoutPanel1.SetColumnSpan(this.CMB_action, 2);
+            this.tableLayoutPanel1.SetColumnSpan(this.BUTactiondo, 2);
+            this.tableLayoutPanel1.SetColumnSpan(this.BUT_resumemis, 2);
+            this.tableLayoutPanel1.SetColumnSpan(this.CMB_setwp, 2);
+            this.tableLayoutPanel1.SetColumnSpan(this.BUT_quickrtl, 2);
+            this.tableLayoutPanel1.SetColumnSpan(this.BUT_quickauto, 2);
+            this.tableLayoutPanel1.SetRowSpan(this.BUT_quickauto, 1);
+            this.tableLayoutPanel1.SetColumnSpan(this.BUT_DropPL, 2);
+            this.tableLayoutPanel1.SetColumnSpan(this.BUT_camon, 2);
+            this.tableLayoutPanel1.SetColumnSpan(this.BUT_camoff, 2);
+            this.tableLayoutPanel1.SetColumnSpan(this.BUT_Homealt, 2);
+            this.tableLayoutPanel1.SetColumnSpan(this.BUT_setwp, 2);
+            this.tableLayoutPanel1.SetColumnSpan(this.CMB_modes, 2);
+            this.tableLayoutPanel1.SetColumnSpan(this.BUT_setmode, 2);
+            this.tableLayoutPanel1.SetColumnSpan(this.BUTrestartmission, 2);
+            this.tableLayoutPanel1.SetRowSpan(this.modifyandSetSpeed, 2);
+            this.tableLayoutPanel1.SetColumnSpan(this.modifyandSetSpeed, 3);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.Resize += new System.EventHandler(this.tableLayoutPanel1_Resize);
+
+            // 
+            // tableLayoutPanel3 (groundactions)
+            // 
+            resources.ApplyResources(this.tableLayoutPanel3, "tableLayoutPanel3");
+            this.tableLayoutPanel3.Controls.Add(this.BUT_changecolor, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.BUT_FBW, 1, 2);
+            this.tableLayoutPanel3.Controls.Add(this.Rack, 2, 0);
+            this.tableLayoutPanel3.Controls.Add(this.BUT_quickmanual, 0, 2);
+            this.tableLayoutPanel3.Controls.Add(this.BUT_PreFlightCal, 2, 2);
+            this.tableLayoutPanel3.Controls.Add(this.BUT_ARM, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.BUT_Reboot, 1, 1);
+            this.tableLayoutPanel3.Controls.Add(this.BUT_DropPLG, 2, 3);
+            this.tableLayoutPanel3.Controls.Add(this.BUT_NeutralPLG, 1, 3);
+            this.tableLayoutPanel3.Controls.Add(this.BUT_ClosePLG, 0, 3);
+            this.tableLayoutPanel3.Controls.Add(this.textBox11low, 1, 5);
+            this.tableLayoutPanel3.Controls.Add(this.textBox11high, 2, 5);
+            this.tableLayoutPanel3.Controls.Add(this.textBox12low, 1, 6);
+            this.tableLayoutPanel3.Controls.Add(this.textBox12high, 2, 6);
+            this.tableLayoutPanel3.Controls.Add(this.textBox11servo, 0, 5);
+            this.tableLayoutPanel3.Controls.Add(this.textBox12servo, 0, 6);
+            this.tableLayoutPanel3.SetColumnSpan(this.BUT_ARM, 1);
+            // Création de la TextBox
+            // Ajout du texte "SN xxx"
+            this.textBoxSN.ReadOnly = true;
+            this.textBoxSN.Font = new System.Drawing.Font("Microsoft Sans Serif", 18f, System.Drawing.FontStyle.Regular); // 24f est la taille de police désirée
+            this.textBoxSN.AutoSize = true;
+            // Alignement du texte au centre
+            // textBow11low
+            this.textBox11low.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.textBox11low.Text = "1000";
+            // textBow11high
+            this.textBox11high.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.textBox11high.Text = "2000";
+            // textBow12low
+            this.textBox12low.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.textBox12low.Text = "1000";
+            // textBow12high
+            this.textBox12high.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.textBox12high.Text = "2000";
+            // textBow11servo
+            this.textBox11servo.Text = "Servo11 low/high:";
+            this.textBox11servo.BackColor = System.Drawing.Color.FromArgb(20, 20, 20);
+            this.textBox11servo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7f, System.Drawing.FontStyle.Regular);
+            // textBow12servo
+            this.textBox12servo.Text = "Servo12 low/high:";
+            this.textBox12servo.BackColor = System.Drawing.Color.FromArgb(20, 20, 20);
+            this.textBox12servo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7f, System.Drawing.FontStyle.Regular);
+            // 
+            // BUT_changecolor
+            // 
+            this.BUT_changecolor.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BUT_changecolor.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BUT_changecolor.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BUT_changecolor, "BUT_changecolor");
+            this.BUT_changecolor.Name = "BUT_changecolor";
+            this.toolTip1.SetToolTip(this.BUT_changecolor, resources.GetString("BUT_changecolor.ToolTip"));
+            this.BUT_changecolor.UseVisualStyleBackColor = true;
+            this.BUT_changecolor.Click += new System.EventHandler(this.BUT_changecolor_Click);
+            // 
+            // BUT_FBW
+            // 
+            this.BUT_FBW.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BUT_FBW.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BUT_FBW.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BUT_FBW, "BUT_FBW");
+            this.BUT_FBW.Name = "BUT_FBW";
+            this.toolTip1.SetToolTip(this.BUT_FBW, resources.GetString("BUT_FBW.ToolTip"));
+            this.BUT_FBW.UseVisualStyleBackColor = true;
+            this.BUT_FBW.Click += new System.EventHandler(this.BUT_FBW_Click);
+            // 
+            // BUT_PreFlightCal
+            // 
+            this.BUT_PreFlightCal.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BUT_PreFlightCal.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BUT_PreFlightCal.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BUT_PreFlightCal, "BUT_PreFlightCal");
+            this.BUT_PreFlightCal.Name = "BUT_PreFlightCal";
+            this.toolTip1.SetToolTip(this.BUT_PreFlightCal, resources.GetString("BUT_PreFlightCal.ToolTip"));
+            this.BUT_PreFlightCal.UseVisualStyleBackColor = true;
+            this.BUT_PreFlightCal.Click += new System.EventHandler(this.BUT_PreFlightCal_Click);
+
+
+
+            textBoxSN.TextAlign = HorizontalAlignment.Center;
+            // Taille de la TextBox pour s'adapter au texte
+            // Ajout du GroupBox à la tabGroundActions
+            this.tableLayoutPanel3.Controls.Add(textBoxSN, 0, 0);
+            resources.ApplyResources(this.tabGroundActions, "tabGroundActions");
+            this.tableLayoutPanel3.Resize += new System.EventHandler(this.tableLayoutPanel3_Resize);
+            // 
+            // tableLayoutPanel4
+            // 
+            resources.ApplyResources(this.tableLayoutPanel4, "tableLayoutPanel4");
+            this.tableLayoutPanel4.Controls.Add(this.parachuteClickBox, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.qlandClickBox, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.rtlClickBox, 0, 1);
+            this.tableLayoutPanel4.Controls.Add(this.setSp30ClickBox, 1, 1);
+            //this.tableLayoutPanel4.Controls.Add(this.setWPClickBox, 0, 2);
+            this.tableLayoutPanel4.Resize += new System.EventHandler(this.tableLayoutPanel4_Resize);
+
+            // 
+            // BUT_camon
+            // 
+            this.BUT_camon.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BUT_camon.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BUT_camon.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BUT_camon, "BUT_camon");
+            this.BUT_camon.Name = "BUT_camon";
+            this.toolTip1.SetToolTip(this.BUT_camon, resources.GetString("BUT_camon.ToolTip"));
+            this.BUT_camon.UseVisualStyleBackColor = true;
+            this.BUT_camon.Click += new System.EventHandler(this.BUT_camon_Click);
+            // 
+            // BUT_camoff
+            // 
+            this.BUT_camoff.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BUT_camoff.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BUT_camoff.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BUT_camoff, "BUT_camoff");
+            this.BUT_camoff.Name = "BUT_camoff";
+            this.toolTip1.SetToolTip(this.BUT_camoff, resources.GetString("BUT_camoff.ToolTip"));
+            this.BUT_camoff.UseVisualStyleBackColor = true;
+            this.BUT_camoff.Click += new System.EventHandler(this.BUT_camoff_Click);
+            // 
+            // BUT_DropPL
+            // 
+            this.BUT_DropPL.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BUT_DropPL.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BUT_DropPL.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BUT_DropPL, "BUT_DropPL");
+            this.BUT_DropPL.Name = "BUT_DropPL";
+            this.toolTip1.SetToolTip(this.BUT_DropPL, resources.GetString("BUT_DropPL.ToolTip"));
+            this.BUT_DropPL.UseVisualStyleBackColor = true;
+            this.BUT_DropPL.Click += new System.EventHandler(this.BUT_DropPL_Click);
+            // 
+            // BUT_DropPLG
+            // 
+            this.BUT_DropPLG.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BUT_DropPLG.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BUT_DropPLG.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BUT_DropPLG, "BUT_DropPLG");
+            this.BUT_DropPLG.Name = "BUT_DropPLG";
+            this.toolTip1.SetToolTip(this.BUT_DropPLG, resources.GetString("BUT_DropPLG.ToolTip"));
+            this.BUT_DropPLG.UseVisualStyleBackColor = true;
+            this.BUT_DropPLG.Click += new System.EventHandler(this.BUT_DropPLG_Click);
+            // 
+            // BUT_NeutralPLG
+            // 
+            this.BUT_NeutralPLG.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BUT_NeutralPLG.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BUT_NeutralPLG.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BUT_NeutralPLG, "BUT_NeutralPLG");
+            this.BUT_NeutralPLG.Name = "BUT_NeutralPLG";
+            this.toolTip1.SetToolTip(this.BUT_NeutralPLG, resources.GetString("BUT_NeutralPLG.ToolTip"));
+            this.BUT_NeutralPLG.UseVisualStyleBackColor = true;
+            this.BUT_NeutralPLG.Click += new System.EventHandler(this.BUT_NeutralPLG_Click);
+            // 
+            // BUT_ClosePLG
+            // 
+            this.BUT_ClosePLG.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BUT_ClosePLG.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BUT_ClosePLG.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BUT_ClosePLG, "BUT_ClosePLG");
+            this.BUT_ClosePLG.Name = "BUT_ClosePLG";
+            this.toolTip1.SetToolTip(this.BUT_ClosePLG, resources.GetString("BUT_ClosePLG.ToolTip"));
+            this.BUT_ClosePLG.UseVisualStyleBackColor = true;
+            this.BUT_ClosePLG.Click += new System.EventHandler(this.BUT_ClosePLG_Click);
+            // 
+            // 
+            // Autonav
+            // 
+            this.Autonav.Text = "AutoFill";
+            this.Autonav.Checked = true;
+            this.Autonav.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.Autonav.Name = "AutoNav";
+            this.Autonav.UseVisualStyleBackColor = true;
+            // 
+            // Rack
+            // 
+            this.Rack.Text = "Rack";
+            this.Rack.Checked = false;
+            this.Rack.CheckState = System.Windows.Forms.CheckState.Unchecked;
+            this.Rack.Name = "Rack";
+            this.Rack.UseVisualStyleBackColor = true;
+            // 
+            // BUT_Reboot
+            // 
+            this.BUT_Reboot.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BUT_Reboot.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BUT_Reboot.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BUT_Reboot, "BUT_Reboot");
+            this.BUT_Reboot.Name = "BUT_Reboot";
+            this.toolTip1.SetToolTip(this.BUT_Reboot, resources.GetString("BUT_Reboot.ToolTip"));
+            this.BUT_Reboot.UseVisualStyleBackColor = true;
+            this.BUT_Reboot.Click += new System.EventHandler(this.BUT_Reboot_Click);
+            // 
+            // Autonav
+            // 
+            this.Autonav.Text = "AutoFill";
+            this.Autonav.Checked = true;
+            this.Autonav.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.Autonav.Name = "AutoNav";
+            this.Autonav.UseVisualStyleBackColor = true;
+            // 
+            // Rack
+            // 
+            this.Rack.Text = "Rack";
+            this.Rack.Checked = false;
+            this.Rack.CheckState = System.Windows.Forms.CheckState.Unchecked;
+            this.Rack.Name = "Rack";
+            this.Rack.UseVisualStyleBackColor = true;
+            // 
+            // BUT_Reboot
+            // 
+            this.BUT_Reboot.ColorMouseDown = System.Drawing.Color.Empty;
+            this.BUT_Reboot.ColorMouseOver = System.Drawing.Color.Empty;
+            this.BUT_Reboot.ColorNotEnabled = System.Drawing.Color.Empty;
+            resources.ApplyResources(this.BUT_Reboot, "BUT_Reboot");
+            this.BUT_Reboot.Name = "BUT_Reboot";
+            this.toolTip1.SetToolTip(this.BUT_Reboot, resources.GetString("BUT_Reboot.ToolTip"));
+            this.BUT_Reboot.UseVisualStyleBackColor = true;
+            this.BUT_Reboot.Click += new System.EventHandler(this.BUT_Reboot_Click);
+            // 
+            double tanaLatitude = -18.8792; // Latitude d'Antananarivo
+            double tanaLongitude = 47.5079; // Longitude d'Antananarivo
+            int initialZoom = 7; // Zoom initial de la carte
+
+            // Centrer la carte sur Antananarivo (Tana)
+            gMapControl1.Position = new GMap.NET.PointLatLng(tanaLatitude, tanaLongitude);
+
+            // Définir le niveau de zoom initial
+            gMapControl1.Zoom = initialZoom;
+            // 
+            // comboBoxMapType
+            // 
+            this.comboBoxMapType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxMapType.FormattingEnabled = true;
+            resources.ApplyResources(this.comboBoxMapType, "comboBoxMapType");
+            this.comboBoxMapType.Name = "comboBoxMapType";
+            this.toolTip1.SetToolTip(this.comboBoxMapType, resources.GetString("comboBoxMapType.ToolTip"));
+            this.panel1.Controls.Add(this.comboBoxMapType);
+
+            // Créez un nouveau panneau pour contenir le comboBoxMapType
+            Panel panel2 = new Panel();
+            panel2.Dock = DockStyle.Right;
+            panel2.Width = 150; // Ajustez la largeur du panneau selon vos besoins
+
+            // Ajoutez le comboBoxMapType au nouveau panneau
+            panel2.Controls.Add(this.comboBoxMapType);
+
+            // Déplacez les autres contrôles dans le panel1 vers la gauche
+            this.panel1.Controls.Remove(this.comboBoxMapType);
+
+            // Ajoutez le nouveau panneau à droite du panel1
+            this.panel1.Controls.Add(panel2);
+
+            this.tabGroundActions.ResumeLayout(false);
+
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.tableLayoutPanel4.PerformLayout();
+
+            // end
+
         }
 
-  
+
 
         private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.Timer ZedGraphTimer;
@@ -3126,5 +3512,55 @@ namespace MissionPlanner.GCSViews
         private Controls.RelayOptions relayOptions14;
         private Controls.RelayOptions relayOptions15;
         private Controls.RelayOptions relayOptions16;
+
+        //edit MD
+        private Form dropoutV; // Define dropout at the class level
+        private PictureBox CamPic;
+        private System.Windows.Forms.Label DelaiLabel;
+        private Controls.MyButton BUT_DropPL;
+        private Controls.MyButton BUT_camon;
+        private Controls.MyButton BUT_camoff;
+        private Controls.MyButton BUT_DropPLG;
+        private Controls.MyButton BUT_NeutralPLG;
+        private Controls.MyButton BUT_ClosePLG;
+        public System.Windows.Forms.TabPage tabGroundActions;
+        private Controls.MyButton BUT_changecolor;
+        private Controls.MyButton BUT_FBW;
+        private Controls.MyButton BUT_PreFlightCal;
+        private Controls.MyButton BUT_Reboot;
+        private List<Tuple<string, int>> listOfTuples = new List<Tuple<string, int>>();
+        private Controls.MyButton parachuteClickBox;
+        private Controls.MyButton qlandClickBox;
+        private Controls.MyButton rtlClickBox;
+        private Controls.MyButton setSp30ClickBox;
+        private Controls.MyButton setWPClickBox;
+        private int loopCounter;
+        public int colorchangeid;
+        private float current_lowpass;
+        private float throttle_lowpass;
+        private float dist_mem;
+        private float dist_toreduce;
+        private int dual_airspeed_counter = 5; // Compteur pour suivre le nombre d'occurrences de "Dual Airspeed"
+        private bool has_dual_alert = false;
+        public ComboBox comboBoxMapType;
+        private int prev_wp;
+        private float prev_bearing;
+        private int methodCallCount = 0;
+        private int wp_dist_loop_count;
+        private string idno;
+        private TextBox textBoxSN;
+        private TextBox textBoxSN2;
+        private TextBox textBox11low;
+        private TextBox textBox11high;
+        private TextBox textBox12low;
+        private TextBox textBox12high;
+        private System.Windows.Forms.Label textBox11servo;
+        private System.Windows.Forms.Label textBox12servo;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.CheckBox Autonav;
+        private System.Windows.Forms.CheckBox Rack;
+        private Form actionForm;
+        //end
     }
 }

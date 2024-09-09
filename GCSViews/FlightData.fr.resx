@@ -235,7 +235,7 @@
     <value>Effectuer</value>
   </data>
   <data name="BUTrestartmission.Text" xml:space="preserve">
-    <value>Repartir Plan</value>
+    <value>Parachute</value>
   </data>
   <data name="BUT_quickmanual.ToolTip" xml:space="preserve">
     <value>Changement du Mode à Manuel/Stabilisé</value>
@@ -253,7 +253,7 @@
     <value>0</value>
   </data>
   <data name="tabActions.Text" xml:space="preserve">
-    <value>Actions</value>
+    <value>Flight Actions</value>
   </data>
   <data name="BUTactiondo.ToolTip" xml:space="preserve">
     <value>Execute l'action a gauche</value>
@@ -321,4 +321,21 @@
   <data name="lbl_hdop.ToolTip" xml:space="preserve">
     <value>gps hdop</value>
   </data>
+
+	<!-- 
+    Edit MD
+    -->
+	<data name="BUT_PreFlightCal.Text" xml:space="preserve">
+    <value>&amp;Pre Fligh Cal</value>
+  </data>
+	<data name="BUT_DropPL.Text" xml:space="preserve">
+    <value>Drop Payload</value>
+  </data>
+	  <data name="BUT_DropPL.ToolTip" xml:space="preserve">
+    <value>Activation du largage manuel de la charge utile</value>
+  </data>
+	
+	<!-- 
+    End
+    -->
 </root>

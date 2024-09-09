@@ -55,6 +55,7 @@ namespace MissionPlanner
             this.menu = new MissionPlanner.Controls.MyButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.status1 = new MissionPlanner.Controls.Status();
+            this.dev_mode = false;
             this.MainMenu.SuspendLayout();
             this.CTX_mainmenu.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -72,7 +73,7 @@ namespace MissionPlanner
             this.MenuInitConfig,
             this.MenuConfigTune,
             this.MenuSimulation,
-            this.MenuHelp,
+            // this.MenuHelp,
             this.MenuConnect,
             this.toolStripConnectionControl,
             this.MenuArduPilot});
@@ -196,7 +197,7 @@ namespace MissionPlanner
             this.MenuArduPilot.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             resources.ApplyResources(this.MenuArduPilot, "MenuArduPilot");
             this.MenuArduPilot.BackColor = System.Drawing.Color.Transparent;
-            this.MenuArduPilot.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            //this.MenuArduPilot.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.MenuArduPilot.ForeColor = System.Drawing.Color.White;
             this.MenuArduPilot.Image = global::MissionPlanner.Properties.Resources._0d92fed790a3a70170e61a86db103f399a595c70;
             this.MenuArduPilot.Margin = new System.Windows.Forms.Padding(0);
@@ -245,6 +246,7 @@ namespace MissionPlanner
 
         #endregion
 
+        public bool dev_mode = false;
         public System.Windows.Forms.ToolStripButton MenuFlightData;
         public System.Windows.Forms.ToolStripButton MenuFlightPlanner;
         public System.Windows.Forms.ToolStripButton MenuInitConfig;

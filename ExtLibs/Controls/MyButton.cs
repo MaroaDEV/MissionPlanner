@@ -64,6 +64,7 @@ namespace MissionPlanner.Controls
             _ColorNotEnabled = Color.FromArgb(73, 0x2b, 0x3a, 0x03);
             _ColorMouseOver = Color.FromArgb(73, 0x2b, 0x3a, 0x03);
             _ColorMouseDown = Color.FromArgb(150, 0x2b, 0x3a, 0x03);
+            this.Font = new System.Drawing.Font(this.Font, FontStyle.Bold);
         }
 
         protected override void OnPaint(PaintEventArgs pevent)
@@ -194,6 +195,21 @@ namespace MissionPlanner.Controls
         protected override void WndProc(ref Message m)
         {
             base.WndProc(ref m);
+        }
+    }
+    public class CustomButton : MissionPlanner.Controls.MyButton
+    {
+        public CustomButton()
+        {
+            // Modifiez les propriétés de style ici
+            this.BackColor = System.Drawing.Color.Red;
+            this.ColorMouseDown = System.Drawing.Color.Red;
+            this.ColorMouseOver = System.Drawing.Color.DarkRed;
+            this.ForeColor = System.Drawing.Color.Red;
+            this.BGGradTop = System.Drawing.Color.DarkRed;
+            this.BGGradBot = System.Drawing.Color.Red;
+            this.TextColor = System.Drawing.Color.White;
+            this.Font = new System.Drawing.Font(this.Font, FontStyle.Bold);
         }
     }
 }

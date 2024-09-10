@@ -235,6 +235,47 @@ namespace MissionPlanner.GCSViews
 
             log.Info("Components Done");
 
+            //Edit MD
+            var mapProviders = new List<GMapProvider>
+            {
+                GMapProviders.GoogleMap,
+                GMapProviders.GoogleTerrainMap,
+                GMapProviders.GoogleSatelliteMap,
+                GMapProviders.GoogleHybridMap
+            };
+
+            // Définissez la DataSource du comboBoxMapType en utilisant la liste spécifique de fournisseurs de carte
+            comboBoxMapType.ValueMember = "Name";
+            comboBoxMapType.DataSource = mapProviders;
+
+            // Sélectionnez le fournisseur de carte actuel
+            comboBoxMapType.SelectedItem = gMapControl1.MapProvider;
+
+            // Écoutez les changements de sélection dans le comboBoxMapType
+            comboBoxMapType.SelectedValueChanged += comboBoxMapType_SelectedValueChanged;
+
+            // Activez les itinéraires sur la carte
+            gMapControl1.RoutesEnabled = true;
+
+            string current_value = CMB_modes.Text;
+
+            // Récupérer la liste complète des modes de vol
+            List<KeyValuePair<int, string>> allModes = ArduPilot.Common.getModesList(MainV2.comPort.MAV.cs.firmware);
+
+            List<KeyValuePair<int, string>> filteredModes = allModes
+                .Where(mode => mode.Key == 10 || mode.Key == 21 || mode.Key == 11 || mode.Key == 20 || mode.Key == 21 || mode.Key == 19)
+                .ToList();
+
+            // Définir la source de données pour CMB_modes sur la liste filtrée
+            CMB_modes.DataSource = filteredModes;
+            CMB_modes.ValueMember = "Key";
+            CMB_modes.DisplayMember = "Value";
+
+            // Restaurer la valeur précédemment sélectionnée
+            CMB_modes.Text = current_value;
+            //CMB_modes.DataSource = ArduPilot.Common.getModesList(MainV2.comPort.MAV.cs.firmware);
+
+            //End
             instance = this;
 
             this.SubMainLeft.Panel1.ControlAdded += (sender, e) => ManageLeftPanelVisibility();
@@ -468,7 +509,16 @@ namespace MissionPlanner.GCSViews
                             b.Format += new ConvertEventHandler(BindingTypeToNumber);
                             b.Parse += new ConvertEventHandler(NumberToBindingType);
 
-                            QV.DataBindings.Add(b);
+                            //EDIT MD
+                            // QV.DataBindings.Add(b);
+                            if (QV.Tag != null)
+                            {
+                                if (QV.Tag.ToString() != "satcount" && QV.Tag.ToString() != "ter_curalt" && QV.Tag.ToString() != "press_abs" && QV.Tag.ToString() != "current")
+                                {
+                                    QV.DataBindings.Add(b);
+                                }
+                            }
+                            //end
                         }
                         catch (Exception ex)
                         {
@@ -1405,14 +1455,22 @@ namespace MissionPlanner.GCSViews
 
         private void BUT_quickmanual_Click(object sender, EventArgs e)
         {
+            // Vérifier la condition si value > 20
+            if (MainV2.comPort.MAV.cs.ter_curalt > 20)
+            {
+                // Afficher une fenêtre de confirmation
+                int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                // Si l'utilisateur choisit "Non", annuler l'action
+                if (result == (int)DialogResult.No)
+                {
+                    return;
+                }
+            }
             try
             {
-                ((Control) sender).Enabled = false;
-                if (MainV2.comPort.MAV.cs.firmware == Firmwares.ArduPlane ||
-                    MainV2.comPort.MAV.cs.firmware == Firmwares.Ateryx ||
-                    MainV2.comPort.MAV.cs.firmware == Firmwares.ArduRover ||
-                    MainV2.comPort.MAV.cs.firmware == Firmwares.ArduCopter2)
-                    MainV2.comPort.setMode("Loiter");
+                ((Control)sender).Enabled = false;
+                MainV2.comPort.setMode("Manual");
             }
             catch
             {
@@ -1806,23 +1864,61 @@ namespace MissionPlanner.GCSViews
 
         private void BUTrestartmission_Click(object sender, EventArgs e)
         {
-            try
-            {
-                ((Control) sender).Enabled = false;
+            int result = CustomMessageBox.Show("Voulez-vous vraiment déclencher le parachute ? Le drone passera ensuite en mode manuel", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-                MainV2.comPort.setWPCurrent(MainV2.comPort.MAV.sysid, MainV2.comPort.MAV.compid, 0); // set nav to
-            }
-            catch
-            {
-                CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
-            }
 
-            ((Control) sender).Enabled = true;
+            // Vérifier la réponse de l'utilisateur
+            if (result == (int)DialogResult.Yes)
+            {
+                // Envoyer une commande MAVLink pour définir la position du servo
+                MainV2.comPort.doCommand(
+                    (byte)MainV2.comPort.sysidcurrent,
+                    (byte)MainV2.comPort.compidcurrent,
+                    MAVLink.MAV_CMD.DO_PARACHUTE,
+                    2,   // 0 = Disable, 1 = Enable, 2 = Release 
+                    0,   // Angle de déclenchement du servo
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0,                       // Non utilisé
+                    0);                      // Non utilisé
+
+                try
+                {
+                    ((Control)sender).Enabled = false;
+                    MainV2.comPort.setMode("Manual");
+                }
+                catch
+                {
+                    CustomMessageBox.Show("Failed to set manual mode after parachute release");
+                }
+
+            }
         }
 
         void cam_camimage(Image camimage)
         {
-            hud1.bgimage = camimage;
+            DateTime windt = DateTime.Now;
+            DateTime mavdt = MainV2.comPort.MAV.cs.datetime;
+
+            // Calculate and set delay text
+            TimeSpan delay = windt - mavdt;
+            DelaiLabel.Text = $"délai = {delay.TotalSeconds:F0} s";
+            DelaiLabel.AutoSize = true;
+            DelaiLabel.ForeColor = Color.White;
+            DelaiLabel.BackColor = Color.Black;
+            DelaiLabel.Font = new Font(DelaiLabel.Font.FontFamily, 12, FontStyle.Bold);
+            DelaiLabel.Location = new Point(10, 10); // Position in the top left corner of CamPic
+
+
+
+            // Set the PictureBox properties
+            CamPic.Image = camimage;
+            CamPic.SizeMode = PictureBoxSizeMode.StretchImage;
+            CamPic.Dock = DockStyle.Fill;
+
+            CamPic.Controls.Add(DelaiLabel);
+            CamPic.Controls.SetChildIndex(DelaiLabel, 0);
         }
 
         private void CB_tuning_CheckedChanged(object sender, EventArgs e)
@@ -2456,7 +2552,18 @@ namespace MissionPlanner.GCSViews
         private void CMB_modes_Click(object sender, EventArgs e)
         {
             string current_value = CMB_modes.Text;
-            CMB_modes.DataSource = ArduPilot.Common.getModesList(MainV2.comPort.MAV.cs.firmware);
+            // CMB_modes.DataSource = ArduPilot.Common.getModesList(MainV2.comPort.MAV.cs.firmware);
+
+            // Récupérer la liste complète des modes de vol
+            List<KeyValuePair<int, string>> allModes = ArduPilot.Common.getModesList(MainV2.comPort.MAV.cs.firmware);
+
+            List<KeyValuePair<int, string>> filteredModes = allModes
+                .Where(mode => mode.Key == 10 || mode.Key == 21 || mode.Key == 11 || mode.Key == 20 || mode.Key == 21 || mode.Key == 19)
+                .ToList();
+
+            // Définir la source de données pour CMB_modes sur la liste filtrée
+            CMB_modes.DataSource = filteredModes;
+
             CMB_modes.ValueMember = "Key";
             CMB_modes.DisplayMember = "Value";
             CMB_modes.Text = current_value;
@@ -4260,6 +4367,12 @@ namespace MissionPlanner.GCSViews
                     });
                     txt_messagebox.Text = message.ToString();
 
+                    //edit md
+                    if (txt_messagebox.Text.Contains("Dual sensors alert"))
+                    {
+                        dual_airspeed_counter = 30;
+                    }
+                    //end
                     messagecount = messagetime.toUnixTime();
                 }
                 catch (Exception ex)
@@ -4267,6 +4380,7 @@ namespace MissionPlanner.GCSViews
                     log.Error(ex);
                 }
             }
+            dual_airspeed_counter = Math.Max(dual_airspeed_counter - 1, 5);
 
             coords1.AltUnit = CurrentState.AltUnit;
         }
@@ -4300,6 +4414,14 @@ namespace MissionPlanner.GCSViews
 
         private async void modifyandSetSpeed_Click(object sender, EventArgs e)
         {
+            // Afficher une fenêtre de confirmation
+            int result = CustomMessageBox.Show("Attention: set speed est une action dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            // Si l'utilisateur choisit "Non", annuler l'action
+            if (result == (int)DialogResult.No)
+            {
+                return;
+            }
             try
             {
                 await MainV2.comPort.doCommandAsync(MainV2.comPort.MAV.sysid, MainV2.comPort.MAV.compid,
@@ -4423,6 +4545,14 @@ namespace MissionPlanner.GCSViews
 
         private void quickView_DoubleClick(object sender, EventArgs e)
         {
+            if (!MainV2.instance.dev_mode)
+                return;
+
+            this.contextMenuStripQuickView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.setViewCountToolStripMenuItem,
+            this.undockToolStripMenuItem
+            });
+
             if (MainV2.DisplayConfiguration.lockQuickView)
                 return;
 
@@ -5379,14 +5509,478 @@ namespace MissionPlanner.GCSViews
                         bindingSourceHud.UpdateDataSource(MainV2.comPort.MAV.cs));
                 }
                 //if the tab detached wi have to update it
-                if (tabQuickDetached) MainV2.comPort.MAV.cs.UpdateCurrentSettings(bindingSourceQuickTab.UpdateDataSource(MainV2.comPort.MAV.cs));
+                loopCounter++;
 
+                if (loopCounter > 15)
+                {
+                    // Exécuter votre action une fois sur 15
+                    MainV2.comPort.MAV.cs.UpdateCurrentSettings(bindingSourceQuickTab.UpdateDataSource(MainV2.comPort.MAV.cs));
+                    loopCounter = 0;
+                }
+                if (1 == 1) Messagetabtimer.Start();
                 lastscreenupdate = DateTime.Now;
             }
             catch (Exception ex)
             {
                 log.Error(ex);
                 Tracking.AddException(ex);
+            }
+            // Vérifier si tableLayoutPanel3 est un conteneur valide
+            if (tableLayoutPanel3 != null)
+            {
+                // Parcourir tous les contrôles dans tableLayoutPanel3
+                foreach (Control control in tableLayoutPanel3.Controls)
+                {
+                    // Vérifier si le contrôle est un bouton
+                    if (control is Button button)
+                    {
+                        // Gérer l'événement Click du bouton
+                        button.Click += (sender, e) =>
+                        {
+                            // Exécuter l'action normale du bouton si la condition n'est pas remplie ou si l'utilisateur confirme
+                            // Placez ici le code à exécuter lorsque le bouton est cliqué
+                        };
+                    }
+                }
+            }
+
+            this.textBoxSN.Text = "SN " + MainV2.comPort.MAV.sysid.ToString("D3");
+            this.textBoxSN2.Text = "SN " + MainV2.comPort.MAV.sysid.ToString("D3");
+
+            if ((int)MainV2.comPort.MAV.cs.wpno != prev_wp)
+            {
+                wp_dist_loop_count = 4;
+                //methodCallCount++;
+                dist_mem = MainV2.comPort.MAV.cs.wp_dist;
+                if (Autonav.Checked)
+                {
+                    int curr_wp = (int)MainV2.comPort.MAV.cs.wpno;
+
+                    //NavWrite navWriter = new NavWrite();
+                    //switch (curr_wp - prev_wp)
+                    //{
+                    //    case 2:
+                    //        navWriter.Write(curr_wp - 2);
+                    //        break;
+                    //    case 3:
+                    //        navWriter.Write(curr_wp - 3);
+                    //        break;
+                    //    default:
+                    //        navWriter.Write(curr_wp - 1);
+                    //        break;
+                    //}
+                }
+
+                // Convertir les cap en entiers pour appliquer le modulo correctement
+                int prevBearingInt = (int)prev_bearing;
+                int targetBearingInt = (int)MainV2.comPort.MAV.cs.target_bearing;
+
+                // Calcule l'écart de cap entre deux segments et utilise le plus petit angle de rotation (0° à 180°)
+                int delta_bearing = (prevBearingInt - targetBearingInt) % 360;
+
+                if (delta_bearing < 0) delta_bearing = Math.Abs(delta_bearing + 360);
+
+                if (Math.Min(delta_bearing, 360 - delta_bearing) < 5) delta_bearing = 180;
+
+                dist_toreduce = 1000 * delta_bearing * 0.005555f;
+
+                //// Calcule le temps de virage basé sur l'écart de cap
+                //int delay_bearing = (int)(41000 * Math.Min(delta_bearing,360 - delta_bearing) * 0.005555);
+
+                Console.WriteLine("Delta Bearing: " + delta_bearing);
+                // Console.WriteLine("Delay Bearing: " + delay_bearing);
+
+                //WaitForDelay(8000 + delay_bearing, () =>
+                //{
+                //    // Cette partie du code s'exécutera après l'attente de 10 secondes
+                //    if (--methodCallCount == 0)
+                //    {
+                //        wp_dist_loop_count = 1;
+                //    }
+                //    // Continuer avec le reste du code ici
+                //});
+            }
+            else
+            {
+                prev_bearing = MainV2.comPort.MAV.cs.target_bearing;
+                if (MainV2.comPort.MAV.cs.wp_dist < dist_mem - (100.0f + dist_toreduce)) wp_dist_loop_count = 1;
+            }
+
+            prev_wp = (int)MainV2.comPort.MAV.cs.wpno;
+
+            bool is_cruising = (MainV2.comPort.MAV.cs.DistToHome > 800) && (MainV2.comPort.MAV.cs.mode == "Auto");
+
+            // THE FOLLOWING PART IS EDITED BY DEVS TO ADD THE CUSTOM MONITORING FOR AERIALMETRIC
+            foreach (Control control in tableLayoutPanelQuick.Controls)
+            {
+
+                QuickView quickView = control as QuickView;
+                quickView.ForeColor = Color.White;
+                quickView.numberColor = Color.White;
+                quickView.numberColorBackup = Color.White;
+
+                // Bitmask: 1 Para, 2 QLAND, 4 RTL, 8 SetSp30, 16 SetWP
+
+
+                if (quickView != null)
+                {
+
+
+                    if (quickView.Tag != null)
+                    {
+                        int bitmask = 0;
+                        float value;
+
+                        switch (quickView.Tag.ToString())
+                        {
+                            case "airspeed":
+                                value = MainV2.comPort.MAV.cs.airspeed;
+                                quickView.desc = "AS";
+                                switch (value)
+                                {
+                                    case float v when (!is_cruising):
+                                        quickView.BackColor = Color.FromArgb(20, 20, 20);
+                                        bitmask = 0;
+                                        break;
+                                    case float v when (v < 20.7 || dual_airspeed_counter > 10):
+                                        quickView.BackColor = Color.DarkRed;
+                                        if (dual_airspeed_counter > 10)
+                                        {
+                                            quickView.desc = "Alerte Pitots !";
+                                        }
+                                        bitmask = 15;
+                                        break;
+                                    case float v when v < 21.7:
+                                        quickView.BackColor = Color.Orange;
+                                        bitmask = 0;
+                                        break;
+                                    default:
+                                        quickView.BackColor = Color.Green;
+                                        bitmask = 0;
+                                        break;
+                                }
+                                break;
+                            case "press_abs":
+                                value = MainV2.comPort.MAV.cs.airspeed;
+                                float speed1 = MainV2.comPort.MAV.cs.press_abs * 10f;
+                                float speed2 = MainV2.comPort.MAV.cs.press_abs2 * 10f;
+                                // Formater la chaîne de formatage pour speed1 et speed2 avec une police plus petite
+                                quickView.numberformat = $"{speed1:000} / {speed2:000}";
+                                quickView.desc = "AS1/2";
+                                switch (value)
+                                {
+                                    case float v when (!is_cruising):
+                                        quickView.BackColor = Color.FromArgb(20, 20, 20);
+                                        bitmask = 0;
+                                        break;
+                                    case float v when (v < 20.7 || dual_airspeed_counter > 10):
+                                        quickView.BackColor = Color.DarkRed;
+                                        if (dual_airspeed_counter > 10)
+                                        {
+                                            quickView.desc = "Alerte Pitots !";
+                                        }
+                                        bitmask = 15;
+                                        break;
+                                    case float v when v < 21.7:
+                                        quickView.BackColor = Color.Orange;
+                                        bitmask = 0;
+                                        break;
+                                    default:
+                                        quickView.BackColor = Color.Green;
+                                        bitmask = 0;
+                                        break;
+                                }
+                                break;
+                            case "ter_curalt":
+                                value = MainV2.comPort.MAV.cs.ter_curalt;
+                                quickView.desc = "alt/rng";
+                                int alt1 = (int)Math.Truncate(MainV2.comPort.MAV.cs.rangefinder1 * 0.01f);
+                                int alt2 = (int)Math.Truncate(MainV2.comPort.MAV.cs.ter_curalt);
+
+                                // Utiliser les valeurs entières pour former la chaîne de formatage
+                                quickView.numberformat = $"{alt2:D3} / {alt1:D3}";
+                                switch (value)
+                                {
+                                    case float v when (!is_cruising || MainV2.comPort.MAV.cs.DistToHome < 800):
+                                        quickView.BackColor = Color.FromArgb(20, 20, 20);
+                                        bitmask = 0;
+                                        break;
+                                    case float v when (alt1 < 10 && v > 60):
+                                        quickView.BackColor = Color.Orange;
+                                        bitmask = 7;
+                                        break;
+                                    case float v when v < 60:
+                                        quickView.BackColor = Color.DarkRed;
+                                        bitmask = 7;
+                                        break;
+                                    case float v when v < 80:
+                                        quickView.BackColor = Color.Orange;
+                                        bitmask = 0;
+                                        break;
+                                    default:
+                                        quickView.BackColor = Color.Green;
+                                        bitmask = 0;
+                                        break;
+                                }
+                                break;
+                            case "boardvoltage":
+                                quickView.desc = "V board";
+                                value = MainV2.comPort.MAV.cs.boardvoltage / 1000;
+                                quickView.number = value;
+                                switch (value)
+                                {
+                                    case float v when v < 4.2:
+                                        quickView.BackColor = Color.DarkRed;
+                                        bitmask = 7;
+                                        break;
+                                    case float v when v < 4.8:
+                                        quickView.BackColor = Color.Orange;
+                                        bitmask = 0;
+                                        break;
+                                    default:
+                                        quickView.BackColor = Color.Green;
+                                        bitmask = 0;
+                                        break;
+                                }
+                                break;
+                            case "satcount":
+                                // Convertir les valeurs float en entiers en tronquant les décimales
+                                int sat1 = (int)Math.Truncate(MainV2.comPort.MAV.cs.satcount);
+                                int sat2 = (int)Math.Truncate(MainV2.comPort.MAV.cs.satcount2);
+
+                                quickView.desc = "Sat";
+
+                                // Utiliser les valeurs entières pour former la chaîne de formatage
+                                quickView.numberformat = $"{sat1:D2} / {sat2:D2}";
+
+                                value = (float)Math.Min(MainV2.comPort.MAV.cs.satcount, MainV2.comPort.MAV.cs.satcount2);
+                                switch (value)
+                                {
+                                    case float v when (v < 8):
+                                        quickView.BackColor = Color.DarkRed;
+                                        bitmask = 7;
+                                        break;
+                                    case float v when v < 11:
+                                        quickView.BackColor = Color.Orange;
+                                        bitmask = 0;
+                                        break;
+                                    default:
+                                        quickView.BackColor = Color.Green;
+                                        bitmask = 0;
+                                        break;
+                                }
+                                break;
+                            case "xtrack_error":
+                                quickView.desc = "Ecart";
+                                value = MainV2.comPort.MAV.cs.xtrack_error;
+                                switch (value)
+                                {
+                                    case float v when (!is_cruising || wp_dist_loop_count >= 3):
+                                        quickView.BackColor = Color.FromArgb(20, 20, 20);
+                                        bitmask = 0;
+                                        break;
+                                    case float v when (v > 10 && wp_dist_loop_count < 3):
+                                        quickView.BackColor = Color.DarkRed;
+                                        bitmask = 7;
+                                        break;
+                                    case float v when (v > 6 && wp_dist_loop_count < 3):
+                                        quickView.BackColor = Color.Orange;
+                                        bitmask = 0;
+                                        break;
+                                    default:
+                                        bitmask = 0;
+                                        quickView.BackColor = Color.Green;
+                                        break;
+                                }
+                                break;
+                            case "roll":
+                                quickView.desc = "roll";
+                                value = MainV2.comPort.MAV.cs.roll;
+                                switch (Math.Abs(value))
+                                {
+                                    case float v when ((!is_cruising) || wp_dist_loop_count >= 3):
+                                        quickView.BackColor = Color.FromArgb(20, 20, 20);
+                                        bitmask = 0;
+                                        break;
+                                    case float v when v > 9:
+                                        quickView.BackColor = Color.DarkRed;
+                                        bitmask = 7;
+                                        break;
+                                    case float v when v > 4:
+                                        quickView.BackColor = Color.Orange;
+                                        bitmask = 0;
+                                        break;
+                                    default:
+                                        bitmask = 0;
+                                        quickView.BackColor = Color.Green;
+                                        break;
+                                }
+                                break;
+                            case "current":
+                                current_lowpass = 0.95f * current_lowpass + 0.05f * (float)MainV2.comPort.MAV.cs.current;
+                                value = current_lowpass;
+                                quickView.number = value;
+                                float currlaw = 9.7649f + 4.37f * MainV2.comPort.MAV.cs.nav_pitch;
+                                quickView.desc = "Curr";
+                                switch (Math.Abs(value))
+                                {
+                                    case float v when (!is_cruising):
+                                        quickView.BackColor = Color.FromArgb(20, 20, 20);
+                                        bitmask = 0;
+                                        break;
+                                    case float v when (v > Math.Max(25.2f, (4.0f + currlaw) * 1.45f)):
+                                        quickView.BackColor = Color.DarkRed;
+                                        bitmask = 4;
+                                        break;
+                                    case float v when ((v > Math.Max(25.2f, 1.0f + currlaw * 1.35f)) || (v < 5)):
+                                        quickView.BackColor = Color.Orange;
+                                        bitmask = 0;
+                                        break;
+                                    default:
+                                        bitmask = 0;
+                                        quickView.BackColor = Color.Green;
+                                        break;
+                                }
+                                break;
+                            case "pitch":
+                                quickView.desc = "pitch";
+                                value = MainV2.comPort.MAV.cs.pitch;
+                                switch (value)
+                                {
+                                    case float v when ((!is_cruising) || wp_dist_loop_count >= 3):
+                                        quickView.BackColor = Color.FromArgb(20, 20, 20);
+                                        bitmask = 0;
+                                        break;
+                                    case float v when (v > 12 || v < -12):
+                                        quickView.BackColor = Color.DarkRed;
+                                        bitmask = 15;
+                                        break;
+                                    case float v when (v > 5 || v < -5):
+                                        quickView.BackColor = Color.Orange;
+                                        bitmask = 0;
+                                        break;
+                                    default:
+                                        bitmask = 0;
+                                        quickView.BackColor = Color.Green;
+                                        break;
+                                }
+                                break;
+                            case "ch3percent":
+                                throttle_lowpass = 0.95f * throttle_lowpass + 0.05f * MainV2.comPort.MAV.cs.ch3percent;
+                                value = throttle_lowpass;
+                                quickView.number = value;
+                                quickView.desc = "Throttle";
+                                switch (value)
+                                {
+                                    case float v when (!is_cruising):
+                                        quickView.BackColor = Color.FromArgb(20, 20, 20);
+                                        bitmask = 0;
+                                        break;
+                                    case float v when (v > 80 || v < 40):
+                                        quickView.BackColor = Color.Orange;
+                                        bitmask = 0;
+                                        break;
+                                    default:
+                                        bitmask = 0;
+                                        quickView.BackColor = Color.Green;
+                                        break;
+                                }
+                                break;
+                            case "vibez":
+                                quickView.desc = "Vibe+";
+                                value = MainV2.comPort.MAV.cs.vibez + MainV2.comPort.MAV.cs.vibex + MainV2.comPort.MAV.cs.vibey;
+                                switch (value)
+                                {
+                                    case float v when (!is_cruising):
+                                        quickView.BackColor = Color.FromArgb(20, 20, 20);
+                                        bitmask = 0;
+                                        break;
+                                    case float v when v > 20:
+                                        quickView.BackColor = Color.DarkRed;
+                                        bitmask = 7;
+                                        break;
+                                    case float v when v > 12:
+                                        quickView.BackColor = Color.Orange;
+                                        bitmask = 0;
+                                        break;
+                                    default:
+                                        bitmask = 0;
+                                        quickView.BackColor = Color.Green;
+                                        break;
+                                }
+                                break;
+                            case "climbrate":
+                                quickView.desc = "climb spd";
+                                value = MainV2.comPort.MAV.cs.climbrate;
+                                switch (Math.Abs(value))
+                                {
+                                    case float v when v > 7:
+                                        quickView.BackColor = Color.DarkRed;
+                                        bitmask = 11;
+                                        break;
+                                    case float v when v > 5:
+                                        quickView.BackColor = Color.Orange;
+                                        bitmask = 0;
+                                        break;
+                                    default:
+                                        bitmask = 0;
+                                        quickView.BackColor = Color.Green;
+                                        break;
+                                }
+                                break;
+                            case "groundspeed":
+                                quickView.desc = "GS";
+                                value = MainV2.comPort.MAV.cs.groundspeed;
+                                switch (value)
+                                {
+                                    default:
+                                        quickView.BackColor = Color.FromArgb(20, 20, 20);
+                                        bitmask = 0;
+                                        break;
+                                }
+                                break;
+                            default:
+                                quickView.BackColor = Color.FromArgb(20, 20, 20);
+                                bitmask = 0;
+                                break;
+                        }
+                        // Vérifie si quickView.Tag.ToString() existe déjà dans la liste
+                        var existingTuple = listOfTuples.FirstOrDefault(t => t.Item1 == quickView.Tag.ToString());
+
+                        if (existingTuple != null)
+                        {
+                            // Si l'élément existe déjà, mettez à jour son entier avec la valeur de bitmask
+                            int index = listOfTuples.IndexOf(existingTuple);
+                            if (listOfTuples[index].Item2 != bitmask && bitmask != 0 && MainV2.comPort.MAV.cs.armed)
+                            {
+                                Console.Beep(880, 500);
+                                //PlayBeepAsync(880, 500); // Play the first beep
+                                //Task.Delay(200).Wait(); // Delay for 1 second
+                                //PlayBeepAsync(880, 500); // Play the first beep
+                                //Task.Delay(200).Wait(); // Delay for 1 second
+                                //PlayBeepAsync(880, 500); // Play the first beep
+                                //Task.Delay(1000).Wait();
+                                //PlayVoiceAsync("alerte " + listOfTuples[index].Item1);
+
+
+                            }
+                            listOfTuples[index] = new Tuple<string, int>(existingTuple.Item1, bitmask);
+                        }
+                        else
+                        {
+                            // Sinon, ajoutez un nouveau tuple à la liste
+                            listOfTuples.Add(new Tuple<string, int>(quickView.Tag.ToString(), bitmask));
+                        }
+
+                        // Liaison de l'événement Click avec ShowActions
+                        quickView.Click += (sender, e) => ShowActions(quickView.Tag.ToString());
+                    }
+
+                }
+
+
+                /// END OF EDITED PART
+
             }
         }
 
@@ -6946,6 +7540,82 @@ namespace MissionPlanner.GCSViews
                 }
 
                 ((Control)sender).Enabled = true;
+            }
+        }
+
+
+        private void comboBoxMapType_SelectedValueChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                // check if we are setting the initial state
+                if (gMapControl1.MapProvider != GMapProviders.EmptyProvider &&
+                    (GMapProvider)comboBoxMapType.SelectedItem == MapboxUser.Instance)
+                {
+                    var url = Settings.Instance["MapBoxURL", ""];
+                    InputBox.Show("Enter MapBox Share URL", "Enter MapBox Share URL", ref url);
+                    var match = System.Text.RegularExpressions.Regex.Matches(url, @"\/styles\/[^\/]+\/([^\/]+)\/([^\/\.]+).*access_token=([^#&=]+)");
+                    if (match != null)
+                    {
+                        MapboxUser.Instance.UserName = match[0].Groups[1].Value;
+                        MapboxUser.Instance.StyleId = match[0].Groups[2].Value;
+                        MapboxUser.Instance.MapKey = match[0].Groups[3].Value;
+                        Settings.Instance["MapBoxURL"] = url;
+                    }
+                    else
+                    {
+                        CustomMessageBox.Show(Strings.InvalidField, Strings.ERROR);
+                        return;
+                    }
+                }
+
+                gMapControl1.MapProvider = (GMapProvider)comboBoxMapType.SelectedItem;
+                if (FlightData.mymap != null)
+                    FlightData.mymap.MapProvider = (GMapProvider)comboBoxMapType.SelectedItem;
+                Settings.Instance["MapType"] = comboBoxMapType.Text;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                CustomMessageBox.Show("Map change failed. try zooming out first.");
+            }
+        }
+        private void ShowActions(string item)
+        {
+            if (listOfTuples.Any(t => t.Item1 == item && t.Item2 != 0))
+            {
+                // Vérifiez si la fenêtre existe déjà
+                if (actionForm == null || actionForm.IsDisposed)
+                {
+                    // Si la fenêtre n'existe pas ou a été fermée, créez une nouvelle instance de Form
+                    actionForm = new Form();
+
+                    // Ajoutez votre TableLayoutPanel à la fenêtre
+                    actionForm.Controls.Add(tableLayoutPanel4);
+
+                    // Attacher une fonction lambda à l'événement FormClosing pour empêcher la fermeture de la fenêtre de supprimer ses contrôles
+                    actionForm.FormClosing += (sender, e) =>
+                    {
+                        e.Cancel = true; // Annuler la fermeture de la fenêtre
+                        actionForm.Hide(); // Masquer la fenêtre au lieu de la fermer
+                    };
+                }
+                int bitmask = listOfTuples.FirstOrDefault(t => t.Item1 == item)?.Item2 ?? 0;
+                // Modifier la visibilité des boutons en fonction du bitmask
+                parachuteClickBox.Visible = (bitmask & 1) != 0; // Vérifie si le premier bit est défini
+                qlandClickBox.Visible = (bitmask & 2) != 0; // Vérifie si le deuxième bit est défini
+                rtlClickBox.Visible = (bitmask & 4) != 0; // Vérifie si le troisième bit est défini
+                setSp30ClickBox.Visible = (bitmask & 8) != 0; // Vérifie si le quatrième bit est défini
+
+                // Affichez ou activez la fenêtre
+                if (actionForm.Visible)
+                {
+                    actionForm.Activate(); // Si la fenêtre est déjà visible, assurez-vous qu'elle est activée
+                }
+                else
+                {
+                    actionForm.Show(); // Si la fenêtre n'est pas visible, affichez-la
+                }
             }
         }
         // end

@@ -83,7 +83,7 @@ namespace MissionPlanner.Utilities
             return config.ContainsKey(key);
         }
 
-        public string UserAgent { get; set; } = "MissionPlanner";
+        public string UserAgent { get; set; } = "GCSAM";
         
         public string ComPort
         {

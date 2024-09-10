@@ -2059,6 +2059,10 @@ main()
                             continue;
 
                         string mode = item.items[index].ToString().Trim();
+
+                        if (mode.StartsWith("CAN["))
+                            continue;
+
                         if (top)
                         {
                             var temp = new TextObj(mode, a, zg1.GraphPane.YAxis.Scale.Min, CoordType.AxisXYScale,

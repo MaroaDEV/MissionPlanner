@@ -77,6 +77,18 @@ namespace MissionPlanner
             if (MAV.aptype == MAVLink.MAV_TYPE.FIXED_WING ||
                 MAV.aptype >= MAVLink.MAV_TYPE.VTOL_DUOROTOR && MAV.aptype <= MAVLink.MAV_TYPE.VTOL_RESERVED5)
             {
+                if (MAV.sysid == MainV2.comPort.sysidcurrent)
+                {
+                    return (new GMapMarkerPlane(MAV.sysid - 1, portlocation, MAV.cs.yaw,
+                    MAV.cs.groundcourse, MAV.cs.nav_bearing, MAV.cs.target_bearing,
+                    (float)CurrentState.toDistDisplayUnit(MAV.cs.radius),
+                    GCSViews.FlightData.instance.colorchangeid)
+                    {
+                        ToolTipText = ArduPilot.Common.speechConversion(MAV, "" + Settings.Instance["mapicondesc"]),
+                        ToolTipMode = String.IsNullOrEmpty(Settings.Instance["mapicondesc"]) ? MarkerTooltipMode.Never : MarkerTooltipMode.Always,
+                        Tag = MAV
+                    });
+                }
                 return new GMapMarkerPlane(
                     MAV.sysid - 1,
                     portlocation,
@@ -84,7 +96,8 @@ namespace MissionPlanner
                     MAV.cs.groundcourse,
                     MAV.cs.nav_bearing,
                     MAV.cs.target_bearing,
-                    (float)CurrentState.fromDistDisplayUnit(MAV.cs.radius))
+                    (float)CurrentState.fromDistDisplayUnit(MAV.cs.radius),
+                    0)
                 {
                     IsActive = MAV == MainV2.comPort?.MAV,
                     ToolTipText = ArduPilot.Common.speechConversion(MAV, "" + Settings.Instance["mapicondesc"]),

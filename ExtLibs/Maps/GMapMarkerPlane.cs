@@ -52,9 +52,10 @@ namespace MissionPlanner.Maps
         float radius = -1;
         float target = -1;
         int which = 0;
+        int colorchangeid = 0;
 
         public GMapMarkerPlane(int which, PointLatLng p, float heading, float cog, float nav_bearing, float target,
-            float radius)
+            float radius, int colorchange)
             : base(p)
         {
             this.heading = heading;
@@ -64,6 +65,7 @@ namespace MissionPlanner.Maps
             this.radius = radius;
             this.which = which;
             Size = icon.Size;
+            this.colorchangeid = colorchange;
         }
 
         public float Cog { get => cog; set => cog = value; }
@@ -77,6 +79,25 @@ namespace MissionPlanner.Maps
             if(IsHidden)
             {
                 return;
+            }
+
+            int sysid = which + 1;
+            string sysidText = "";
+            try
+            {
+                sysidText = "SN " + sysid.ToString("D3");
+            }
+            catch
+            {
+            }
+            base.OnRender(g);
+
+            // Dessiner le texte "hey" à côté du marqueur en blanc, en gras et plus grand
+            using (Font font = new Font("Arial", 12, FontStyle.Bold))
+            using (Brush brush = new SolidBrush(Color.Yellow))
+            {
+                Point textLocation = new Point(LocalPosition.X + Size.Width + 5, LocalPosition.Y);
+                g.DrawString(sysidText, font, brush, textLocation);
             }
 
             var temp = g.Transform;
@@ -170,20 +191,22 @@ namespace MissionPlanner.Maps
             // the plane
             g.TranslateTransform(-2, -2);
 
+            int colormark = which + colorchangeid;
+
             var color = Color.White;
-            if (which % 7 == 0)
+            if (colormark % 7 == 0)
                 color = Color.Red;
-            if (which % 7 == 1)
+            if (colormark % 7 == 1)
                 color = Color.Black;
-            if (which % 7 == 2)
+            if (colormark % 7 == 2)
                 color = Color.Blue;
-            if (which % 7 == 3)
+            if (colormark % 7 == 3)
                 color = Color.LimeGreen;
-            if (which % 7 == 4)
+            if (colormark % 7 == 4)
                 color = Color.Yellow;
-            if (which % 7 == 5)
+            if (colormark % 7 == 5)
                 color = Color.Orange;
-            if (which % 7 == 6)
+            if (colormark % 7 == 6)
                 color = Color.Pink;
 
             if(IsTransparent)

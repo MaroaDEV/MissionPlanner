@@ -43,6 +43,7 @@ namespace MissionPlanner.GCSViews
         public static FlightData instance;
         public static GMapOverlay kmlpolygons;
         public static HUD myhud;
+        public static HUD videohud;
         public static myGMAP mymap;
         public static bool threadrun;
         public SplitContainer MainHcopy;

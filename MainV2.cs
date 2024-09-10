@@ -3568,16 +3568,16 @@ namespace MissionPlanner
                 {
                     if (image == null)
                     {
-                        GCSViews.FlightData.myhud.bgimage = null;
-                        //GCSViews.FlightData.videohud.bgimage = null;
+                        //GCSViews.FlightData.myhud.bgimage = null;
+                        GCSViews.FlightData.videohud.bgimage = null;
                         return;
                     }
                     // ready for video integration:
-                    // var old = GCSViews.FlightData.videohud.bgimage;
-                    // GCSViews.FlightData.videohud.bgimage = new Bitmap(image.Width, image.Height, 4 * image.Width, 
+                    var old = GCSViews.FlightData.videohud.bgimage;
+                    GCSViews.FlightData.videohud.bgimage = new Bitmap(image.Width, image.Height, 4 * image.Width, 
 
-                    var old = GCSViews.FlightData.myhud.bgimage;
-                    GCSViews.FlightData.myhud.bgimage = new Bitmap(image.Width, image.Height, 4 * image.Width,
+                    //var old = GCSViews.FlightData.myhud.bgimage;
+                    //GCSViews.FlightData.myhud.bgimage = new Bitmap(image.Width, image.Height, 4 * image.Width,
                         PixelFormat.Format32bppPArgb,
                         image.LockBits(Rectangle.Empty, null, SKColorType.Bgra8888)
                             .Scan0);

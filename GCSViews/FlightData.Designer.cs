@@ -98,7 +98,7 @@ namespace MissionPlanner.GCSViews
             this.BUT_joystick = new MissionPlanner.Controls.MyButton();
             this.BUT_RAWSensor = new MissionPlanner.Controls.MyButton();
             this.BUT_Homealt = new MissionPlanner.Controls.MyButton();
-            this.BUTrestartmission = new MissionPlanner.Controls.MyButton();
+            // this.BUTrestartmission = new MissionPlanner.Controls.MyButton();
             this.CMB_mountmode = new System.Windows.Forms.ComboBox();
             this.BUT_quickrtl = new MissionPlanner.Controls.MyButton();
             this.BUT_quickmanual = new MissionPlanner.Controls.MyButton();
@@ -3295,7 +3295,7 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.CheckBox CB_tuning;
         private Controls.MyButton BUT_RAWSensor;
         private Controls.MyButton BUTactiondo;
-        private Controls.MyButton BUTrestartmission;
+        
         private System.Windows.Forms.ComboBox CMB_action;
         private Controls.MyButton BUT_Homealt;
         private System.Windows.Forms.TrackBar tracklog;
@@ -3514,6 +3514,7 @@ namespace MissionPlanner.GCSViews
         private Controls.RelayOptions relayOptions16;
 
         //edit MD
+        private Controls.CustomButton BUTrestartmission;
         private Form dropoutV; // Define dropout at the class level
         private PictureBox CamPic;
         private System.Windows.Forms.Label DelaiLabel;

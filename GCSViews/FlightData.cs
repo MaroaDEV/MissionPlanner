@@ -1463,7 +1463,7 @@ namespace MissionPlanner.GCSViews
                 int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 // Si l'utilisateur choisit "Non", annuler l'action
-                if (result == (int)DialogResult.No)
+                if (result != (int)DialogResult.Yes)
                 {
                     return;
                 }
@@ -1865,7 +1865,7 @@ namespace MissionPlanner.GCSViews
 
         private void BUTrestartmission_Click(object sender, EventArgs e)
         {
-            int result = CustomMessageBox.Show("Voulez-vous vraiment déclencher le parachute ? Le drone passera ensuite en mode manuel", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            int result = CustomMessageBox.Show("Voulez-vous vraiment déclencher le parachute ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
 
             // Vérifier la réponse de l'utilisateur
@@ -1883,16 +1883,6 @@ namespace MissionPlanner.GCSViews
                     0,                       // Non utilisé
                     0,                       // Non utilisé
                     0);                      // Non utilisé
-
-                try
-                {
-                    ((Control)sender).Enabled = false;
-                    MainV2.comPort.setMode("Manual");
-                }
-                catch
-                {
-                    CustomMessageBox.Show("Failed to set manual mode after parachute release");
-                }
 
             }
         }
@@ -4419,7 +4409,7 @@ namespace MissionPlanner.GCSViews
             int result = CustomMessageBox.Show("Attention: set speed est une action dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             // Si l'utilisateur choisit "Non", annuler l'action
-            if (result == (int)DialogResult.No)
+            if (result != (int)DialogResult.Yes)
             {
                 return;
             }
@@ -7250,7 +7240,7 @@ namespace MissionPlanner.GCSViews
                 int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 // Si l'utilisateur choisit "Non", annuler l'action
-                if (result == (int)DialogResult.No)
+                if (result != (int)DialogResult.Yes)
                 {
                     return;
                 }
@@ -7313,7 +7303,7 @@ namespace MissionPlanner.GCSViews
                 int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 // Si l'utilisateur choisit "Non", annuler l'action
-                if (result == (int)DialogResult.No)
+                if (result != (int)DialogResult.Yes)
                 {
                     return;
                 }
@@ -7357,7 +7347,7 @@ namespace MissionPlanner.GCSViews
                 int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 // Si l'utilisateur choisit "Non", annuler l'action
-                if (result == (int)DialogResult.No)
+                if (result != (int)DialogResult.Yes)
                 {
                     return;
                 }
@@ -7414,7 +7404,7 @@ namespace MissionPlanner.GCSViews
                 int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 // Si l'utilisateur choisit "Non", annuler l'action
-                if (result == (int)DialogResult.No)
+                if (result != (int)DialogResult.Yes)
                 {
                     return;
                 }
@@ -7443,7 +7433,7 @@ namespace MissionPlanner.GCSViews
                 int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 // Si l'utilisateur choisit "Non", annuler l'action
-                if (result == (int)DialogResult.No)
+                if (result != (int)DialogResult.Yes)
                 {
                     return;
                 }
@@ -7468,7 +7458,7 @@ namespace MissionPlanner.GCSViews
                 int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 // Si l'utilisateur choisit "Non", annuler l'action
-                if (result == (int)DialogResult.No)
+                if (result != (int)DialogResult.Yes)
                 {
                     return;
                 }
@@ -7495,7 +7485,7 @@ namespace MissionPlanner.GCSViews
                 int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 // Si l'utilisateur choisit "Non", annuler l'action
-                if (result == (int)DialogResult.No)
+                if (result != (int)DialogResult.Yes)
                 {
                     return;
                 }

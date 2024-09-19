@@ -508,9 +508,7 @@
     <Compile Update="Controls\PreFlight\CheckListInput.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="GCSViews\FlightData.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Update="GCSViews\FlightData.cs" />
     <Compile Update="GCSViews\FlightPlanner.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -5557,20 +5557,23 @@ namespace MissionPlanner.GCSViews
                 {
                     int curr_wp = (int)MainV2.comPort.MAV.cs.wpno;
 
-                    //NavWrite navWriter = new NavWrite();
-                    //switch (curr_wp - prev_wp)
-                    //{
-                    //    case 2:
-                    //        navWriter.Write(curr_wp - 2);
-                    //        break;
-                    //    case 3:
-                    //        navWriter.Write(curr_wp - 3);
-                    //        break;
-                    //    default:
-                    //        navWriter.Write(curr_wp - 1);
-                    //        break;
-                    //}
+
+                    NavWrite navWriter = new NavWrite();
+                    switch (curr_wp - prev_wp)
+                    {
+                        case 2:
+                            navWriter.Write(curr_wp - 2);
+                            break;
+                        case 3:
+                            navWriter.Write(curr_wp - 3);
+                            break;
+                        default:
+                            navWriter.Write(curr_wp - 1);
+                            break;
+                    }
                 }
+
+                prev_wp = (int)MainV2.comPort.MAV.cs.wpno;
 
                 // Convertir les cap en entiers pour appliquer le modulo correctement
                 int prevBearingInt = (int)prev_bearing;
@@ -5607,7 +5610,7 @@ namespace MissionPlanner.GCSViews
                 if (MainV2.comPort.MAV.cs.wp_dist < dist_mem - (100.0f + dist_toreduce)) wp_dist_loop_count = 1;
             }
 
-            prev_wp = (int)MainV2.comPort.MAV.cs.wpno;
+          
 
             bool is_cruising = (MainV2.comPort.MAV.cs.DistToHome > 800) && (MainV2.comPort.MAV.cs.mode == "Auto");
 

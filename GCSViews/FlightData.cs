@@ -1463,7 +1463,7 @@ namespace MissionPlanner.GCSViews
                 int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 // Si l'utilisateur choisit "Non", annuler l'action
-                if (result != (int)DialogResult.Yes)
+                if (result != (int)DialogResult.Yes || result == (int)DialogResult.None || result == (int)DialogResult.Abort)
                 {
                     return;
                 }
@@ -4409,7 +4409,7 @@ namespace MissionPlanner.GCSViews
             int result = CustomMessageBox.Show("Attention: set speed est une action dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             // Si l'utilisateur choisit "Non", annuler l'action
-            if (result != (int)DialogResult.Yes)
+            if (result != (int)DialogResult.Yes || result == (int)DialogResult.None || result == (int)DialogResult.Abort)
             {
                 return;
             }
@@ -7139,14 +7139,14 @@ namespace MissionPlanner.GCSViews
             BUT_camoff_Click(sender, e);
         }
 
-        public async void BUT_DropPL_Click(object sender, EventArgs e)
+        public void BUT_DropPL_Click(object sender, EventArgs e)
         {
             // Je vais essayer d'enlever les méthodes async dans cette fonction aussi
             // Afficher une fenêtre de confirmation
             int result = CustomMessageBox.Show("Attention: voulez vous vraiment larguer le colis maintenant ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             // Si l'utilisateur choisit "Non", annuler l'action
-            if (result == (int)DialogResult.No)
+            if (result != (int)DialogResult.Yes || result == (int)DialogResult.None || result == (int)DialogResult.Abort)
             {
                 return;
             }
@@ -7186,49 +7186,7 @@ namespace MissionPlanner.GCSViews
                 0,                       // Non utilisé
                 0);
 
-            // Attendre 5 secondes avant d'envoyer les prochaines commandes
-            await Task.Delay(5000);
-
-            // Envoyer une commande MAVLink pour passer tous les servo en position neutre
-
-            MainV2.comPort.doCommand(
-                (byte)MainV2.comPort.sysidcurrent,
-                (byte)MainV2.comPort.compidcurrent,
-                MAVLink.MAV_CMD.DO_SET_SERVO,
-                11,   // Servo n°
-                1500,   // Angle de déclenchement du servo
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0);
-            MainV2.comPort.doCommand(
-                (byte)MainV2.comPort.sysidcurrent,
-                (byte)MainV2.comPort.compidcurrent,
-                MAVLink.MAV_CMD.DO_SET_SERVO,
-                12,   // Servo n°
-                1500,   // Angle de déclenchement du servo
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0);
-            MainV2.comPort.doCommand(
-                (byte)MainV2.comPort.sysidcurrent,
-                (byte)MainV2.comPort.compidcurrent,
-                MAVLink.MAV_CMD.DO_SET_SERVO,
-                14,   // Servo n°
-                1000,   // Angle de déclenchement du servo
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0,                       // Non utilisé
-                0);
-
             CustomMessageBox.Show("Action effectuée");
-
-
-
         }
 
         public void BUT_DropPLG_Click(object sender, EventArgs e)
@@ -7240,7 +7198,7 @@ namespace MissionPlanner.GCSViews
                 int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 // Si l'utilisateur choisit "Non", annuler l'action
-                if (result != (int)DialogResult.Yes)
+                if (result != (int)DialogResult.Yes || result == (int)DialogResult.None || result == (int)DialogResult.Abort)
                 {
                     return;
                 }
@@ -7303,7 +7261,7 @@ namespace MissionPlanner.GCSViews
                 int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 // Si l'utilisateur choisit "Non", annuler l'action
-                if (result != (int)DialogResult.Yes)
+                if (result != (int)DialogResult.Yes || result == (int)DialogResult.None || result == (int)DialogResult.Abort)
                 {
                     return;
                 }
@@ -7347,7 +7305,7 @@ namespace MissionPlanner.GCSViews
                 int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 // Si l'utilisateur choisit "Non", annuler l'action
-                if (result != (int)DialogResult.Yes)
+                if (result != (int)DialogResult.Yes || result == (int)DialogResult.None || result == (int)DialogResult.Abort)
                 {
                     return;
                 }
@@ -7404,7 +7362,7 @@ namespace MissionPlanner.GCSViews
                 int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 // Si l'utilisateur choisit "Non", annuler l'action
-                if (result != (int)DialogResult.Yes)
+                if (result != (int)DialogResult.Yes || result == (int)DialogResult.None || result == (int)DialogResult.Abort)
                 {
                     return;
                 }
@@ -7433,7 +7391,7 @@ namespace MissionPlanner.GCSViews
                 int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 // Si l'utilisateur choisit "Non", annuler l'action
-                if (result != (int)DialogResult.Yes)
+                if (result != (int)DialogResult.Yes || result == (int)DialogResult.None || result == (int)DialogResult.Abort)
                 {
                     return;
                 }
@@ -7458,7 +7416,7 @@ namespace MissionPlanner.GCSViews
                 int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 // Si l'utilisateur choisit "Non", annuler l'action
-                if (result != (int)DialogResult.Yes)
+                if (result != (int)DialogResult.Yes || result == (int)DialogResult.None || result == (int)DialogResult.Abort)
                 {
                     return;
                 }
@@ -7485,7 +7443,7 @@ namespace MissionPlanner.GCSViews
                 int result = CustomMessageBox.Show("Drone en altitude: cette action est dangereuse. Voulez vous continuer ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 // Si l'utilisateur choisit "Non", annuler l'action
-                if (result != (int)DialogResult.Yes)
+                if (result != (int)DialogResult.Yes || result == (int)DialogResult.None || result == (int)DialogResult.Abort)
                 {
                     return;
                 }

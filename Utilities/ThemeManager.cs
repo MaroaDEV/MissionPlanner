@@ -72,9 +72,9 @@ namespace MissionPlanner.Utilities
             // colors.Add("Button Text", Color.FromArgb(64, 87, 4), "ButtonTextColor");				// This changes the colour of button text
             // colors.Add("Button Background top", Color.FromArgb(148, 193, 31), "ButBG");								// This changes the colour of button backgrounds (Top)
             // colors.Add("Button Background bottom", Color.FromArgb(205, 226, 150), "ButBGBot");						// This changes the colour of button backgrounds (Bot)
-            colors.Add("ProgressBar Top", Color.FromArgb(102, 139, 26), "ProgressBarColorTop");	// These three variables change the colours of progress bars
-            colors.Add("ProgressBar Bottom", Color.FromArgb(124, 164, 40), "ProgressBarColorBot");
-            colors.Add("ProgressBar Outline", Color.FromArgb(150, 174, 112), "ProgressBarOutlineColor");
+            //colors.Add("ProgressBar Top", Color.FromArgb(102, 139, 26), "ProgressBarColorTop");	// These three variables change the colours of progress bars
+            //colors.Add("ProgressBar Bottom", Color.FromArgb(124, 164, 40), "ProgressBarColorBot");
+            //colors.Add("ProgressBar Outline", Color.FromArgb(150, 174, 112), "ProgressBarOutlineColor");
             // colors.Add("BannerColor1", Color.FromArgb(0x40, 0x57, 0x04), "BannerColor1");			// These two variables change the colours of banners such as "planner" umder configuration
             // colors.Add("BannerColor2", Color.FromArgb(0x94, 0xC1, 0x1F), "BannerColor2");
             // colors.Add("Disabled Button", Color.FromArgb(150, 43, 58, 3), "ColorNotEnabled");		// This changes the background color of buttons when not enabled
@@ -106,7 +106,10 @@ namespace MissionPlanner.Utilities
             colors.Add("Disabled Button", Color.DarkGray, "ColorNotEnabled");		// This changes the background color of buttons when not enabled
             colors.Add("Button Mouseover", Color.RoyalBlue, "ColorMouseOver");			// This changes the background color of buttons when the mouse is hovering over a button
             colors.Add("Button Mousedown", Color.Black, "ColorMouseDown");			// This changes the background color of buttons when the mouse is clicked down on a button
-            colors.Add("Graph Chart Fill", Color.FromArgb(20, 20, 20), "ZedGraphChartFill"); 	// These three variables change the fill colours of Zed Graphs
+            colors.Add("Graph Chart Fill", Color.FromArgb(20, 20, 20), "ZedGraphChartFill");    // These three variables change the fill colours of Zed Graphs
+            colors.Add("ProgressBar Top", Color.FromArgb(176, 196, 222), "ProgressBarColorTop");	// These three variables change the colours of progress bars
+            colors.Add("ProgressBar Bottom", Color.FromArgb(65, 105, 225), "ProgressBarColorBot");
+            colors.Add("ProgressBar Outline", Color.FromArgb(25, 25, 112), "ProgressBarOutlineColor");
             // end
         }
 

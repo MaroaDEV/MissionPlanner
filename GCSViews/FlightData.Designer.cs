@@ -3211,33 +3211,7 @@ namespace MissionPlanner.GCSViews
             this.toolTip1.SetToolTip(this.BUT_Reboot, resources.GetString("BUT_Reboot.ToolTip"));
             this.BUT_Reboot.UseVisualStyleBackColor = true;
             this.BUT_Reboot.Click += new System.EventHandler(this.BUT_Reboot_Click);
-            // 
-            // Autonav
-            // 
-            this.Autonav.Text = "AutoFill";
-            this.Autonav.Checked = true;
-            this.Autonav.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.Autonav.Name = "AutoNav";
-            this.Autonav.UseVisualStyleBackColor = true;
-            // 
-            // Rack
-            // 
-            this.Rack.Text = "Rack";
-            this.Rack.Checked = false;
-            this.Rack.CheckState = System.Windows.Forms.CheckState.Unchecked;
-            this.Rack.Name = "Rack";
-            this.Rack.UseVisualStyleBackColor = true;
-            // 
-            // BUT_Reboot
-            // 
-            this.BUT_Reboot.ColorMouseDown = System.Drawing.Color.Empty;
-            this.BUT_Reboot.ColorMouseOver = System.Drawing.Color.Empty;
-            this.BUT_Reboot.ColorNotEnabled = System.Drawing.Color.Empty;
-            resources.ApplyResources(this.BUT_Reboot, "BUT_Reboot");
-            this.BUT_Reboot.Name = "BUT_Reboot";
-            this.toolTip1.SetToolTip(this.BUT_Reboot, resources.GetString("BUT_Reboot.ToolTip"));
-            this.BUT_Reboot.UseVisualStyleBackColor = true;
-            this.BUT_Reboot.Click += new System.EventHandler(this.BUT_Reboot_Click);
+
             // 
             double tanaLatitude = -18.8792; // Latitude d'Antananarivo
             double tanaLongitude = 47.5079; // Longitude d'Antananarivo

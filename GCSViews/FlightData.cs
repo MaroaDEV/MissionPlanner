@@ -1889,27 +1889,28 @@ namespace MissionPlanner.GCSViews
 
         void cam_camimage(Image camimage)
         {
-            DateTime windt = DateTime.Now;
-            DateTime mavdt = MainV2.comPort.MAV.cs.datetime;
 
-            // Calculate and set delay text
-            TimeSpan delay = windt - mavdt;
-            DelaiLabel.Text = $"délai = {delay.TotalSeconds:F0} s";
-            DelaiLabel.AutoSize = true;
-            DelaiLabel.ForeColor = Color.White;
-            DelaiLabel.BackColor = Color.Black;
-            DelaiLabel.Font = new Font(DelaiLabel.Font.FontFamily, 12, FontStyle.Bold);
-            DelaiLabel.Location = new Point(10, 10); // Position in the top left corner of CamPic
+            // hud1.bgimage = camimage;
+            hud1.bgimage = MainV2.cam.image;
+            //DateTime windt = DateTime.Now;
+            //DateTime mavdt = MainV2.comPort.MAV.cs.datetime;
 
+            //// Calculate and set delay text
+            //TimeSpan delay = windt - mavdt;
+            //DelaiLabel.Text = $"délai = {delay.TotalSeconds:F0} s";
+            //DelaiLabel.AutoSize = true;
+            //DelaiLabel.ForeColor = Color.White;
+            //DelaiLabel.BackColor = Color.Black;
+            //DelaiLabel.Font = new Font(DelaiLabel.Font.FontFamily, 12, FontStyle.Bold);
+            //DelaiLabel.Location = new Point(10, 10); // Position in the top left corner of CamPic
 
+            //// Set the PictureBox properties
+            //CamPic.Image = camimage;
+            //CamPic.SizeMode = PictureBoxSizeMode.StretchImage;
+            //CamPic.Dock = DockStyle.Fill;
 
-            // Set the PictureBox properties
-            CamPic.Image = camimage;
-            CamPic.SizeMode = PictureBoxSizeMode.StretchImage;
-            CamPic.Dock = DockStyle.Fill;
-
-            CamPic.Controls.Add(DelaiLabel);
-            CamPic.Controls.SetChildIndex(DelaiLabel, 0);
+            //CamPic.Controls.Add(DelaiLabel);
+            //CamPic.Controls.SetChildIndex(DelaiLabel, 0);
         }
 
         private void CB_tuning_CheckedChanged(object sender, EventArgs e)
@@ -5615,7 +5616,6 @@ namespace MissionPlanner.GCSViews
 
                 // Bitmask: 1 Para, 2 QLAND, 4 RTL, 8 SetSp30, 16 SetWP
 
-
                 if (quickView != null)
                 {
 
@@ -7080,23 +7080,6 @@ namespace MissionPlanner.GCSViews
         }
         public void BUT_camon_Click(object sender, EventArgs e)
         {
-            CamPic.Size = new System.Drawing.Size(600, 600);
-
-            dropoutV = new Form();
-            dropoutV.Text = "Cam Stream";
-            dropoutV.Size = new Size(CamPic.Width, CamPic.Height + 20); // Augmenter la hauteur pour le label
-            dropoutV.Controls.Add(CamPic);
-
-
-
-
-
-
-            dropoutV.Resize += dropoutV_Resize;
-            dropoutV.FormClosed += dropoutV_FormClosed;
-            dropoutV.StartPosition = FormStartPosition.CenterScreen; // Assuming RestoreStartupLocation sets this
-            dropoutV.Show();
-
             try
             {
                 MainV2.comPort.doCommand((byte)MainV2.comPort.sysidcurrent,
@@ -7108,7 +7091,22 @@ namespace MissionPlanner.GCSViews
             {
                 CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
             }
+            CamPic.Size = new System.Drawing.Size(600, 600);
 
+            //dropoutV = new Form();
+            //dropoutV.Text = "Cam Stream";
+            //dropoutV.Size = new Size(CamPic.Width, CamPic.Height + 20); // Augmenter la hauteur pour le label
+            //dropoutV.Controls.Add(CamPic);
+
+
+
+
+
+
+            //dropoutV.Resize += dropoutV_Resize;
+            //dropoutV.FormClosed += dropoutV_FormClosed;
+            //dropoutV.StartPosition = FormStartPosition.CenterScreen; // Assuming RestoreStartupLocation sets this
+            //dropoutV.Show();
         }
         public void BUT_camoff_Click(object sender, EventArgs e)
         {

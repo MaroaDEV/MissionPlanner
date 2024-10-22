@@ -1895,7 +1895,7 @@ namespace MissionPlanner.GCSViews
             //DateTime windt = DateTime.Now;
             //DateTime mavdt = MainV2.comPort.MAV.cs.datetime;
 
-            //// Calculate and set delay text
+            ////// Calculate and set delay text
             //TimeSpan delay = windt - mavdt;
             //DelaiLabel.Text = $"délai = {delay.TotalSeconds:F0} s";
             //DelaiLabel.AutoSize = true;
@@ -1905,7 +1905,7 @@ namespace MissionPlanner.GCSViews
             //DelaiLabel.Location = new Point(10, 10); // Position in the top left corner of CamPic
 
             //// Set the PictureBox properties
-            //CamPic.Image = camimage;
+            //CamPic.Image = MainV2.cam.image;
             //CamPic.SizeMode = PictureBoxSizeMode.StretchImage;
             //CamPic.Dock = DockStyle.Fill;
 
@@ -7091,22 +7091,22 @@ namespace MissionPlanner.GCSViews
             {
                 CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
             }
-            CamPic.Size = new System.Drawing.Size(600, 600);
+            CamPic.Size = new System.Drawing.Size(400, 600);
 
-            //dropoutV = new Form();
-            //dropoutV.Text = "Cam Stream";
-            //dropoutV.Size = new Size(CamPic.Width, CamPic.Height + 20); // Augmenter la hauteur pour le label
-            //dropoutV.Controls.Add(CamPic);
-
-
+            dropoutV = new Form();
+            dropoutV.Text = "Cam Stream";
+            dropoutV.Size = new Size(CamPic.Width, CamPic.Height + 20); // Augmenter la hauteur pour le label
+            dropoutV.Controls.Add(CamPic);
 
 
 
 
-            //dropoutV.Resize += dropoutV_Resize;
-            //dropoutV.FormClosed += dropoutV_FormClosed;
-            //dropoutV.StartPosition = FormStartPosition.CenterScreen; // Assuming RestoreStartupLocation sets this
-            //dropoutV.Show();
+
+
+            dropoutV.Resize += dropoutV_Resize;
+            dropoutV.FormClosed += dropoutV_FormClosed;
+            dropoutV.StartPosition = FormStartPosition.CenterScreen; // Assuming RestoreStartupLocation sets this
+            dropoutV.Show();
         }
         public void BUT_camoff_Click(object sender, EventArgs e)
         {

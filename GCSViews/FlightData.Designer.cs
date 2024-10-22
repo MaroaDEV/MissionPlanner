@@ -3489,9 +3489,9 @@ namespace MissionPlanner.GCSViews
 
         //edit MD
         private Controls.CustomButton BUTrestartmission;
-        private Form dropoutV; // Define dropout at the class level
-        private PictureBox CamPic;
-        private System.Windows.Forms.Label DelaiLabel;
+        public Form dropoutV; // Define dropout at the class level
+        public PictureBox CamPic;
+        public System.Windows.Forms.Label DelaiLabel;
         private Controls.MyButton BUT_DropPL;
         private Controls.MyButton BUT_camon;
         private Controls.MyButton BUT_camoff;

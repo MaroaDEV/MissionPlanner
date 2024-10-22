@@ -3576,13 +3576,41 @@ namespace MissionPlanner
                     // var old1 = GCSViews.FlightData.videohud.bgimage;
                     //GCSViews.FlightData.videohud.bgimage = new Bitmap(image.Width, image.Height, 4 * image.Width;
 
-                    var old = GCSViews.FlightData.myhud.bgimage;
-                    GCSViews.FlightData.myhud.bgimage = new Bitmap(image.Width, image.Height, 4 * image.Width,
+
+                    // START EDIT
+                    var old1 = FlightData.CamPic.Image;
+                    var old2 = FlightData.dropoutV;
+                    FlightData.CamPic.Image = new Bitmap(image.Width,
+                        image.Height,
+                        4 * image.Width,
                         PixelFormat.Format32bppPArgb,
-                        image.LockBits(Rectangle.Empty, null, SKColorType.Bgra8888)
-                            .Scan0);
+                        image.LockBits(Rectangle.Empty, null, SKColorType.Bgra8888).Scan0);
+
+                    DateTime windt = DateTime.Now;
+                    DateTime mavdt = MainV2.comPort.MAV.cs.datetime;
+
+                    // Calculate and set delay text
+                    TimeSpan delay = windt - mavdt;
+                    FlightData.DelaiLabel.Text = $"délai = {delay.TotalSeconds:F0} s";
+                    FlightData.DelaiLabel.AutoSize = true;
+                    FlightData.DelaiLabel.ForeColor = Color.White;
+                    FlightData.DelaiLabel.BackColor = Color.Black;
+                    FlightData.DelaiLabel.Font = new Font(FlightData.DelaiLabel.Font.FontFamily, 12, FontStyle.Bold);
+                    FlightData.DelaiLabel.Location = new Point(10, 10); // Position in the top left corner of CamPic
+
+                    FlightData.CamPic.Controls.Add(FlightData.DelaiLabel);
+                    FlightData.CamPic.Controls.SetChildIndex(FlightData.DelaiLabel, 0);
+
+                    // END EDIT
+                    var old = GCSViews.FlightData.myhud.bgimage;
+                    //GCSViews.FlightData.myhud.bgimage = new Bitmap(image.Width, image.Height, 4 * image.Width,
+                    //    PixelFormat.Format32bppPArgb,
+                    //    image.LockBits(Rectangle.Empty, null, SKColorType.Bgra8888)
+                    //        .Scan0);
                     if (old != null)
                         old.Dispose();
+                    if (old1 != null)
+                        old1.Dispose();
                 }
                 catch
                 {
@@ -3602,7 +3630,12 @@ namespace MissionPlanner
 
                     // var old = GCSViews.FlightData.videohud.bgimage;
                     // GCSViews.FlightData.videohud.bgimage = new Bitmap(image.Width,
-
+                    var old1 = FlightData.CamPic.Image;
+                    //FlightData.CamPic.Image = new Bitmap(image.Width,
+                    //    image.Height,
+                    //    4 * image.Width,
+                    //    PixelFormat.Format32bppPArgb,
+                    //    image.LockBits(Rectangle.Empty, null, SKColorType.Bgra8888).Scan0);
                     var old = GCSViews.FlightData.myhud.bgimage;
                     GCSViews.FlightData.myhud.bgimage = new Bitmap(image.Width,
                         image.Height,
@@ -3611,6 +3644,8 @@ namespace MissionPlanner
                         image.LockBits(Rectangle.Empty, null, SKColorType.Bgra8888).Scan0);
                     if (old != null)
                         old.Dispose();
+                    if (old1 != null)
+                        old1.Dispose();
                 }
                 catch
                 {
@@ -3630,6 +3665,7 @@ namespace MissionPlanner
 
                     //var old = GCSViews.FlightData.videohud.bgimage;
                     //GCSViews.FlightData.videohud.bgimage = new Bitmap(image.Width, image.Height, 4 * image.Width,
+                    FlightData.CamPic.Image = MainV2.cam.image;
                     var old = GCSViews.FlightData.myhud.bgimage;
                     GCSViews.FlightData.myhud.bgimage = new Bitmap(image.Width, image.Height, 4 * image.Width,
                         PixelFormat.Format32bppPArgb,

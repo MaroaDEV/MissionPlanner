@@ -7098,8 +7098,19 @@ namespace MissionPlanner.GCSViews
             dropoutV.Size = new Size(CamPic.Width, CamPic.Height + 20); // Augmenter la hauteur pour le label
             dropoutV.Controls.Add(CamPic);
 
+            DateTime windt = DateTime.Now;
+            DateTime mavdt = MainV2.comPort.MAV.cs.datetime;
+            // Calculate and set delay text
+            TimeSpan delay = windt - mavdt;
+            DelaiLabel.Text = $"délai = {delay.TotalSeconds:F0} s";
+            DelaiLabel.AutoSize = true;
+            DelaiLabel.ForeColor = Color.White;
+            DelaiLabel.BackColor = Color.Black;
+            DelaiLabel.Font = new Font(DelaiLabel.Font.FontFamily, 12, FontStyle.Bold);
+            DelaiLabel.Location = new Point(10, 10); // Position in the top left corner of CamPic
 
-
+            CamPic.Controls.Add(DelaiLabel);
+            CamPic.Controls.SetChildIndex(DelaiLabel, 0);
 
 
 
@@ -7122,11 +7133,10 @@ namespace MissionPlanner.GCSViews
             {
                 CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
             }
-
+            CamPic.Controls.Clear();
             if (dropoutV != null && !dropoutV.IsDisposed)
             {
                 dropoutV.Controls.Clear();
-                CamPic.Controls.Clear();
                 dropoutV.Close();
 
             }

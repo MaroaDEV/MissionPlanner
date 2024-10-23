@@ -3591,15 +3591,7 @@ namespace MissionPlanner
 
                     // Calculate and set delay text
                     TimeSpan delay = windt - mavdt;
-                    FlightData.DelaiLabel.Text = $"délai = {delay.TotalSeconds:F0} s";
-                    FlightData.DelaiLabel.AutoSize = true;
-                    FlightData.DelaiLabel.ForeColor = Color.White;
-                    FlightData.DelaiLabel.BackColor = Color.Black;
-                    FlightData.DelaiLabel.Font = new Font(FlightData.DelaiLabel.Font.FontFamily, 12, FontStyle.Bold);
-                    FlightData.DelaiLabel.Location = new Point(10, 10); // Position in the top left corner of CamPic
-
-                    FlightData.CamPic.Controls.Add(FlightData.DelaiLabel);
-                    FlightData.CamPic.Controls.SetChildIndex(FlightData.DelaiLabel, 0);
+                    FlightData.DelaiLabel.Text = $"délai : {delay.TotalSeconds+1:F0} s";
 
                     // END EDIT
                     var old = GCSViews.FlightData.myhud.bgimage;
@@ -3611,6 +3603,7 @@ namespace MissionPlanner
                         old.Dispose();
                     if (old1 != null)
                         old1.Dispose();
+
                 }
                 catch
                 {
